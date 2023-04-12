@@ -8,3 +8,10 @@ def set_int_aprobado(estado ):
         return 1
     else:
         return 0
+    
+#Utilizando la regla de mayor a 3.999 esta aprobado, significa que retornara un 1 para aprobado
+def set_in_aprobado_nota(nota):
+    if(nota > 3.999):
+        return 1
+    else:
+        return 0
