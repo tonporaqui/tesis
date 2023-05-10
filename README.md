@@ -11,6 +11,7 @@ Algunas dependencias:
 + pip install lime
 + pip install shap
 + pip install bnlearn
++ pip install tensorflow
 
 # Visualizacion nootebook
 Si necesit visualizar el html de los notebook usar:
