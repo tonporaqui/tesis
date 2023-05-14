@@ -1,6 +1,0 @@
-Test original es uno
-El segundo es otro que tiene alguna relacion con el test original.
-
-0,1,42 indicadores de estudios en dataset 1
-asignar una probabilida y buscar estructura del modelo de cada ejercicio y la solemne.
-
