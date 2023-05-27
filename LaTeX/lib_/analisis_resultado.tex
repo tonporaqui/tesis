@@ -1,12 +1,22 @@
 \hypertarget{analisis_resultado}{%
     \section{Análisis Resultado}\label{Análisis Resultado}}
 
+En nuestro analisis de resultado, se revisará la relación entre la resolución
+de la guía de programación y el éxito académico en el ramo de introducción a la
+programación. Se analizará específicamente la columna exitosos del conjunto de
+datos dataset a 2021, con el objetivo de responder a la pregunta de
+investigación planteada en este estudio: ¿La resolución de una guía de
+programación está relacionada con el éxito académico en el ramo de introducción
+a la programación en la Universidad Andrés Bello? De esta manera, se podrá
+determinar si resolver la guía es actualmente significativo para predecir el
+rendimiento en la solemne 1 del año 2021,
+
 \subsection{Descripción del DataFrame}
 
-La tabla presenta una descripción del DataFrame, que incluye información sobre las columnas,
-el número de valores no nulos y los tipos de datos correspondientes.
-Analizando esta descripción, podemos obtener una visión general de la estructura y las características
-del DataFrame.
+La tabla presenta una descripción del DataFrame, que incluye información sobre
+las columnas, el número de valores no nulos y los tipos de datos
+correspondientes. Analizando esta descripción, podemos obtener una visión
+general de la estructura y las características del DataFrame.
 
 \begin{table}[htbp]
     \centering
@@ -25,16 +35,19 @@ del DataFrame.
     \label{tab:descripcion_dataframe}%
 \end{table}%
 
-En la tabla \ref{tab:descripcion_dataframe}, contiene cinco columnas: exitosos, fallidos, envios, sol1 y aprobado.
-Cada una de estas columnas tiene un total de 839 valores no nulos y se identifica el tipo de dato
-correspondiente. Estos detalles son fundamentales para comprender la composición y las propiedades del DataFrame analizado.
+En la tabla \ref{tab:descripcion_dataframe}, contiene cinco columnas: exitosos,
+fallidos, envios, sol1 y aprobado. Cada una de estas columnas tiene un total de
+839 valores no nulos y se identifica el tipo de dato correspondiente. Estos
+detalles son fundamentales para comprender la composición y las propiedades del
+DataFrame analizado.
 
 \subsection{Estadísticas de la variable exitosos}
 
-En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas.
-En este contexto, hemos examinado la variable exitosos y recopilado estadísticas como el recuento, la media,
-la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la
-distribución y la tendencia central de la variable.
+En el análisis de datos, es importante comprender las características
+estadísticas de las variables numéricas. En este contexto, hemos examinado la
+variable exitosos y recopilado estadísticas como el recuento, la media, la
+desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan
+información sobre la distribución y la tendencia central de la variable.
 
 \begin{table}[htbp]
     \centering
@@ -57,15 +70,19 @@ distribución y la tendencia central de la variable.
     \label{tab:estadistica_variable_exito}%
 \end{table}%
 
-En la tabla \ref{tab:estadistica_variable_exito}, la variable exitosos presenta una media de aproximadamente 7.48 y una desviación estándar de alrededor de 5.36.
-La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.19.
-Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable exitosos.
+En la tabla \ref{tab:estadistica_variable_exito}, la variable exitosos presenta
+una media de aproximadamente 7.48 y una desviación estándar de alrededor de
+5.36. La distribución de los datos muestra una ligera asimetría positiva con un
+sesgo de aproximadamente 0.19. Estos resultados nos ayudan a comprender la
+variabilidad y la forma de la distribución de la variable exitosos.
 
 \subsection{Coeficiente de asimetría}
 
-El coeficiente de asimetría es una medida estadística que nos proporciona información sobre la asimetría de
-una distribución de datos. En el contexto de los datos analizados, hemos obtenido un coeficiente de asimetría
-de aproximadamente 0.1864. Este valor indica una ligera asimetría positiva en la distribución.
+El coeficiente de asimetría es una medida estadística que nos proporciona
+información sobre la asimetría de una distribución de datos. En el contexto de
+los datos analizados, hemos obtenido un coeficiente de asimetría de
+aproximadamente 0.1864. Este valor indica una ligera asimetría positiva en la
+distribución.
 
 \begin{table}[htbp]
     \centering
@@ -81,16 +98,19 @@ de aproximadamente 0.1864. Este valor indica una ligera asimetría positiva en l
     \label{tab:skewness}%
 \end{table}%
 
-En la tabla \ref{tab:skewness}, se puede apreciar la aproximacion de 0.1864 lo cual nos indica que la distribución de los datos tiene una
-ligera asimetría hacia la derecha. Esto implica que hay una cola derecha más larga en comparación con la
-cola izquierda de la distribución. En términos porcentuales, esta asimetría representa aproximadamente
-el 18.64\% del rango total de la distribución.
+En la tabla \ref{tab:skewness}, se puede apreciar la aproximacion de 0.1864 lo
+cual nos indica que la distribución de los datos tiene una ligera asimetría
+hacia la derecha. Esto implica que hay una cola derecha más larga en
+comparación con la cola izquierda de la distribución. En términos porcentuales,
+esta asimetría representa aproximadamente el 18.64\% del rango total de la
+distribución.
 
 \subsection{Coeficiente de Variación}
 
-El coeficiente de variación es una medida de la dispersión relativa de una variable en relación a su media.
-Nos permite evaluar la variabilidad de los datos en comparación con su valor promedio. Se calcula dividiendo
-la desviación estándar por la media y se expresa como un porcentaje.
+El coeficiente de variación es una medida de la dispersión relativa de una
+variable en relación a su media. Nos permite evaluar la variabilidad de los
+datos en comparación con su valor promedio. Se calcula dividiendo la desviación
+estándar por la media y se expresa como un porcentaje.
 
 \begin{table}[htbp]
     \centering
@@ -107,16 +127,18 @@ la desviación estándar por la media y se expresa como un porcentaje.
     \label{tab:coef_variacion}
 \end{table}
 
-En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación calculado para los
-datos analizados. El coeficiente de variación es de aproximadamente 0.7166, lo que indica una alta
-dispersión relativa en relación con la media. Esto se confirma por el coeficiente de variación en porcentaje,
-que es del 71.66\%. Estos resultados destacan la variabilidad de los datos en el conjunto de datos analizado.
+En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación
+calculado para los datos analizados. El coeficiente de variación es de
+aproximadamente 0.7166, lo que indica una alta dispersión relativa en relación
+con la media. Esto se confirma por el coeficiente de variación en porcentaje,
+que es del 71.66\%. Estos resultados destacan la variabilidad de los datos en
+el conjunto de datos analizado.
 
 \subsection{Obteniendo Amplitud}
 
-La amplitud es una medida de la variabilidad o dispersión de los datos. Nos permite evaluar la diferencia
-entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos
-en el conjunto.
+La amplitud es una medida de la variabilidad o dispersión de los datos. Nos
+permite evaluar la diferencia entre el valor máximo y mínimo de una variable,
+proporcionando información sobre la extensión de los datos en el conjunto.
 
 \begin{table}[htbp]
     \centering
@@ -131,21 +153,22 @@ en el conjunto.
     \label{tab:amplitud}
 \end{table}
 
-En la tabla \ref{tab:amplitud}, se muestra la amplitud calculada para los datos analizados. La amplitud es de
-aproximadamente 2.6137, lo que indica la diferencia entre el valor máximo y mínimo de la variable.
-Esta medida nos proporciona una idea de la extensión de los datos en el conjunto analizado.
+En la tabla \ref{tab:amplitud}, se muestra la amplitud calculada para los datos
+analizados. La amplitud es de aproximadamente 2.6137, lo que indica la
+diferencia entre el valor máximo y mínimo de la variable. Esta medida nos
+proporciona una idea de la extensión de los datos en el conjunto analizado.
 
 \subsection{Tabla de Frecuencias}
 
 Utilizando los datos obtenidos de la tabla \ref{tab:skewness} y la tabla
 \ref{tab:amplitud}, se ha construido una tabla de frecuencias que muestra la
-distribución de los datos en intervalos. Los intervalos se definen con base en la
-amplitud y el valor máximo de los datos analizados.
+distribución de los datos en intervalos. Los intervalos se definen con base en
+la amplitud y el valor máximo de los datos analizados.
 
-\begin{table}[ht]
+\begin{table}[htbp]
     \centering
     \caption{Tabla de Frecuencias}
-    \begin{tabular}{|l|l|l|l|l|}
+    \begin{tabular}{lllll}
         \hline
         \textbf{Intervalo} & \textbf{f\_i} & \textbf{F\_i} & \textbf{h\_i} & \textbf{H\_i} \\
         \hline
@@ -164,20 +187,21 @@ amplitud y el valor máximo de los datos analizados.
     \label{tab:tabla_frecuencias}
 \end{table}
 
-En la tabla \ref{tab:tabla_frecuencias}, se presenta la tabla de frecuencias que
-muestra la cantidad de datos en cada intervalo, el total acumulado de datos hasta ese
-intervalo, la frecuencia relativa del intervalo y la frecuencia relativa acumulada.
-Esta tabla nos permite visualizar la distribución de los datos y su acumulación en cada
-intervalo.
+En la tabla \ref{tab:tabla_frecuencias}, se presenta la tabla de frecuencias
+que muestra la cantidad de datos en cada intervalo, el total acumulado de datos
+hasta ese intervalo, la frecuencia relativa del intervalo y la frecuencia
+relativa acumulada. Esta tabla nos permite visualizar la distribución de los
+datos y su acumulación en cada intervalo.
 
-El intervalo más relevante en esta tabla es el intervalo (7.83, 10.44], ya que contiene
-la mayor frecuencia (161) y la mayor acumulación (409). Esto indica que la mayoría de
-los datos se encuentran en este rango de valores.
+El intervalo más relevante en esta tabla es el intervalo (7.83, 10.44], ya que
+contiene la mayor frecuencia (161) y la mayor acumulación (409). Esto indica
+que la mayoría de los datos se encuentran en este rango de valores.
 
 \subsection{Histograma con curva de densidad}
 
-El histograma con curva de densidad es una herramienta visual importante en el análisis de datos
-para comprender la distribución de los valores de la variable Exitosos.
+El histograma con curva de densidad es una herramienta visual importante en el
+análisis de datos para comprender la distribución de los valores de la variable
+Exitosos.
 
 \begin{figure}[ht]
     \centering
@@ -186,61 +210,65 @@ para comprender la distribución de los valores de la variable Exitosos.
     \label{fig:hist_density}
 \end{figure}
 
-La figura \ref{fig:hist_density} muestra este tipo de gráfico correspondiente a los datos analizados.
+La figura \ref{fig:hist_density} muestra este tipo de gráfico correspondiente a
+los datos analizados.
 
-El eje Y muestra la densidad en el rango de 0.00 a aproximadamente 0.08, mientras que el eje X
-representa la cantidad de éxitos de 0 a 25. La mayor concentración de la distribución se
-encuentra alrededor de 0.08 en el eje Y y 0 en el eje X, lo cual indica que la mayoría de
-las observaciones tienen un número bajo de éxitos.
+El eje Y muestra la densidad en el rango de 0.00 a aproximadamente 0.08,
+mientras que el eje X representa la cantidad de éxitos de 0 a 25. La mayor
+concentración de la distribución se encuentra alrededor de 0.08 en el eje Y y 0
+en el eje X, lo cual indica que la mayoría de las observaciones tienen un
+número bajo de éxitos.
 
-La curva de densidad, en color rojo, comienza cerca de (0.02, 0) en el eje Y y se extiende hasta
-(10, 0.04) en el eje X. Esta curva suavizada muestra la forma general de la distribución de los
-valores de Exitosos. A medida que aumenta la cantidad de éxitos, la densidad tiende a
-incrementar, lo cual se refleja en la curva que sube desde un punto cercano a 0 en el eje Y
-hasta aproximadamente 0.04 en el eje X.
+La curva de densidad, en color rojo, comienza cerca de (0.02, 0) en el eje Y y
+se extiende hasta (10, 0.04) en el eje X. Esta curva suavizada muestra la forma
+general de la distribución de los valores de Exitosos. A medida que aumenta la
+cantidad de éxitos, la densidad tiende a incrementar, lo cual se refleja en la
+curva que sube desde un punto cercano a 0 en el eje Y hasta aproximadamente
+0.04 en el eje X.
 
-En resumen, el análisis del histograma con curva de densidad revela que la mayoría de las
-observaciones tienen un número bajo de éxitos, con una concentración máxima alrededor de 0.08 en
-el eje Y y 0 en el eje X. Además, la curva de densidad muestra una tendencia creciente a medida
-que aumenta la cantidad de éxitos, alcanzando un pico cerca de 0.04 en el eje X.
+En resumen, el análisis del histograma con curva de densidad revela que la
+mayoría de las observaciones tienen un número bajo de éxitos, con una
+concentración máxima alrededor de 0.08 en el eje Y y 0 en el eje X. Además, la
+curva de densidad muestra una tendencia creciente a medida que aumenta la
+cantidad de éxitos, alcanzando un pico cerca de 0.04 en el eje X.
 
 \subsection{Identificar valores atípicos}
 
-En el análisis de datos, la detección de valores atípicos es crucial para identificar
-observaciones que difieren significativamente de la tendencia general. Estos valores pueden
-tener un impacto significativo y requerir atención especial.
+En el análisis de datos, la detección de valores atípicos es crucial para
+identificar observaciones que difieren significativamente de la tendencia
+general. Estos valores pueden tener un impacto significativo y requerir
+atención especial.
 
-A continuación se muestra una tabla con los valores atípicos identificados mediante el método
-del Z-score. Se calculó el Z-score para cada observación utilizando un umbral de 3 desviaciones
-estándar.
-Los valores que superan este umbral se consideran atípicos y se presentan en la tabla:
+A continuación se muestra una tabla con los valores atípicos identificados
+mediante el método del Z-score. Se calculó el Z-score para cada observación
+utilizando un umbral de 3 desviaciones estándar. Los valores que superan este
+umbral se consideran atípicos y se presentan en la tabla:
 
-\begin{table}[ht]
+\begin{table}[htbp]
     \centering
+    \caption{Valores Atípicos}
     \begin{tabular}{cccccc}
-    \hline
-    \textbf{exitosos} & \textbf{fallidos} & \textbf{envios} & \textbf{sol1} & \textbf{aprobado} \\
-    \hline
-    6 & 41 & 47 & 1.5 & 0 \\
-    0 & 47 & 47 & 1.6 & 0 \\
-    9 & 38 & 47 & 1.6 & 0 \\
-    9 & 38 & 47 & 2.4 & 0 \\
-    26 & 37 & 63 & 2.5 & 0 \\
-    26 & 5 & 31 & 3.4 & 0 \\
-    7 & 40 & 47 & 4.3 & 1 \\
-    28 & 35 & 63 & 4.4 & 1 \\
-    26 & 5 & 31 & 4.6 & 1 \\
-    5 & 42 & 47 & 7.0 & 1 \\
-    \hline
+        \hline
+        \textbf{exitosos} & \textbf{fallidos} & \textbf{envios} & \textbf{sol1} & \textbf{aprobado} \\
+        \hline
+        156               & 6                 & 41              & 47            & 1.5               & 0                 \\
+        163               & 0                 & 47              & 47            & 1.6               & 0                 \\
+        164               & 9                 & 38              & 47            & 1.6               & 0                 \\
+        249               & 9                 & 38              & 47            & 2.4               & 0                 \\
+        262               & 26                & 37              & 63            & 2.5               & 0                 \\
+        370               & 26                & 5               & 31            & 3.4               & 0                 \\
+        514               & 7                 & 40              & 47            & 4.3               & 1                 \\
+        523               & 28                & 35              & 63            & 4.4               & 1                 \\
+        542               & 26                & 5               & 31            & 4.6               & 1                 \\
+        829               & 5                 & 42              & 47            & 7.0               & 1                 \\
+        \hline
     \end{tabular}
     \label{tab:valores_atipicos}
-    \end{table}
+\end{table}
 
-Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas
-observaciones difieren significativamente en al menos una de las variables. Exitosos representa
-las respuestas correctas de la guía, Fallidos indica la cantidad de errores para lograr los
-Exitosos, y Envíos es la suma de Exitosos y Fallidos. Sol1 se refiere a la nota
-obtenida en la solemne 1.
-
-Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían
-indicar situaciones excepcionales o errores en la recolección de datos.
+Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos
+notar que algunas observaciones difieren significativamente en al menos una de
+las variables. Exitosos representa las respuestas correctas de la guía, 
+Fallidos indica la cantidad de errores para lograr los Exitosos, y Envíos es la suma de Exitosos y Fallidos. 
+Sol1 se refiere a la nota obtenida en la solemne 1. Estos valores atípicos pueden ser de interés para un análisis más detallado, 
+ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.

@@ -20,6 +20,8 @@
 \usepackage{biblatex}
 \usepackage{csquotes}
 \usepackage[hidelinks]{hyperref}
+\usepackage{caption}
+\usepackage{tocloft}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Other Settings
@@ -29,6 +31,9 @@
 \graphicspath{{/img/}}
 \addbibresource{bibliography.bib}
 \hypersetup{hidelinks}
+\addto\captionsspanish{
+  \renewcommand{\listtablename}{Índice de Tablas}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Define some useful colors %%%%%%%%%%%%%%%%%%%%%%%%%%
 \definecolor{ocre}{RGB}{243,102,25}
