@@ -5,13 +5,10 @@ jupyter + python
 + vscode
 
 # Dependencias
-Algunas dependencias:
 
-+ pip install openpyxl
-+ pip install lime
-+ pip install shap
-+ pip install bnlearn
-+ pip install tensorflow
+instalar dependencias:
+
+pip install -r requirements.txt
 
 # Visualizacion nootebook
 Si necesit visualizar el html de los notebook usar:
