@@ -13,7 +13,7 @@ rendimiento en la solemne 1 del año 2021,
 
 \subsection{Descripción del DataFrame}
 
-La tabla presenta una descripción del DataFrame, que incluye información sobre
+La tabla \ref{tab:descripcion_dataframe} presenta una descripción del DataFrame, que incluye información sobre
 las columnas, el número de valores no nulos y los tipos de datos
 correspondientes. Analizando esta descripción, podemos obtener una visión
 general de la estructura y las características del DataFrame.
@@ -23,35 +23,42 @@ general de la estructura y las características del DataFrame.
     \caption{Descripción del DataFrame}
     \begin{tabular}{lll}
         \hline
-        \textbf{Columna} & \textbf{No Nulos} & \textbf{Tipo} \\
+        \textbf{Columna} & \textbf{Non-Null Count} & \textbf{Dtype} \\
         \hline
-        exitosos         & 839               & int64         \\
-        fallidos         & 839               & int64         \\
-        envios           & 839               & int64         \\
-        sol1             & 839               & float64       \\
-        aprobado         & 839               & int64         \\
+        hito1     & 839 non-null    & float64 \\
+        hito2     & 839 non-null    & float64 \\
+        exitosos  & 839 non-null    & int64   \\
+        fallidos  & 839 non-null    & int64   \\
+        sol1      & 839 non-null    & float64 \\
+        aprobado  & 839 non-null    & int64   \\
+        e0 - e52   & 839 non-null    & int64   \\
         \hline
-    \end{tabular}%
-    \label{tab:descripcion_dataframe}%
-\end{table}%
+    \end{tabular}
+    \label{tab:descripcion_dataframe}
+\end{table}
 
-En la tabla \ref{tab:descripcion_dataframe}, contiene cinco columnas: exitosos,
-fallidos, envios, sol1 y aprobado. Cada una de estas columnas tiene un total de
+En la tabla \ref{tab:descripcion_dataframe}, cada una de estas columnas tiene un total de
 839 valores no nulos y se identifica el tipo de dato correspondiente. Estos
 detalles son fundamentales para comprender la composición y las propiedades del
 DataFrame analizado.
 
-\subsection{Estadísticas de la variable exitosos}
+\subsection{Estadísticas de la variable sol1}
 
 En el análisis de datos, es importante comprender las características
 estadísticas de las variables numéricas. En este contexto, hemos examinado la
-variable exitosos y recopilado estadísticas como el recuento, la media, la
+variable sol1 y recopilado estadísticas como el recuento, la media, la
 desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan
 información sobre la distribución y la tendencia central de la variable.
 
+En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta
+una media de aproximadamente 7.48 y una desviación estándar de alrededor de
+5.36. La distribución de los datos muestra una ligera asimetría positiva con un
+sesgo de aproximadamente 0.19. Estos resultados nos ayudan a comprender la
+variabilidad y la forma de la distribución de la variable sol1.
+
 \begin{table}[htbp]
     \centering
-    \caption{Estadísticas de la variable exitosos}
+    \caption{Estadísticas de la variable sol1}
     \begin{tabular}{ll}
         \hline
         \textbf{Medida}    & \textbf{Valor}      \\
@@ -67,14 +74,10 @@ información sobre la distribución y la tendencia central de la variable.
         Skewness           & 0.18644798387069741 \\
         \hline
     \end{tabular}%
-    \label{tab:estadistica_variable_exito}%
+    \label{tab:estadistica_variable_sol1}%
 \end{table}%
 
-En la tabla \ref{tab:estadistica_variable_exito}, la variable exitosos presenta
-una media de aproximadamente 7.48 y una desviación estándar de alrededor de
-5.36. La distribución de los datos muestra una ligera asimetría positiva con un
-sesgo de aproximadamente 0.19. Estos resultados nos ayudan a comprender la
-variabilidad y la forma de la distribución de la variable exitosos.
+
 
 \subsection{Coeficiente de asimetría}
 
@@ -203,7 +206,7 @@ El histograma con curva de densidad es una herramienta visual importante en el
 análisis de datos para comprender la distribución de los valores de la variable
 Exitosos.
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width=4.06111in,height=2.68611in]{img/histogramaConCurvaDeDensidad.png}
     \caption{Histograma con Curva de Densidad}
