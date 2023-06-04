@@ -7,7 +7,7 @@ En nuestro analisis de resultado, se revisará la relación entre la resolución
 
 La tabla \ref{tab:descripcion_dataframe} presenta una descripción del DataFrame, que incluye información sobre las columnas, el número de valores no nulos y los tipos de datos correspondientes. Analizando esta descripción, podemos obtener una visión general de la estructura y las características del DataFrame.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Descripción del DataFrame}
     \begin{tabular}{lll}
@@ -32,9 +32,7 @@ En la tabla \ref{tab:descripcion_dataframe}, cada una de estas columnas tiene un
 
 En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas. En este contexto, hemos examinado la variable sol1 y recopilado estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la distribución y la tendencia central de la variable.
 
-En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
-
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Estadísticas de la variable sol1}
     \begin{tabular}{ll}
@@ -55,13 +53,13 @@ En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta una
     \label{tab:estadistica_variable_sol1}%
 \end{table}%
 
-
+En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
 
 \subsection{Coeficiente de asimetría}
 
 El coeficiente de asimetría es una medida estadística que nos proporciona información sobre la asimetría de una distribución de datos. En el contexto de los datos analizados, hemos obtenido un coeficiente de asimetría de aproximadamente 3.31\%. Este valor indica una ligera asimetría positiva en la distribución.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Coeficiente de asimetría}
     \begin{tabular}{ll}
@@ -81,7 +79,7 @@ En la tabla \ref{tab:skewness}, se puede apreciar la aproximacion de 0.033079652
 
 El coeficiente de variación es una medida de la dispersión relativa de una variable en relación a su media. Nos permite evaluar la variabilidad de los datos en comparación con su valor promedio. Se calcula dividiendo la desviación estándar por la media y se expresa como un porcentaje.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Coeficiente de Variación}
     \begin{tabular}{ll}
@@ -102,7 +100,7 @@ En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación ca
 
 La amplitud es una medida de la variabilidad o dispersión de los datos. Nos permite evaluar la diferencia entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos en el conjunto.
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Amplitud}
     \begin{tabular}{ll}
@@ -122,7 +120,7 @@ En la tabla \ref{tab:amplitud}, se muestra la amplitud calculada para los datos 
 Utilizando los datos obtenidos de la tabla \ref{tab:skewness} y la tabla \ref{tab:amplitud}, se ha construido una tabla de frecuencias que muestra la distribución de los datos en intervalos. Los intervalos se definen con base en
 la amplitud y el valor máximo de los datos analizados.
 
-\begin{table}[htbp]
+\begin{table}[h]
     \centering
     \caption{Tabla de Frecuencias}
     \begin{tabular}{lllll}
@@ -153,7 +151,7 @@ El intervalo más relevante en esta tabla es el intervalo (3.36, 3.92], ya que c
 
 A continuación, se muestra una nueva tabla con información adicional:
 
-\begin{table}[htbp]
+\begin{table}[h]
     \centering
     \caption{Información adicional}
     \begin{tabular}{lllll}
@@ -175,7 +173,7 @@ En la tabla \ref{tab:informacion_adicional}, se muestra la mediana de los datos,
 
 El histograma con curva de densidad es una herramienta visual importante en el análisis de datos para comprender la distribución de los valores de la variable sol1.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=4.06111in,height=2.68611in]{img/histogramaConCurvaDeDensidad.png}
     \caption{Histograma con Curva de Densidad}
@@ -199,7 +197,7 @@ En el análisis de datos, la detección de valores atípicos es crucial para ide
 
 A continuación se muestra una tabla con los valores atípicos identificados mediante el método del Z-score. Se calculó el Z-score para cada observación utilizando un umbral de 3 desviaciones estándar. Los valores que superan este umbral se consideran atípicos y se presentan en la tabla:
 
-\begin{table}[htbp]
+\begin{table}[H]
     \centering
     \caption{Valores Atípicos}
     \begin{tabular}{ccccccc}
@@ -225,4 +223,4 @@ A continuación se muestra una tabla con los valores atípicos identificados med
     \label{tab:valores_atipicos}%
 \end{table}%
 
-Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. "Exitosos" representa las respuestas correctas de la guía, "Fallidos" indica la cantidad de errores para lograr los "Exitosos", y "Envíos" es la suma de "Exitosos" y "Fallidos". "Sol1" se refiere a la nota obtenida en la solemne 1. Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.
+Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. exitosos representa las respuestas correctas de la guía, fallidos indica la cantidad de errores para lograr los exitosos, y envíos es la suma de exitosos y fallidos. sol1 se refiere a la nota obtenida en la solemne 1. Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.
