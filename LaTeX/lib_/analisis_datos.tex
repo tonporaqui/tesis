@@ -1,7 +1,40 @@
 \subsection{Análisis de datos}
 
-Una vez recopilados los datos, se realizará un análisis descriptivo para examinar la distribución de los resultados en la guía de programación y la primera evaluación. Además, se llevará a cabo un análisis de correlación entre las variables mencionadas anteriormente para identificar posibles
-relaciones y patrones significativos.
+Una vez recopilados los datos, se realizará un análisis descriptivo para examinar la distribución de los resultados en la guía de programación y la primera evaluación. Además, se llevará a cabo un análisis de correlación entre las variables mencionadas anteriormente para identificar posibles relaciones y patrones significativos.
+
+\subsection{Descripción de la base de datos}
+
+A continuación, se presenta la descricion de la base de datos.
+
+\begin{table}[H]
+  \centering
+  \caption{Descripción de variables}
+  \begin{tabular}{|l|p{0.6\linewidth}|}
+    \hline
+    \textbf{Variable}        & \textbf{Descripción}                                                                                                                                                           \\
+    \hline
+    sol1                     & Indica la calificación obtenida en la primera evaluación, con un valor binario donde 1 indica una respuesta correcta a la pregunta, mientras que el valor predeterminado es 0. \\
+    \hline
+    exitosos                 & Indica la cantidad de preguntas respondidas correctamente en la guía.                                                                                                          \\
+    \hline
+    fallidos                 & Indica la cantidad de preguntas respondidas incorrectamente en la guía.                                                                                                        \\
+    \hline
+    hito1                    & Son las espectativas a cumplir del aprendizaje del curso.                                                                                                                      \\
+    \hline
+    hito2                    & Son las espectativas a cumplir del aprendizaje del curso.                                                                                                                      \\
+    \hline
+    programa                 & Indica al programa de estudio.                                                                                                                                                 \\
+    \hline
+    Columnas e0 hasta la e52 & Son representacion de los resultados de las preguntas de la guia este es binario.                                                                                              \\
+    \hline
+  \end{tabular}
+  \label{tab:variables}
+\end{table}
+
+
+Estas columnas son relevantes para nuestro análisis, ya que nos permitirán examinar la relación
+entre la resolución de la guía de programación, el éxito académico en la primera evaluación y
+el programa de estudio al que pertenecen los estudiantes (véase Tabla \ref{tab:variables}).
 
 \subsubsection{Descripción del DataFrame}
 
