@@ -111,6 +111,4 @@ strict digraph "" {
 	e51 -> aprobado;
 	e52 -> exitosos;
 	e52 -> aprobado;
-	sol1 -> exitosos;
-	sol1 -> aprobado;
 }
