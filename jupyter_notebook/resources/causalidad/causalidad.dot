@@ -1,6 +1,6 @@
 strict digraph "" {
-	e29 -> exitosos_binario;
-	exitosos_binario -> hito1_binario;
-	hito1_binario -> hito2_binario;
-	hito2_binario -> aprobado_binario;
+	hito1 -> hito2;
+	hito2 -> aprobado;
+	exitosos -> hito1;
+	e29 -> exitosos;
 }

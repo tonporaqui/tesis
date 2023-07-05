@@ -1,0 +1,37 @@
+estoy utilizando la libreria dowhy para mi trabajo de investigacion.
+
+Punto 1: Empezare con una pregunta como tratamiento, son las columnas de la e0 a la e44, y de allí voy a crear variables colectivas (por ejemplo suma de varias de preguntas). Posiblemente allí nos vamos a apoyar de SHAP.
+
+Con respecto a lo que me dice shap:
+Utilizando Random Forest Regressor podemos ver la interpretacion la cual nos muestra el mayor impacto positivo:
++ hito1: con un 22% cumplido tiene un 75%  aproximandamente de importancia.
++ exitosos: 12 respondidas, tiene un 67% aproximadamente de importancia.
++ e42: pregunta de la guia respondida 1.0 con un 59% aproximadamente de importancia.
++ e29: pregunta de la guia respondida 1.0 con un 54% aproximadamente de importancia.
++ e35: pregunta de la guia respondida 1.0 con un 47% aproximadamente de importancia.
++ e3: pregunta de la guia respondida 1.0 con un 46% aproximadamente de importancia.
++ fallidos: con 4.0 intentos para lograr el exito en la pregunta.
+
+Y el impacto mas bajo:
++ e18 = pregunta de la guia respondida 1.0 con un 81% aproximadamente de menor impacto.
+
+Punto 2: Primero hay que descubrir cual es la variable que mas influye en términos de tratamiento.
+Luego descubrir subconjunto, ojalá pequeño.
+
+esta es la estructura de mi data frame:
+['hito1', 'hito2', 'exitosos', 'fallidos', 'e0', 'e1', 'e2', 'e3', 'e4',
+       'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15',
+       'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25',
+       'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35',
+       'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'aprobado']
+
+columnas binarias aprobado y las columas de la e0 hasta la e44.
+
+necesito generar los codigos necesarios para cubrir punto 1 y punto 2
+
+
+Apuntes pablo.
+media estandar de kfold, y la desviacion estandar de los modelos.
+
+oversample imblearn
+
