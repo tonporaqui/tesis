@@ -35,15 +35,11 @@ media estandar de kfold, y la desviacion estandar de los modelos.
 
 oversample imblearn.
 
-# Definir los modelos de regresión
-models_regresion = [
-    LinearRegression(positive=True, fit_intercept=True),
-    DecisionTreeRegressor(
-        min_samples_split=5,
-        min_samples_leaf=3,
-    ),
-    KNeighborsRegressor(n_neighbors=8),
-]
+# Ajustar el modelo de regresión lineal
+model = LinearRegression(
+    positive=True,
+    fit_intercept=True
+)
 # Selección de características y variable objetivo para los modelos de Regresion.
 y = df["sol1"]
 X = df[
@@ -54,10 +50,7 @@ X = df[
         "fallidos"
     ]
 ]
-por cada modelo de regresion.
-aplicar kfold, por cada kfold realizar train_test_split y con test realizar prediccion para obtener el mejor modelo.
-generar grafico de los mejores resultados de cada modelo.
-generar grafico de MSE,MEA,R2, media y desviacion estandar de los mejores modelos.
-generar grafico del mejor modelo de regresion.
-generar de MSE,MEA,R2, media y desviacion estandar del mejor modelo.
-
+aplicar kfold y su correspondiente train_test_split
+generar grafico de MSE,MEA,R2, media y desviacion.
+Calcular los valores SHAP.
+y finalmente desplegar el shap force_plot, con la figura de matplotlib
