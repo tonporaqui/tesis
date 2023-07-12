@@ -87,4 +87,20 @@ strict digraph "" {
 	e43 -> aprobado;
 	e44 -> e29;
 	e44 -> aprobado;
+	e45 -> e29;
+	e45 -> aprobado;
+	e46 -> e29;
+	e46 -> aprobado;
+	e47 -> e29;
+	e47 -> aprobado;
+	e48 -> e29;
+	e48 -> aprobado;
+	e49 -> e29;
+	e49 -> aprobado;
+	e50 -> e29;
+	e50 -> aprobado;
+	e51 -> e29;
+	e51 -> aprobado;
+	e52 -> e29;
+	e52 -> aprobado;
 }

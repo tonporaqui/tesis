@@ -54,3 +54,70 @@ aplicar kfold y su correspondiente train_test_split
 generar grafico de MSE,MEA,R2, media y desviacion.
 Calcular los valores SHAP.
 y finalmente desplegar el shap force_plot, con la figura de matplotlib
+
+
+Estoy realizando un trabajo de investigacion y necesito entrar en causalidad, entiendo que la libreria dowhy es buena para esto y es de python.
+
+con la libreria dowhy estoy realizando un trabajo de investigacion causal.
+Esta es la estructura de mi data frame:
+['hito1', 'hito2', 'exitosos', 'fallidos', 'e0', 'e1', 'e2', 'e3', 'e4',
+       'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15',
+       'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25',
+       'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35',
+       'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45',
+       'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52', 'aprobado']
+
+Las columnas se relacionan de la siguiente manera:
+aprobado: equivale a una variable binaria, donde 0 es reprobado y 1 es aprobado.
+las columnas del e0 hasta la e52: son del tipo binaria, estas representan a la pregunta de la guia y permite apollar a los estudiantes a resolver la primera prueba de conocimientos y se relacionan con "aprobado".
+exitosos: es una variable numerica incremental, es equivalente al resumen de preguntas de la guia respondidas con exito.
+fallidos: es una variable numerica incremental, esta representa cuantos intentos fallidos tuvo para lograr responder las preguntas de la guia.
+hito1: es una variable porcentual y representa a un conjunto de preguntas de la guia, mientras mas responde mas alto es el porcentaje.
+hito2: es una variable porcentual y representa a un conjunto de preguntas de la guia, mientras mas responde mas alto es el porcentaje.
+
+Genera el grafo causal que representa las relaciones entre las variables.
+Necesito descubrir cual es la variable que mas influye en términos de tratamiento.
+Luego descubrir subconjunto, ojalá pequeño.
+Genera el codigo.
+
+
+estimador de categoria lienarDML y estimar el efecto causal.
+y visualizar con Dowhy.
+Personalized treatmen effect wiht econml
+Do calculus para averiguar si la puerta trasera es aplicable
+causalforesdml
+Test estimate robustnes with dowhy
+SingleTreePlicyInterpreter
+
+
+genera el codigo para resolver desde el paso 2 en adelante, estoy utilizando la libreria dowhy + econml, incluye alguna otra libreria que necesites para resolver lo solicitado en los pasos:
+# Paso 1: Modelar un problema causal
+model = CausalModel(
+    data=df,
+    treatment='e29',  # Variable tratada (exposición)
+    outcome='aprobado',  # Variable de resultado
+    common_causes=['hito1', 'hito2', 'exitosos', 'fallidos', 'e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10',
+       'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20',
+       'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e30',
+       'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40',
+       'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50',
+       'e51', 'e52']  # Variables de causa común
+)
+# Paso 2: Identificar el estimando objetivo bajo el modelo
+# Paso 3: Estimar el efecto causal con el estimador de categoría econ DML
+# Paso 4: Refutar el estimado obtenido
+# Paso 5: Verificar si la puerta trasera es aplicable o si hay otra mejor.
+# Paso 6: Prueba de robustez del estimado.
+# Paso 7: Interpretar el modelo con SingleTreePolicyInterpreter
+# Paso 8: Imprimir resultados
+print("Estimado de efecto causal:")
+print("Gráfico de barras para visualizar el estimado de efecto causal:")
+print("Refutación de estimado:")
+print("Gráfico de barras para visualizar la refutación de estimado:")
+print("¿Es aplicable la puerta trasera?")
+print("Prueba de robustez:")
+print("Gráfico de barras para visualizar la prueba de robustez:")
+print("Políticas interpretadas:")
+
+
+bibliografia aplicando dowhy para bibliografia.
