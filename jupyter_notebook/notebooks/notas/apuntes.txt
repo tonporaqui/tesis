@@ -120,4 +120,28 @@ print("Gráfico de barras para visualizar la prueba de robustez:")
 print("Políticas interpretadas:")
 
 
-bibliografia aplicando dowhy para bibliografia.
+Deep End-to-end Causal Inference.
+DoWhy: Addressing Challenges in Expressing and Validating Causal Assumptions.
+DoWhy-GCM An extension of DoWhy for causal inference in graphical.
+DoWhy An End-to-End Library for Causal Inference.
+
+https://towardsdatascience.com/practical-python-causality-econometrics-for-data-science-ffc074e11a1d
+
+ necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
+
+Deep End-to-end Causal Inference.
+
+ necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
+ 
+DoWhy: Addressing Challenges in Expressing and Validating Causal Assumptions.
+
+ necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
+
+DoWhy-GCM An extension of DoWhy for causal inference in graphical.
+
+ necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
+DoWhy An End-to-End Library for Causal Inference.
+
+ necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
+
+https://towardsdatascience.com/practical-python-causality-econometrics-for-data-science-ffc074e11a1d
