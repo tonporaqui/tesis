@@ -119,29 +119,43 @@ print("Prueba de robustez:")
 print("Gráfico de barras para visualizar la prueba de robustez:")
 print("Políticas interpretadas:")
 
+Estoy realizando una investigacion de causalidad y el uso de la herramienta dowhy.
+necesito el resumen mostrando los puntos mas relevantes,  lo mas detallado posible y a la vez sintetisados, si existen explicar los casos de estudios y la methodologia utilizada, las formulas que se presenten y concluciones del uso de la librerias, tecnicas usadas y finalmente generar una tabla bibliografica de cada paper o articulo en formato apa.
 
-Deep End-to-end Causal Inference.
+
+Deep end-to-end causal inference
+@article{geffner2022deep,
+  title={Deep end-to-end causal inference},
+  author={Geffner, Tomas and Antoran, Javier and Foster, Adam and Gong, Wenbo and Ma, Chao and Kiciman, Emre and Sharma, Amit and Lamb, Angus and Kukla, Martin and Pawlowski, Nick and others},
+  journal={arXiv preprint arXiv:2202.02195},
+  year={2022},
+  url={https://arxiv.org/pdf/2202.02195.pdf}
+}
+
+DoWhy: An end-to-end library for causal inference
+@article{sharma2020dowhy,
+  title={DoWhy: An end-to-end library for causal inference},
+  author={Sharma, Amit and Kiciman, Emre},
+  journal={arXiv preprint arXiv:2011.04216},
+  year={2020},
+  url={https://arxiv.org/pdf/2011.04216.pdf}
+
+}
+
 DoWhy: Addressing Challenges in Expressing and Validating Causal Assumptions.
-DoWhy-GCM An extension of DoWhy for causal inference in graphical.
-DoWhy An End-to-End Library for Causal Inference.
+@article{sharma2021dowhy,
+  title={Dowhy: Addressing challenges in expressing and validating causal assumptions},
+  author={Sharma, Amit and Syrgkanis, Vasilis and Zhang, Cheng and K{\i}c{\i}man, Emre},
+  journal={arXiv preprint arXiv:2108.13518},
+  year={2021},
+  url={https://arxiv.org/pdf/2108.13518.pdf}
+}
 
-https://towardsdatascience.com/practical-python-causality-econometrics-for-data-science-ffc074e11a1d
-
- necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
-
-Deep End-to-end Causal Inference.
-
- necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
- 
-DoWhy: Addressing Challenges in Expressing and Validating Causal Assumptions.
-
- necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
-
-DoWhy-GCM An extension of DoWhy for causal inference in graphical.
-
- necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
-DoWhy An End-to-End Library for Causal Inference.
-
- necesito que me entregues un resumen lo mas profundo posible sobre sus puntos mas importantes,  las pruebas realizadas, los resultados e identificar si la libreria usada es dowhy y las observaciones de uso de dicha libreria.
-
-https://towardsdatascience.com/practical-python-causality-econometrics-for-data-science-ffc074e11a1d
+DoWhy-GCM An extension of DoWhy for causal inference in graphical causal model.
+@article{blobaum2022dowhy,
+  title={DoWhy-GCM: An extension of DoWhy for causal inference in graphical causal models},
+  author={Bl{\"o}baum, Patrick and G{\"o}tz, Peter and Budhathoki, Kailash and Mastakouri, Atalanti A and Janzing, Dominik},
+  journal={arXiv preprint arXiv:2206.06821},
+  year={2022},
+  url={https://arxiv.org/pdf/2206.06821.pdf}
+}
