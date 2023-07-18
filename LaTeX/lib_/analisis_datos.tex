@@ -7,34 +7,37 @@ Una vez recopilados los datos, se realizará un análisis descriptivo para exami
 A continuación, se presenta la descricion de la base de datos.
 
 \begin{table}[H]
-  \centering
-  \caption{Descripción de variables}
-  \begin{tabular}{|l|p{0.6\linewidth}|}
-    \hline
-    \textbf{Variable}        & \textbf{Descripción}                                                                                                                                                           \\
-    \hline
-    sol1                     & Indica la calificación obtenida en la primera evaluación, con un valor binario donde 1 indica una respuesta correcta a la pregunta, mientras que el valor predeterminado es 0. \\
-    \hline
-    exitosos                 & Indica la cantidad de preguntas respondidas correctamente en la guía.                                                                                                          \\
-    \hline
-    fallidos                 & Indica la cantidad de preguntas respondidas incorrectamente en la guía.                                                                                                        \\
-    \hline
-    hito1                    & Son las espectativas a cumplir del aprendizaje del curso.                                                                                                                      \\
-    \hline
-    hito2                    & Son las espectativas a cumplir del aprendizaje del curso.                                                                                                                      \\
-    \hline
-    programa                 & Indica al programa de estudio.                                                                                                                                                 \\
-    \hline
-    Columnas e0 hasta la e52 & Son representacion de los resultados de las preguntas de la guia este es binario.                                                                                              \\
-    \hline
-  \end{tabular}
-  \label{tab:variables}
+    \centering
+    \caption{Descripción de variables}
+    \begin{tabular}{|l|p{0.6\linewidth}|}
+        \hline
+        \textbf{Variable}        & \textbf{Descripción}   \\
+        \hline
+        sol1                     & Indica la calificación obtenida en la primera evaluación, las calificacion parte de la nota 0 hasta la maxima 7 \\
+        \hline
+        exitosos                 & Indica la cantidad de preguntas respondidas correctamente en la guía, a medida que se van respondiendo correctamente esta va generando un resumen de de total respondidas exitosamente \\
+        \hline
+        fallidos                 & Indica la cantidad de intentos realizados para resolver preguntas de la guia \\
+        \hline
+        hito1                    & Son las espectativas a cumplir del aprendizaje del curso, se construye por medio de conjuntos de preguntas. \\
+        \hline
+        hito2                    & Son las espectativas a cumplir del aprendizaje del curso, se construye por medio de conjuntos de preguntas. \\
+        \hline
+        programa                 & Indica al programa de estudio. \\
+        \hline
+        Columnas e0 hasta la e52 & Son representacion de los resultados de las preguntas de la guia este es binario, 1 equivale a respondida exitosamente y cero no respondida.  \\
+        \hline
+    \end{tabular}
+    \label{tab:variables}
 \end{table}
-
 
 Estas columnas son relevantes para nuestro análisis, ya que nos permitirán examinar la relación
 entre la resolución de la guía de programación, el éxito académico en la primera evaluación y
 el programa de estudio al que pertenecen los estudiantes (véase Tabla \ref{tab:variables}).
+
+\subsubsection{Variable Objetivo}
+
+Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable sol1 como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado.
 
 \subsubsection{Descripción del DataFrame}
 
@@ -61,13 +64,13 @@ La tabla \ref{tab:descripcion_dataframe} presenta una descripción del DataFrame
 
 En la tabla \ref{tab:descripcion_dataframe}, cada una de estas columnas tiene un total de 839 valores no nulos y se identifica el tipo de dato correspondiente. Estos detalles son fundamentales para comprender la composición y las propiedades del DataFrame analizado.
 
-\subsubsection{Estadísticas de la variable sol1}
+\subsubsection{Estadísticas de la variable objetivo}
 
 En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas. En este contexto, hemos examinado la variable sol1 y recopilado estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la distribución y la tendencia central de la variable.
 
 \begin{table}[H]
     \centering
-    \caption{Estadísticas de la variable sol1}
+    \caption{Estadísticas de la variable objetivo}
     \begin{tabular}{ll}
         \hline
         \textbf{Medida}    & \textbf{Valor}       \\
@@ -88,7 +91,7 @@ En el análisis de datos, es importante comprender las características estadís
 
 En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
 
-\subsubsection{Coeficiente de asimetría variable sol1}
+\subsubsection{Coeficiente de asimetría variable objetivo}
 
 El coeficiente de asimetría es una medida estadística que nos proporciona información sobre la asimetría de una distribución de datos. En el contexto de los datos analizados, hemos obtenido un coeficiente de asimetría de aproximadamente 3.31\%. Este valor indica una ligera asimetría positiva en la distribución.
 
@@ -108,7 +111,7 @@ El coeficiente de asimetría es una medida estadística que nos proporciona info
 
 En la tabla \ref{tab:skewness}, se puede apreciar la aproximacion de 0.033079652062595215 lo cual nos indica que la distribución de los datos tiene una ligera asimetría hacia la derecha. Esto implica que hay una cola derecha más larga en comparación con la cola izquierda de la distribución. En términos porcentuales, esta asimetría representa aproximadamente el 3.31\% del rango total de la distribución.
 
-\subsubsection{Coeficiente de Variación variable sol1}
+\subsubsection{Coeficiente de Variación variable objetivo}
 
 El coeficiente de variación es una medida de la dispersión relativa de una variable en relación a su media. Nos permite evaluar la variabilidad de los datos en comparación con su valor promedio. Se calcula dividiendo la desviación estándar por la media y se expresa como un porcentaje.
 
@@ -129,7 +132,7 @@ El coeficiente de variación es una medida de la dispersión relativa de una var
 
 En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación calculado para los datos analizados. El coeficiente de variación es de aproximadamente 0.5027, lo que indica una alta dispersión relativa en relación con la media. Esto se confirma por el coeficiente de variación en porcentaje, que es del 50.28\%. Estos resultados destacan la variabilidad de los datos en el conjunto de datos analizado.
 
-\subsubsection{Obteniendo Amplitud variable sol1}
+\subsubsection{Obteniendo Amplitud variable variable objetivo}
 
 La amplitud es una medida de la variabilidad o dispersión de los datos. Nos permite evaluar la diferencia entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos en el conjunto.
 
@@ -148,7 +151,7 @@ La amplitud es una medida de la variabilidad o dispersión de los datos. Nos per
 
 En la tabla \ref{tab:amplitud}, se muestra la amplitud calculada para los datos analizados. La amplitud es de aproximadamente 0.56\%, lo que indica la diferencia entre el valor máximo y mínimo de la variable. Esta medida nos proporciona una idea de la extensión de los datos en el conjunto analizado.
 
-\subsubsection{Tabla de Frecuencias variable sol1}
+\subsubsection{Tabla de Frecuencias variable objetivo}
 
 Utilizando los datos obtenidos de la tabla \ref{tab:skewness} y la tabla \ref{tab:amplitud}, se ha construido una tabla de frecuencias que muestra la distribución de los datos en intervalos. Los intervalos se definen con base en
 la amplitud y el valor máximo de los datos analizados.
@@ -202,7 +205,7 @@ A continuación, se muestra una nueva tabla con información adicional:
 
 En la tabla \ref{tab:informacion_adicional}, se muestra la mediana de los datos, así como el intervalo en el que se encuentra dicha mediana. Además, se indica el valor máximo y el intervalo en el que se encuentra dicho valor máximo.
 
-\subsubsection{Histograma con curva de densidad variable sol1}
+\subsubsection{Histograma con curva de densidad variable objetivo}
 
 El histograma con curva de densidad es una herramienta visual importante en el análisis de datos para comprender la distribución de los valores de la variable sol1.
 
@@ -224,7 +227,7 @@ La curva de densidad, representada en color rojo, alcanza su punto más alto ent
 
 En resumen, el análisis del histograma con curva de densidad revela que la mayoría de las observaciones tienen una nota baja en sol1, concentrándose principalmente alrededor del valor 0.35 en el eje Y. Además, la curva de densidad muestra un pico más alto entre las notas 3 y 4 en el eje X.
 
-\subsubsection{Identificar valores atípicos variable sol1}
+\subsubsection{Identificar valores atípicos variable objetivo}
 
 En el análisis de datos, la detección de valores atípicos es crucial para identificar observaciones que difieren significativamente de la tendencia general. Estos valores pueden tener un impacto significativo y requerir atención especial.
 
@@ -235,22 +238,22 @@ A continuación se muestra una tabla con los valores atípicos identificados med
     \caption{Valores Atípicos}
     \begin{tabular}{ccccccc}
         \hline
-        \textbf{hito1} & \textbf{hito2} & \textbf{exitosos} & \textbf{fallidos} & \textbf{programa} & \textbf{sol1} & \textbf{aprobado}     \\
-        21.0           & 6.0            & 17                & 14                                  & UNAB11500     & 1.0               & 0 \\
-        2.0            & 2.0            & 4                 & 27                                  & UNAB12210     & 1.0               & 0 \\
-        4.0            & 4.0            & 6                 & 41                                  & UNAB12510     & 1.5               & 0 \\
-        0.0            & 0.0            & 0                 & 47                                  & UNAB12100     & 1.6               & 0 \\
-        10.0           & 6.0            & 9                 & 38                                  & UNAB11500     & 1.6               & 0 \\
-        12.0           & 0.0            & 9                 & 38                                  & UNAB12210     & 2.4               & 0 \\
-        42.0           & 12.0           & 26                & 37                                  & UNAB21500     & 2.5               & 0 \\
-        32.0           & 32.0           & 26                & 5                                   & UNAB11500     & 3.4               & 0 \\
-        9.0            & 0.0            & 7                 & 40                                  & UNAB11500     & 4.3               & 1 \\
-        38.0           & 6.0            & 28                & 35                                  & UNAB12210     & 4.4               & 1 \\
-        32.0           & 32.0           & 26                & 5                                   & UNAB12210     & 4.6               & 1 \\
-        18.0           & 2.0            & 11                & 20                                  & UNAB12210     & 4.6               & 1 \\
-        32.0           & 14.0           & 21                & 10                                  & UNAB12210     & 5.9               & 1 \\
-        13.0           & 25.0           & 16                & 15                                  & UNAB22115     & 7.0               & 1 \\
-        7.0            & 0.0            & 5                 & 42                                  & UNAB12100     & 7.0               & 1 \\
+        \textbf{hito1} & \textbf{hito2} & \textbf{exitosos} & \textbf{fallidos} & \textbf{programa} & \textbf{sol1} & \textbf{aprobado} \\
+        21.0           & 6.0            & 17                & 14                & UNAB11500         & 1.0           & 0                 \\
+        2.0            & 2.0            & 4                 & 27                & UNAB12210         & 1.0           & 0                 \\
+        4.0            & 4.0            & 6                 & 41                & UNAB12510         & 1.5           & 0                 \\
+        0.0            & 0.0            & 0                 & 47                & UNAB12100         & 1.6           & 0                 \\
+        10.0           & 6.0            & 9                 & 38                & UNAB11500         & 1.6           & 0                 \\
+        12.0           & 0.0            & 9                 & 38                & UNAB12210         & 2.4           & 0                 \\
+        42.0           & 12.0           & 26                & 37                & UNAB21500         & 2.5           & 0                 \\
+        32.0           & 32.0           & 26                & 5                 & UNAB11500         & 3.4           & 0                 \\
+        9.0            & 0.0            & 7                 & 40                & UNAB11500         & 4.3           & 1                 \\
+        38.0           & 6.0            & 28                & 35                & UNAB12210         & 4.4           & 1                 \\
+        32.0           & 32.0           & 26                & 5                 & UNAB12210         & 4.6           & 1                 \\
+        18.0           & 2.0            & 11                & 20                & UNAB12210         & 4.6           & 1                 \\
+        32.0           & 14.0           & 21                & 10                & UNAB12210         & 5.9           & 1                 \\
+        13.0           & 25.0           & 16                & 15                & UNAB22115         & 7.0           & 1                 \\
+        7.0            & 0.0            & 5                 & 42                & UNAB12100         & 7.0           & 1                 \\
         \hline
     \end{tabular}%
     \label{tab:valores_atipicos}%
