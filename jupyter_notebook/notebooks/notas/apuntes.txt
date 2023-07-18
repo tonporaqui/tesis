@@ -159,3 +159,44 @@ DoWhy-GCM An extension of DoWhy for causal inference in graphical causal model.
   year={2022},
   url={https://arxiv.org/pdf/2206.06821.pdf}
 }
+
+
+Compara algoritmos
+
+modelos de clasificacion
+    DecisionTreeClassifier
+    LogisticRegression
+    RandomForestClassifier
+    XGBClassifier
+
+Cross Validation
+  Stratified K-Fold
+  Dividir los datos en conjuntos de entrenamiento y prueba
+  Ajustar el modelo en los datos de entrenamiento
+  Calcular las métricas utilizando validación cruzada
+  Encontrar el mejor modelo basado en la media de las métricas
+  Realizar predicciones utilizando el mejor modelo sobre test
+  Buscar el objeto del mejor modelo en la lista de modelos
+  Ajustar el mejor modelo en los datos de entrenamiento
+  Calcular y mostrar los resultados obtenidos del mejor modelo
+
+Visualizar los resultados
+
+mindmap
+  root((Comparar algoritmos))
+    Modelos de clasificación
+      DecisionTreeClassifier
+      LogisticRegression
+      RandomForestClassifier
+      XGBClassifier
+    Stratified K Fold 
+      Cross Validation
+        Dividir los datos
+        Ajustar modelo en datos de entrenamiento
+        Calcular métricas usando validación cruzada
+      Encontrar mejor modelo
+        Realizar predicciones en datos de prueba
+        Buscar objeto del mejor modelo
+        Ajustar mejor modelo en datos de entrenamiento        
+    Visualizar resultados
+      Calcular y mostrar resultados del mejor modelo
