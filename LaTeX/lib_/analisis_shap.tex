@@ -1,77 +1,223 @@
-\subsection{Analisis SHAP}
+\subsection{Análisis SHAP}
 
-Luego de la investigacion realizada en la comparacion de algoritmos realizado y que nos arrojara que el mejor modelo de clasificacion es RandomForestClassifier y de regreseion es LinearRegression, los cuales revisaremos sus resultados.
+Después de realizar la investigación y la comparación de algoritmos, se determinó que el mejor modelo de clasificación es RandomForestClassifier, y el mejor modelo de regresión es LinearRegression. A continuación, analizaremos los resultados de estos modelos.
 
-\subsubsection{Analisis Mejor Modelo Clasificación RandomForestClassifier}
-Entrenamiento:
+\subsubsection{Análisis del Mejor Modelo de Clasificación: RandomForestClassifier}
 
-Preparando las coordenadas de análisis X/Y, donde utilizaremos la columna 'aprobado' (binario obtenida de sol1 donde 1 es equivale aprobado con un una nota mayor o igual 4) como referencia para el eje Y, y analizaremos el comportamiento de las demás columnas en relación a dicho eje X.
 
-para comprender mejor los graficos que veremos a continuacion es necesario comprender lo siguiente:
-\say{higher} se refiere a las instancias que tienen valores más altos de la característica en comparación con otras instancias, y tienen un mayor impacto en la probabilidad de ser \say{aprobado}. Por otro lado, \say{lower} se refiere a las instancias con valores más bajos de la característica, que tienen un menor impacto en la probabilidad de ser \say{aprobado}.
+Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la columna \say{aprobado} (binaria, obtenida de \say{sol1}, donde 1 significa aprobado con una nota mayor o igual a 4) como referencia para el eje Y. Analizaremos el comportamiento de las demás columnas en relación con dicho eje X.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.0611in,height=6.6861in]{img/shap_rf/shapForcePlot2.png}
-    \caption{Característica Variables SHAP}
+    \includegraphics[width=4.061in,height=2.686in]{img/shap_rf/conjunto_clasificacion.png}
+    \caption{Selección de característica y variable objetivo}
+    \label{fig:variables_entrenamiento}
+\end{figure}
+
+Para comprender mejor los gráficos que veremos a continuación, es necesario entender lo siguiente:
+
+\begin{itemize}
+    \item El término \say{higher} se refiere a las instancias que tienen valores más altos en comparación con otras instancias, y tienen un mayor impacto en la probabilidad de ser \say{aprobado}.
+    \item El término \say{lower} se refiere a las instancias con valores más bajos de la característica, que tienen un menor impacto en la probabilidad de ser \say{aprobado}.
+\end{itemize}
+
+En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.061in,height=6.686in]{img/shap_rf/shapForcePlot2.png}
+    \caption{Características Variables SHAP}
     \label{fig:caract_var_shap}
 \end{figure}
 
-Podemos observar de forma breve que:
+Al observar este gráfico, podemos destacar lo siguiente:
 
-\say{hito1} tiene un alto impacto positivo acompañado de 
-la pregunta de la guia \say{e29} tambien es una variable de interes de estudio, \say{exitosos} como \say{fallidos} tambien son variables muy interesantes de analisar, ya que estan correlacionadas con la intencion de resolver la guia.
+\begin{itemize}
+    \item La característica \say{hito1} tiene un alto impacto positivo.
+    \item La pregunta de la guía \say{e29} también es una variable de interés, ya que está correlacionada con la intención de resolver la guía.
+    \item Tanto las variables \say{exitosos} como \say{fallidos} también son variables interesantes de analizar, ya que están correlacionadas con la intención de resolver la guía.
+\end{itemize}
 
-por otro lado tenemos la figura de matplotlib
+Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig:caract_var_shap_mat}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=6.0611in,height=1.6861in]{img/shap_rf/shapForcePlot.png}
-    \caption{Característica Variables SHAP matplotlib}
+    \caption{Características Variables SHAP (Matplotlib)}
     \label{fig:caract_var_shap_mat}
 \end{figure}
 
-Al revisar el grafico generado por matplotlib podemos ver:
-+ hito1: con un 22.0 cumplido, tiene un 75\%  aproximandamente de importancia.
-+ exitosos: tiene 12 respuestas y aproximadamente un 67\% de importancia.
-+ e42: La variable tiene una respuesta de 1.0 en la pregunta de la guía y aproximadamente un 59\% de importancia.
-+ e29: La variable tiene una respuesta de 1.0 en la pregunta de la guía y aproximadamente un 54\% de importancia.
-+ e35: La variable tiene una respuesta de 1.0 en la pregunta de la guía y aproximadamente un 47\% de importancia.
-+ e3: La variable tiene una respuesta de 1.0 en la pregunta de la guía y aproximadamente un 46\% de importancia.
-+ fallidos: La variable tiene 4.0 intentos para lograr el éxito en la pregunta y aproximadamente un 49\% de importancia.
+Al revisar este gráfico, podemos obtener más detalles sobre las características y su importancia:
 
-El impacto más bajo lo presenta la variable \say{e18}, con una respuesta de 1.0 en la pregunta de la guía y una importancia aproximada del 81\% al 85\%.
+\begin{itemize}
+    \item La sección \say{higher} muestra los \say{aprobado} o valores positivos que contribuyen a aumentar el valor de predicción. En este caso, \say{hito1} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{exitosos}, \say{e42}, \say{e29}, \say{e35}, \say{e3}, \say{fallidos}.
+    \item La sección \say{lower} muestra los valores negativos o fallidos que contribuyen a disminuir el valor de predicción. En este caso, la variable \say{e18}, tiene una contribución negativa al valor de prediccióno que no aporta mucho.
+    \item En el gráfico, la marca \say{f(x)} representa el valor de predicción del modelo, que en este caso es 0.81.
+\end{itemize}
 
-La marca \say{f(x)} en el gráfico representa el valor de predicción del modelo. En este caso, el valor es 0.81
+Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
 
-Graficos de dependencia:
-
-Representa la relación entre los valores de la variable \say{hito1}, say{e29}, say{exitosos},\say{fallidos}, \say{e42} y los valores de Shapley en el modelo. Proporciona una visualización de cómo las variable en cuestion influye en las predicciones del modelo y ayuda a entender su importancia relativa.
+En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/hito1.png}
-    \caption{Variable dependencia hito1}
+    \caption{Variable de Dependencia: hito1}
     \label{fig:dependencia_hito1}
 \end{figure}
+
+En la Figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/e29.png}
-    \caption{Variable dependencia e29}
+    \caption{Variable de Dependencia: e29}
     \label{fig:dependencia_e29}
 \end{figure}
+
+En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/exitosos.png}
-    \caption{Variable dependencia exitosos}
+    \caption{Variable de Dependencia: exitosos}
     \label{fig:dependencia_exitosos}
 \end{figure}
+
+En la Figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos}:
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/fallidos.png}
-    \caption{Variable dependencia fallidos}
+    \caption{Variable de Dependencia: fallidos}
     \label{fig:dependencia_fallidos}
 \end{figure}
+
+Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
+
+\subsubsection{Análisis del Mejor Modelo de Clasificación: LinearRegression}
+
+Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la columna \say{sol1} cual representa la nota obtenida en la primera evaluacion, esta parte de la nota 0.0 hasta la nota mas alta 7.0 y para probar se requiere una nota igual o superior a 4.0 como referencia para el eje Y. Analizaremos el comportamiento de las demás columnas en relación con dicho eje X.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=5.0611in,height=2.6861in]{img/shap_lr/dependencia_variable_objetivo.png}
+    \caption{Selección de característica y variable objetivo}
+    \label{fig:variables_entrenamiento_lr}
+\end{figure}
+
+En la Figura \ref{fig:caract_var_shap_lr1} se muestra el gráfico de características variables SHAP:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.0611in,height=6.6861in]{img/shap_lr/shapForcePlot_lr.png}
+    \caption{Características Variables SHAP}
+    \label{fig:caract_var_shap_lr1}
+\end{figure}
+
+Al observar este gráfico, podemos destacar lo siguiente:
+
+\begin{itemize}
+    \item \say{e29} tiene característica con una gama de valores en el conjunto de datos que contribuye significativamente a las predicciones del modelo.
+    \item \say{e42} también tiene característica que influencian de manera importante en las predicciones y que hay una muestra particular que se ve afectada de manera notable.
+    \item \say{e10} muestra punto azul y rojo mas sercanos. Esto indica que esta característica tiene una contribución más uniforme en las predicciones y que hay menos variabilidad en los valores de esta característica en el conjunto de datos.
+    \item \say{fallidos} muestra varios puntos que van desde azul hasta rojo. Esto indica que esta característica tiene una amplia gama de valores en el conjunto de datos y contribuye significativamente a las predicciones del modelo.
+\end{itemize}
+
+Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig:caract_var_shap_mat_lr2}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6.0611in,height=1.6861in]{img/shap_lr/shapForcePlot_lr2.png}
+    \caption{Características Variables SHAP (Matplotlib)}
+    \label{fig:caract_var_shap_mat_lr2}
+\end{figure}
+
+Al revisar este gráfico, podemos obtener más detalles sobre las características y su importancia:
+
+\begin{itemize}
+    \item La sección \say{higher} muestra los \say{e42} o valores positivos que contribuyen a aumentar el valor de predicción. En este caso, la pregunta \say{e42} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{e29}, \say{e3}.
+    \item La sección \say{lower} muestra los valores negativos o fallidos que contribuyen a disminuir el valor de predicción. En este caso, el valor de \say{fallidos} es 4.0, lo que significa que esta característica tiene una contribución negativa al valor de predicción.
+    \item La marca \say{f(x)} en el gráfico representa el valor de predicción del modelo. En este caso, el valor es 4.46\%.
+\end{itemize}
+
+Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
+
+En la Figura \ref{fig:dependencia_e42_lr} se muestra el gráfico de dependencia para la variable \say{e42}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e42.png}
+    \caption{Variable de Dependencia: e42}
+    \label{fig:dependencia_e42_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e29_lr} se muestra el gráfico de dependencia para la variable \say{e29}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e29.png}
+    \caption{Variable de Dependencia: e29}
+    \label{fig:dependencia_e29_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e29_lr} se muestra el gráfico de dependencia para la variable \say{e29}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e29.png}
+    \caption{Variable de Dependencia: e29}
+    \label{fig:dependencia_e29_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e3_lr} se muestra el gráfico de dependencia para la variable \say{e3}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e3.png}
+    \caption{Variable de Dependencia: e3}
+    \label{fig:dependencia_e3_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e3_lr} se muestra el gráfico de dependencia para la variable \say{e3}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e3.png}
+    \caption{Variable de Dependencia: e3}
+    \label{fig:dependencia_e3_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e10_lr} se muestra el gráfico de dependencia para la variable \say{e10}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e10.png}
+    \caption{Variable de Dependencia: e10}
+    \label{fig:dependencia_e10_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_e0_lr} se muestra el gráfico de dependencia para la variable \say{e0}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e0.png}
+    \caption{Variable de Dependencia: e0}
+    \label{fig:dependencia_e0_lr}
+\end{figure}
+
+En la Figura \ref{fig:dependencia_fallidos_lr} se muestra el gráfico de dependencia para la variable \say{fallidos}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/fallidos.png}
+    \caption{Variable de Dependencia: fallidos}
+    \label{fig:dependencia_fallidos_lr}
+\end{figure}
+
+Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
+
+En resumen, el análisis SHAP nos ha permitido identificar las características y variables que más influyen en los modelos de clasificación y regresión. Esto nos brinda una mejor comprensión de los factores que determinan la resolucion de la guia y la nota obtenida en la prueba de conocimientos.
+
+
+
