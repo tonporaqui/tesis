@@ -9,7 +9,7 @@ Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=4.061in,height=2.686in]{img/shap_rf/conjunto_clasificacion.png}
+    \includegraphics[width=0.5\textwidth]{img/shap_rf/conjunto_clasificacion.png}
     \caption{Selección de característica y variable objetivo}
     \label{fig:variables_entrenamiento}
 \end{figure}
@@ -21,28 +21,38 @@ Para comprender mejor los gráficos que veremos a continuación, es necesario en
     \item El término \say{lower} se refiere a las instancias con valores más bajos de la característica, que tienen un menor impacto en la probabilidad de ser \say{aprobado}.
 \end{itemize}
 
-En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP:
+En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=6.061in,height=6.686in]{img/shap_rf/shapForcePlot2.png}
-    \caption{Características Variables SHAP}
-    \label{fig:caract_var_shap}
-\end{figure}
+% \begin{wrapfigure}{l}{0.6\textwidth}
+%     \includegraphics[width=0.9\linewidth]{img/shap_rf/shapForcePlot2.png} 
+%     \caption{Características Variables SHAP}
+%     \label{fig:caract_var_shap}
+%     \end{wrapfigure}
 
-Al observar este gráfico, podemos destacar lo siguiente:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.5\textwidth]{img/shap_rf/shapForcePlot2.png}
+        \caption{Características Variables SHAP}
+        \label{fig:caract_var_shap}
+    \end{figure}
+
+Al observar este podemos destacar lo siguiente:
 
 \begin{itemize}
-    \item La característica \say{hito1} tiene un alto impacto positivo.
+    \item La variable \say{hito1}  muestra un alto \say{higher} contribuyendo bastante informacion con sus picos de dispercion.
     \item La pregunta de la guía \say{e29} también es una variable de interés, ya que está correlacionada con la intención de resolver la guía.
     \item Tanto las variables \say{exitosos} como \say{fallidos} también son variables interesantes de analizar, ya que están correlacionadas con la intención de resolver la guía.
+    \item La variable \say{fallidos} tienen un sesgo de informacion algo disperso, pero a su vez tambien es una variable bastante interesantes de revisar.
+    \item La variable \say{e42} tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
+    \item La variable \say{e3} tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
 \end{itemize}
 
 Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig:caract_var_shap_mat}:
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.0611in,height=1.6861in]{img/shap_rf/shapForcePlot.png}
+    \includegraphics[width=1\textwidth]{img/shap_rf/shapForcePlot.png}
     \caption{Características Variables SHAP (Matplotlib)}
     \label{fig:caract_var_shap_mat}
 \end{figure}
@@ -57,41 +67,63 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
 
-En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1}:
-
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/hito1.png}
-    \caption{Variable de Dependencia: hito1}
-    \label{fig:dependencia_hito1}
+    
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/hito1.png}
+        \caption{hito1}
+        \label{fig:dependencia_hito1}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/e29.png}
+        \caption{e29}
+        \label{fig:dependencia_e29}
+    \end{subfigure}
+
+    \caption{Variables de dependencias hito1 - e29}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29}:
+En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1}. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/e29.png}
-    \caption{Variable de Dependencia: e29}
-    \label{fig:dependencia_e29}
+
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/exitosos.png}
+        \caption{exitosos}
+        \label{fig:dependencia_exitosos}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/fallidos.png}
+        \caption{fallidos}
+        \label{fig:dependencia_fallidos}
+    \end{subfigure}
+
+    \caption{Variable de dependencias exitosos - fallidos}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos}:
+En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/exitosos.png}
-    \caption{Variable de Dependencia: exitosos}
-    \label{fig:dependencia_exitosos}
+
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/e42.png}
+        \caption{e42}
+        \label{fig:dependencia_e42}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/e3.png}
+        \caption{e3}
+        \label{fig:dependencia_e3}
+    \end{subfigure}
+
+    \caption{Variable de dependencias e42 - e3}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos}:
+En la Figura \ref{fig:dependencia_e42} se muestra el gráfico de dependencia para la variable \say{e42}, mientras tanto en la figura \ref{fig:dependencia_e3} se muestra el gráfico de dependencia para la variable \say{e3}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_rf/fallidos.png}
-    \caption{Variable de Dependencia: fallidos}
-    \label{fig:dependencia_fallidos}
-\end{figure}
 
 Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
 
@@ -101,7 +133,7 @@ Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=5.0611in,height=2.6861in]{img/shap_lr/dependencia_variable_objetivo.png}
+    \includegraphics[width=0.5\textwidth]{img/shap_lr/dependencia_variable_objetivo.png}
     \caption{Selección de característica y variable objetivo}
     \label{fig:variables_entrenamiento_lr}
 \end{figure}
@@ -110,7 +142,7 @@ En la Figura \ref{fig:caract_var_shap_lr1} se muestra el gráfico de caracterís
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.0611in,height=6.6861in]{img/shap_lr/shapForcePlot_lr.png}
+    \includegraphics[width=0.7\textwidth]{img/shap_lr/shapForcePlot_lr.png}
     \caption{Características Variables SHAP}
     \label{fig:caract_var_shap_lr1}
 \end{figure}
@@ -128,7 +160,7 @@ Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=6.0611in,height=1.6861in]{img/shap_lr/shapForcePlot_lr2.png}
+    \includegraphics[width=1\textwidth]{img/shap_lr/shapForcePlot_lr2.png}
     \caption{Características Variables SHAP (Matplotlib)}
     \label{fig:caract_var_shap_mat_lr2}
 \end{figure}
@@ -141,79 +173,66 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
     \item La marca \say{f(x)} en el gráfico representa el valor de predicción del modelo. En este caso, el valor es 4.46\%.
 \end{itemize}
 
+
+
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
 
-En la Figura \ref{fig:dependencia_e42_lr} se muestra el gráfico de dependencia para la variable \say{e42}:
-
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e42.png}
-    \caption{Variable de Dependencia: e42}
-    \label{fig:dependencia_e42_lr}
+    
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e42.png}
+        \caption{e42}
+        \label{fig:dependencia_e42_lr}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e29.png}
+        \caption{e29}
+        \label{fig:dependencia_e29_lr}
+    \end{subfigure}
+
+    \caption{Variables de dependencias e42 - e29}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_e29_lr} se muestra el gráfico de dependencia para la variable \say{e29}:
+En la Figura \ref{fig:dependencia_e42_lr} se muestra el gráfico de dependencia para la variable \say{e42}. mientras tanto en la figura \ref{fig:dependencia_e29_lr} se muestra el gráfico de dependencia para la variable \say{e29}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e29.png}
-    \caption{Variable de Dependencia: e29}
-    \label{fig:dependencia_e29_lr}
+
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e3.png}
+        \caption{e3}
+        \label{fig:dependencia_e3_lr}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e10.png}
+        \caption{e10}
+        \label{fig:dependencia_e10_lr}
+    \end{subfigure}
+
+    \caption{Variable de dependencias e3 - e10}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_e29_lr} se muestra el gráfico de dependencia para la variable \say{e29}:
+En la Figura \ref{fig:dependencia_e3_lr} se muestra el gráfico de dependencia para la variable \say{e3}, mientras tanto en la figura \ref{fig:dependencia_e10_lr} se muestra el gráfico de dependencia para la variable \say{e10}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e29.png}
-    \caption{Variable de Dependencia: e29}
-    \label{fig:dependencia_e29_lr}
+
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e0.png}
+        \caption{e0}
+        \label{fig:dependencia_e0_lr}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/fallidos.png}
+        \caption{fallidos}
+        \label{fig:dependencia_fallidos_lr}
+    \end{subfigure}
+
+    \caption{Variable de dependencias e0 - fallidos}
+    \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_e3_lr} se muestra el gráfico de dependencia para la variable \say{e3}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e3.png}
-    \caption{Variable de Dependencia: e3}
-    \label{fig:dependencia_e3_lr}
-\end{figure}
-
-En la Figura \ref{fig:dependencia_e3_lr} se muestra el gráfico de dependencia para la variable \say{e3}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e3.png}
-    \caption{Variable de Dependencia: e3}
-    \label{fig:dependencia_e3_lr}
-\end{figure}
-
-En la Figura \ref{fig:dependencia_e10_lr} se muestra el gráfico de dependencia para la variable \say{e10}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e10.png}
-    \caption{Variable de Dependencia: e10}
-    \label{fig:dependencia_e10_lr}
-\end{figure}
-
-En la Figura \ref{fig:dependencia_e0_lr} se muestra el gráfico de dependencia para la variable \say{e0}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/e0.png}
-    \caption{Variable de Dependencia: e0}
-    \label{fig:dependencia_e0_lr}
-\end{figure}
-
-En la Figura \ref{fig:dependencia_fallidos_lr} se muestra el gráfico de dependencia para la variable \say{fallidos}:
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=4.0611in,height=2.6861in]{img/shap_lr/fallidos.png}
-    \caption{Variable de Dependencia: fallidos}
-    \label{fig:dependencia_fallidos_lr}
-\end{figure}
+En la Figura \ref{fig:dependencia_e0_lr} se muestra el gráfico de dependencia para la variable \say{e0}, mientras tanto en la figura \ref{fig:dependencia_fallidos_lr} se muestra el gráfico de dependencia para la variable \say{fallidos}
 
 Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
 
