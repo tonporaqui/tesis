@@ -37,7 +37,7 @@ el programa de estudio al que pertenecen los estudiantes (véase Tabla \ref{tab:
 
 \subsubsection{Variable Objetivo}
 
-Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable sol1 como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado.
+Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable \say{sol1} como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado.
 
 \subsubsection{Descripción del DataFrame}
 
@@ -66,7 +66,7 @@ En la tabla \ref{tab:descripcion_dataframe}, cada una de estas columnas tiene un
 
 \subsubsection{Estadísticas de la variable objetivo}
 
-En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas. En este contexto, hemos examinado la variable sol1 y recopilado estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la distribución y la tendencia central de la variable.
+En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas. En este contexto, hemos examinado la variable \say{sol1} y recopilado estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la distribución y la tendencia central de la variable.
 
 \begin{table}[H]
     \centering
@@ -89,7 +89,7 @@ En el análisis de datos, es importante comprender las características estadís
     \label{tab:estadistica_variable_sol1}%
 \end{table}%
 
-En la tabla \ref{tab:estadistica_variable_sol1}, la variable "sol1" presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
+En la tabla \ref{tab:estadistica_variable_sol1}, la variable \say{sol1} presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
 
 \subsubsection{Coeficiente de asimetría variable objetivo}
 
@@ -207,7 +207,7 @@ En la tabla \ref{tab:informacion_adicional}, se muestra la mediana de los datos,
 
 \subsubsection{Histograma con curva de densidad variable objetivo}
 
-El histograma con curva de densidad es una herramienta visual importante en el análisis de datos para comprender la distribución de los valores de la variable sol1.
+El histograma con curva de densidad es una herramienta visual importante en el análisis de datos para comprender la distribución de los valores de la variable \say{sol1}.
 
 \begin{figure}[H]
     \centering
@@ -219,7 +219,7 @@ El histograma con curva de densidad es una herramienta visual importante en el a
 
 La figura \ref{fig:hist_density} muestra este tipo de gráfico correspondiente a los datos analizados.
 
-En el eje Y se presentan los valores de densidad que van desde 0.00 hasta aproximadamente 0.35, representando la densidad de la variable sol1. Por otro lado, en el eje X se muestran los valores del 0 al 7, que representan las diferentes notas obtenidas en la columna sol1 (solemne 1).
+En el eje Y se presentan los valores de densidad que van desde 0.00 hasta aproximadamente 0.35, representando la densidad de la variable \say{sol1}. Por otro lado, en el eje X se muestran los valores del 0 al 7, que representan las diferentes notas obtenidas en la columna \say{sol1} (solemne 1).
 
 La mayor concentración de datos se encuentra alrededor del valor 0.35 en el eje Y, lo cual indica que la mayoría de las observaciones tienen una nota baja en sol1.
 
@@ -259,4 +259,4 @@ A continuación se muestra una tabla con los valores atípicos identificados med
     \label{tab:valores_atipicos}%
 \end{table}%
 
-Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. exitosos representa las respuestas correctas de la guía, fallidos indica la cantidad de errores para lograr los exitosos, programa al que pertenece. sol1 se refiere a la nota obtenida en la solemne, aprobado se refiere si la nota de solemen es mayor mayor o igual a 4 el alumno es aprobado(columna agregada por medio de script). Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.
+Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. exitosos representa las respuestas correctas de la guía, fallidos indica la cantidad de errores para lograr los exitosos, programa al que pertenece. \say{sol1} se refiere a la nota obtenida en la solemne, aprobado se refiere si la nota de solemen es mayor mayor o igual a 4 el alumno es aprobado(columna agregada por medio de script). Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.

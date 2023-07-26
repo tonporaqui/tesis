@@ -23,32 +23,23 @@ Para comprender mejor los gráficos que veremos a continuación, es necesario en
 
 En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
 
-% \begin{wrapfigure}{l}{0.6\textwidth}
-%     \includegraphics[width=0.9\linewidth]{img/shap_rf/shapForcePlot2.png} 
-%     \caption{Características Variables SHAP}
-%     \label{fig:caract_var_shap}
-%     \end{wrapfigure}
-
-
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=0.5\textwidth]{img/shap_rf/shapForcePlot2.png}
-        \caption{Características Variables SHAP}
-        \label{fig:caract_var_shap}
-    \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{img/shap_rf/shapForcePlot2.png}
+    \caption{Características Variables SHAP}
+    \label{fig:caract_var_shap}
+\end{figure}
 
 Al observar este podemos destacar lo siguiente:
 
 \begin{itemize}
     \item La variable \say{hito1}  muestra un alto \say{higher} contribuyendo bastante informacion con sus picos de dispercion.
-    \item La pregunta de la guía \say{e29} también es una variable de interés, ya que está correlacionada con la intención de resolver la guía.
+    \item La pregunta de la guía \say{e29} también es una variable de interés, siendo una de las preguntas de la guía con la mayor dispercion en sesgos \say{higher} y \say{lower}.
     \item Tanto las variables \say{exitosos} como \say{fallidos} también son variables interesantes de analizar, ya que están correlacionadas con la intención de resolver la guía.
-    \item La variable \say{fallidos} tienen un sesgo de informacion algo disperso, pero a su vez tambien es una variable bastante interesantes de revisar.
-    \item La variable \say{e42} tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
-    \item La variable \say{e3} tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
+    \item La variable \say{e42} como la variable \say{e3}, tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
 \end{itemize}
 
-Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig:caract_var_shap_mat}:
+Además, se presenta otro gráfico generado por matplotlib sobre la prediccion del modelo en la Figura \ref{fig:caract_var_shap_mat}:
 
 \begin{figure}[H]
     \centering
@@ -60,15 +51,15 @@ Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig
 Al revisar este gráfico, podemos obtener más detalles sobre las características y su importancia:
 
 \begin{itemize}
-    \item La sección \say{higher} muestra los \say{aprobado} o valores positivos que contribuyen a aumentar el valor de predicción. En este caso, \say{hito1} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{exitosos}, \say{e42}, \say{e29}, \say{e35}, \say{e3}, \say{fallidos}.
+    \item La sección \say{higher} muestra los valores positivos que contribuyen a aumentar el valor de predicción. En este caso, \say{hito1} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{exitosos}, \say{e42}, \say{e29}, \say{e35}, \say{e3}, \say{fallidos} para \say{aprobado}.
     \item La sección \say{lower} muestra los valores negativos o fallidos que contribuyen a disminuir el valor de predicción. En este caso, la variable \say{e18}, tiene una contribución negativa al valor de prediccióno que no aporta mucho.
     \item En el gráfico, la marca \say{f(x)} representa el valor de predicción del modelo, que en este caso es 0.81.
 \end{itemize}
 
-Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
+Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
 
 \begin{figure}[H]
-    
+
     \begin{subfigure}{0.5\textwidth}
         \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/hito1.png}
         \caption{hito1}
@@ -84,7 +75,7 @@ Además de los gráficos anteriores, se presentan los gráficos de dependencia p
     \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1}. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29}
+En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1} y refleja \say{fallidos} con su correlación. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29} con la variable \say{extisoso}.
 
 \begin{figure}[H]
 
@@ -103,7 +94,7 @@ En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia p
     \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos}
+En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos} con su variable de dependencia \say{fallidos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos} con su dependencia \say{exitosos}.
 
 \begin{figure}[H]
 
@@ -122,10 +113,11 @@ En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependenci
     \label{fig:image2}
 \end{figure}
 
-En la Figura \ref{fig:dependencia_e42} se muestra el gráfico de dependencia para la variable \say{e42}, mientras tanto en la figura \ref{fig:dependencia_e3} se muestra el gráfico de dependencia para la variable \say{e3}
-
+En la Figura \ref{fig:dependencia_e42} se muestra el gráfico de dependencia para la variable \say{e42} con su dependencia \say{hito1}, mientras tanto en la figura \ref{fig:dependencia_e3} se muestra el gráfico de dependencia para la variable \say{e3} con la variable \say{e32}.
 
 Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
+
+En resumen, podemos entender que el modelo predictivo RandomForestClassifier tiene una función f(x) con una precisión del 81\%. Además, al observar las variables con mayor impacto en la probabilidad de ser clasificado como \textit{aprobado} (denominadas \textit{higher}), encontramos: \textit{hito1}, \textit{exitosos}, \textit{e42}, \textit{e29}, \textit{e35}, \textit{e3} y \textit{fallidos}. Por otro lado, las variables con menor impacto en la probabilidad de ser clasificado como \textit{aprobado} se encuentran en el conjunto \textit{lower}, destacando la variable \textit{e18}.
 
 \subsubsection{Análisis del Mejor Modelo de Clasificación: LinearRegression}
 
@@ -150,10 +142,10 @@ En la Figura \ref{fig:caract_var_shap_lr1} se muestra el gráfico de caracterís
 Al observar este gráfico, podemos destacar lo siguiente:
 
 \begin{itemize}
-    \item \say{e29} tiene característica con una gama de valores en el conjunto de datos que contribuye significativamente a las predicciones del modelo.
-    \item \say{e42} también tiene característica que influencian de manera importante en las predicciones y que hay una muestra particular que se ve afectada de manera notable.
-    \item \say{e10} muestra punto azul y rojo mas sercanos. Esto indica que esta característica tiene una contribución más uniforme en las predicciones y que hay menos variabilidad en los valores de esta característica en el conjunto de datos.
-    \item \say{fallidos} muestra varios puntos que van desde azul hasta rojo. Esto indica que esta característica tiene una amplia gama de valores en el conjunto de datos y contribuye significativamente a las predicciones del modelo.
+    \item La pregunta de la guía \say{e29} tiene característica con una gama de valores en el conjunto de datos que contribuye significativamente a las predicciones del modelo.
+    \item Como tambien la pregunta de la guía \say{e42} tiene característica que influencian de manera importante en las predicciones y que hay una muestra particular que se ve afectada de manera notable.
+    \item Mientras tanto la pregunta de la guia \say{e10} muestra un sesgo azul y rojo mas sercanos. Esto indica que esta característica tiene una contribución más uniforme en las predicciones y que hay menos variabilidad en los valores de esta característica en el conjunto de datos.
+    \item \say{fallidos} muestra sesgos o puntos que van desde azul hasta rojo. Esto indica que esta característica tiene una amplia gama de valores en el conjunto de datos y contribuye significativamente a las predicciones del modelo.
 \end{itemize}
 
 Además, se presenta otro gráfico generado por matplotlib en la Figura \ref{fig:caract_var_shap_mat_lr2}:
@@ -178,7 +170,7 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables:
 
 \begin{figure}[H]
-    
+
     \begin{subfigure}{0.5\textwidth}
         \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_lr/e42.png}
         \caption{e42}
