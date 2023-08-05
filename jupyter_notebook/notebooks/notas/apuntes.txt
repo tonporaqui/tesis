@@ -200,3 +200,24 @@ mindmap
         Ajustar mejor modelo en datos de entrenamiento        
     Visualizar resultados
       Calcular y mostrar resultados del mejor modelo
+
+Portada
+Planteamiento del problema
+Justificacion
+Objetivo General
+Objetivo Especifico
+Metodologia
+  Enfoque de la investigacion.
+    Enfoque cuantitativo y cualitativos.
+  Diseño de investigacion
+    Metodologia KDD
+    Descripcion de la base de datos
+  Comparar algoritmos
+    K-Fold
+    Stratified K-Fold
+    Cross-Validation
+    Aplicacion
+      SHAP Y XAI
+      Analisis e interpretacion de resultados
+    Conclusiones y Recomendaciones
+Analisis resultados
