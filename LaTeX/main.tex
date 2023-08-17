@@ -27,6 +27,9 @@
 \usepackage{dirtytalk}
 \usepackage{verbatim}
 \usepackage{subcaption}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Other Settings
@@ -43,6 +46,38 @@
 \hypersetup{hidelinks}
 \addto\captionsspanish{
   \renewcommand{\listtablename}{Índice de Tablas}
+}
+\lstset{
+  language=Python,
+  basicstyle=\small\ttfamily,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=tb,
+  columns=fullflexible,
+  showstringspaces=false
+}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color[rgb]{0.95, 0.95, 0.95},  
+    commentstyle=\color[rgb]{0.13,0.55,0.13},
+    keywordstyle=\color[rgb]{0.25,0.13,0.89},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color[rgb]{0.7,0.13,0.13},
+    basicstyle=\ttfamily\small,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+\lstset{
+  literate={á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% Define some useful colors %%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -221,3 +221,29 @@ Metodologia
       Analisis e interpretacion de resultados
     Conclusiones y Recomendaciones
 Analisis resultados
+
+\usepackage{listings}
+
+
+esta es mi estrucutra de mi tesis para la seccion metodologia:
+metodologia
+enfoque de la investigacion
+diseño de investigacion
+analisis de la base de datos
+  definicion de la variable objetivo
+comparador de algoritmos
+  k-fold cross-validation y stratified k-fold cross-validation
+comparacion de metricas entre modelos de clasificacion
+  accuracy
+  precision
+  recall
+  f1 scrote
+medidas de rendimiento de modelos de Regresion
+  MSE (Mean Squared error) - Error Cuadratico medio
+  MAE (Mean Absolute Error) - Error Absoluto medio
+  R2 (Coeficiente de determinacion)
+Aplicacion de Xai y SHAP para el Mejor Modelo
+Analisis de causalidad con dowhy
+Conclusiones
+
+cual es la mejor estructura para la seccion Analisis de resultado?

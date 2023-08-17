@@ -37,7 +37,12 @@ el programa de estudio al que pertenecen los estudiantes (véase Tabla \ref{tab:
 
 \subsubsection{Variable Objetivo}
 
-Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable \say{sol1} como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado.
+Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable \say{sol1} como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado, la cual podemos observar en el listing \ref{lst:trat_varObjetivo}.
+
+\begin{lstlisting}[language=Python, caption=Tratamiento Variable Objetivo ,label=lst:trat_varObjetivo]
+    # creando columna aprobado y con la funcion set_in_aprobado_nota poblamos la nueva columna.
+    df["aprobado"] = df.apply(lambda x: functions.set_in_aprobado_nota(x["sol1"]), axis=1)
+\end{lstlisting}
 
 \subsubsection{Descripción del DataFrame}
 
@@ -132,7 +137,7 @@ El coeficiente de variación es una medida de la dispersión relativa de una var
 
 En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación calculado para los datos analizados. El coeficiente de variación es de aproximadamente 0.5027, lo que indica una alta dispersión relativa en relación con la media. Esto se confirma por el coeficiente de variación en porcentaje, que es del 50.28\%. Estos resultados destacan la variabilidad de los datos en el conjunto de datos analizado.
 
-\subsubsection{Obteniendo Amplitud variable variable objetivo}
+\subsubsection{Obteniendo Amplitud variable objetivo}
 
 La amplitud es una medida de la variabilidad o dispersión de los datos. Nos permite evaluar la diferencia entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos en el conjunto.
 
