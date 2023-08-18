@@ -1,30 +1,31 @@
-\subsection{Análisis SHAP}
+\subsection{Interpretación del Modelo con SHAP}
 
-Después de realizar la investigación y la comparación de algoritmos, se determinó que el mejor modelo de clasificación es RandomForestClassifier, y el mejor modelo de regresión es LinearRegression, como el objetivo de la investigacion es determina la aprobacion del ramo el modelo de clasifacion RandomForestClassifier es es el mas adecuardo para realizar nuestro analisis utilizando la variable objetivo \say{aprobado} que nos permitira indentificar si aprobo o reprobo la primera evaluacion y si la guia de apoyo tiene algun impacto significativo para la aprobacion. A continuación, analizaremos los resultados de este modelo.
+Tras una exhaustiva investigación y comparación de algoritmos, se determinó que el modelo de clasificación más adecuado es el RandomForestClassifier. Dado que el objetivo principal de la investigación es determinar la aprobación del curso, este modelo se seleccionó para analizar la variable objetivo \say{aprobado}. Esta variable nos permite identificar si un estudiante aprobó o reprobó la primera evaluación y evaluar el impacto de la guía de apoyo en dicha aprobación. A continuación, se detallan los resultados y análisis de este modelo.
 
-\subsubsection{Análisis del Mejor Modelo de Clasificación: RandomForestClassifier}
+\subsubsection{Preparación y Selección de Características}
+
+Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la columna \say{aprobado} como referencia para el eje Y. Esta columna es binaria, derivada de \say{sol1}, donde 1 indica aprobación con una nota mayor o igual a 4. El comportamiento de las demás columnas se analizará en relación con este eje.
 
 
-Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la columna \say{aprobado} (binaria, obtenida de \say{sol1}, donde 1 significa aprobado con una nota mayor o igual a 4) como referencia para el eje Y. Analizaremos el comportamiento de las demás columnas en relación con dicho eje X.
-
-La selección de características y variable objetivo se presenta a continuacion:
-
-\begin{lstlisting}[language=Python, caption=Selección de características y variable objetivo RandomForestClassifier, label=lst:seleccion_caracteristicasRFC]
+\begin{lstlisting}[language=Python, caption=Selección de características y variable objetivo para RandomForestClassifier, label=lst:seleccion_caracteristicasRFC]
     y = df["aprobado"]
     X = df[
         ['hito1', 'hito2', 'exitosos', 'fallidos', 'e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
     ]
 \end{lstlisting}
 
-Se dividen los datos en un conjunto de entrenamiento (80\% de los datos) y un conjunto de prueba (20\% de los datos), y almacena esos conjuntos en las variables correspondientes. Esto es útil para evaluar el rendimiento del modelo en datos no vistos durante el entrenamiento.
+\subsubsection{División de Datos y Definición del Modelo}
 
-\begin{lstlisting}[language=Python, caption=Division datos de entrenamiento, label=lst:train_test_split_RFC]
+Para evaluar el rendimiento del modelo, se dividen los datos en conjuntos de entrenamiento (80\%) y prueba (20\%).
+
+\begin{lstlisting}[language=Python, caption=División de datos para entrenamiento y prueba, label=lst:train_test_split_RFC]
     X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2,random_state= 1502)
 \end{lstlisting}
 
-Se realiza del modelo de clasificacion segun la mejor definicion de sus opciones de configuracion con el que se obtuvo el mejor resultado en la comparacion de algoritmos.
+El modelo RandomForestClassifier se define según la mejor configuración obtenida en la comparación de algoritmos.
 
-\begin{lstlisting}[language=Python, caption=Deficion de modelo RandomForestRegressor, label=lst:def_RFC]
+
+\begin{lstlisting}[language=Python, caption=Definición del modelo RandomForestRegressor, label=lst:def_RFC]
     model = RandomForestRegressor( 
         max_depth=10, 
         min_samples_split=10, 
@@ -34,7 +35,9 @@ Se realiza del modelo de clasificacion segun la mejor definicion de sus opciones
     )
 \end{lstlisting}
 
-Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento
+\subsubsection{Validación Cruzada y Evaluación del Modelo}
+
+Para obtener una evaluación robusta del modelo, se utiliza la técnica de Stratified K-Fold Cross-Validation.
 
 \begin{lstlisting}[language=Python, caption=Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:skfold_train]
     # Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento
@@ -79,9 +82,9 @@ Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento
 \end{lstlisting}
 
 
-los resultados obtenidos son los siguientes:
+Los resultados obtenidos en la validación cruzada proporcionan una visión clara del rendimiento del modelo en diferentes subconjuntos de datos. Estos resultados son esenciales para garantizar que el modelo no esté sobreajustado y pueda generalizar bien en datos no vistos.
 
-\begin{lstlisting}[language=Python, caption=Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:skfold_train]
+\begin{lstlisting}[language=Python, caption=Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:res_skfold_train]
     Fold - Error cuadrático medio: 0.22338734811732283
 Fold - Coeficiente de determinación (R2): 0.0994393219751517
 
@@ -116,32 +119,37 @@ Promedio del error cuadrático medio en validación cruzada en %: 21.73574205551
 
 Si el RMSE es 0, significa que el modelo predice perfectamente los valores reales. Cuanto más cerca esté el MSE o RMSE de cero, mejor será el rendimiento del modelo en términos de la diferencia entre las predicciones y los valores reales.
 
-Realizar la predicción con SHAP utilizando el conjunto de prueba
+\subsubsection{Análisis SHAP}
 
-\begin{lstlisting}[language=Python, caption=Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:skfold_train]
+El análisis SHAP (SHapley Additive exPlanations) es una técnica que permite interpretar las predicciones de modelos complejos. En este caso, se utiliza para entender cómo cada característica influye en las predicciones del modelo RandomForestClassifier.
+
+\begin{lstlisting}[language=Python, caption=Predicción con SHAP utilizando el conjunto de prueba, label=lst:shap_analysis]
     # Realizar la predicción con SHAP utilizando el conjunto de prueba (X_test)
     explainer = shap.Explainer(model)
     shap_values = explainer.shap_values(X_test)
 \end{lstlisting}
 
-A continuacion revisaremos los resultados obtenidos revisando los graficos SHAP.
 
-Para comprender mejor los gráficos que veremos a continuación, es necesario entender lo siguiente:
+Para comprender los gráficos SHAP, es esencial entender que:
 
 \begin{itemize}
-    \item El término \say{higher} se refiere a las instancias que tienen valores más altos en comparación con otras instancias, y tienen un mayor impacto en la probabilidad de ser \say{aprobado}.
-    \item El término \say{lower} se refiere a las instancias con valores más bajos de la característica, que tienen un menor impacto en la probabilidad de ser \say{aprobado}.
+    \item \say{Higher}: Refiere a instancias con valores más altos de una característica, que tienen un impacto positivo en la predicción.
+    \item \say{Lower}: Indica instancias con valores más bajos de una característica, que tienen un impacto negativo en la predicción.
 \end{itemize}
 
-Viendo los graficos de caracteristicas
+\subsubsection{Visualización de Resultados con Gráficos SHAP}
 
-\begin{lstlisting}[language=Python, caption=Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:skfold_train]
-    # Mostrar Grafico de Caracteristicas
-    shap.summary_plot(shap_values, X_test)
-\end{lstlisting}
+Los gráficos SHAP proporcionan una visualización intuitiva de cómo cada característica influye en las predicciones del modelo. A continuación, se presentan varios gráficos que muestran la importancia y el impacto de las características en las predicciones.
+
+
 
 
 En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
+
+\begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
+    # Mostrar Grafico de Caracteristicas
+    shap.summary_plot(shap_values, X_test)
+\end{lstlisting}
 
 \begin{figure}[H]
     \centering
@@ -161,6 +169,11 @@ Al observar este podemos destacar lo siguiente:
 
 Además, se presenta otro gráfico generado por matplotlib sobre la prediccion del modelo en la Figura \ref{fig:caract_var_shap_mat}:
 
+\begin{lstlisting}[language=Python, caption=grafico matplotib, label=lst:graf_matplotib]
+    # Crear la figura de matplotlib
+    shap.force_plot(explainer.expected_value, shap_values[0,:], X_test.iloc[0,:], matplotlib=True)
+\end{lstlisting}
+
 \begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{img/shap_rf/shapForcePlot.png}
@@ -177,6 +190,38 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
 \end{itemize}
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
+
+\begin{lstlisting}[language=Python, caption=Grafico de dependencia hito1  e29, label=lst:grafDepHito1e29]
+    # Obtener el índice de la variable "hito1" en tu DataFrame
+    indice = X.columns.get_loc("hito1")
+    
+    # Crear el gráfico de dependencia para "hito1"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+    
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("hito1")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+    
+    # Mostrar el gráfico
+    plt.show()
+
+    # Obtener el índice de la variable "e29" en tu DataFrame
+    indice = X.columns.get_loc("e29")
+
+    # Crear el gráfico de dependencia para "exitosos"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("e29")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+
+    # Mostrar el gráfico
+    plt.show()
+\end{lstlisting}
 
 \begin{figure}[H]
 
@@ -197,6 +242,38 @@ Además de los gráficos anteriores, se presentan los gráficos de dependencia p
 
 En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1} y refleja \say{fallidos} con su correlación. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29} con la variable \say{extisoso}.
 
+\begin{lstlisting}[language=Python, caption=Grafico de dependencia exitosos  fallidos, label=lst:grafDepExitososFallidos]
+    # Obtener el índice de la variable "exitosos" en tu DataFrame
+    indice = X.columns.get_loc("exitosos")
+    
+    # Crear el gráfico de dependencia para "exitosos"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+    
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("Exitosos")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+    
+    # Mostrar el gráfico
+    plt.show()
+
+    # Obtener el índice de la variable "fallidos" en tu DataFrame
+    indice = X.columns.get_loc("fallidos")
+    
+    # Crear el gráfico de dependencia para "exitosos"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+    
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("fallidos")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+    
+    # Mostrar el gráfico
+    plt.show()
+\end{lstlisting}
+
 \begin{figure}[H]
 
     \begin{subfigure}{0.5\textwidth}
@@ -215,6 +292,38 @@ En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia p
 \end{figure}
 
 En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos} con su variable de dependencia \say{fallidos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos} con su dependencia \say{exitosos}.
+
+\begin{lstlisting}[language=Python, caption=Grafico de dependencia e42 e3, label=lst:grafDepe42e3]
+    # Obtener el índice de la variable "e42" en tu DataFrame
+    indice = X.columns.get_loc("e42")
+    
+    # Crear el gráfico de dependencia para "e42"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+    
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("e42")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+    
+    # Mostrar el gráfico
+    plt.show()
+
+    # Obtener el índice de la variable "e3" en tu DataFrame
+    indice = X.columns.get_loc("e3")
+    
+    # Crear el gráfico de dependencia para "e3"
+    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+    
+    # Personalizar la apariencia del gráfico
+    plt.xlabel("e3")
+    plt.ylabel("Valores SHAP")
+    plt.title("Gráfico de Dependencia")
+    plt.tight_layout()
+    
+    # Mostrar el gráfico
+    plt.show()
+\end{lstlisting}
 
 \begin{figure}[H]
 
@@ -237,9 +346,14 @@ En la Figura \ref{fig:dependencia_e42} se muestra el gráfico de dependencia par
 
 Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
 
-En resumen, podemos entender que el modelo predictivo RandomForestClassifier tiene una función f(x) con una precisión del 81\%. Además, al observar las variables con mayor impacto en la probabilidad de ser clasificado como \textit{aprobado} (denominadas \textit{higher}), encontramos: \textit{hito1}, \textit{exitosos}, \textit{e42}, \textit{e29}, \textit{e35}, \textit{e3} y \textit{fallidos}. Por otro lado, las variables con menor impacto en la probabilidad de ser clasificado como \textit{aprobado} se encuentran en el conjunto \textit{lower}, destacando la variable \textit{e18}.
+\subsubsection{Reflexiones Finales del Análisis SHAP}
 
-En resumen, el análisis SHAP nos ha permitido identificar las características y variables que más influyen en los modelos de clasificación. Esto nos brinda una mejor comprensión de los factores que determinan la resolucion de la guia y la nota obtenida en la prueba de conocimientos.
+A través del análisis SHAP, hemos obtenido una visión detallada de cómo las distintas características influyen en las predicciones del modelo RandomForestClassifier. Es evidente que ciertas variables tienen un impacto más significativo en la probabilidad de que un estudiante sea clasificado como \textit{aprobado}.
 
+La variable \say{hito1}, como se observa en la Figura \ref{fig:caract_var_shap} y \ref{fig:dependencia_hito1}, tiene una contribución positiva considerable, lo que indica que es un factor crucial para determinar la aprobación. Las variables \say{exitosos} y \say{e42}, junto con \say{hito1}, son de particular interés, ya que muestran una fuerte correlación con la aprobación, como se refleja en las Figuras \ref{fig:caract_var_shap_mat}, \ref{fig:dependencia_exitosos} y \ref{fig:dependencia_e42}.
 
+Por otro lado, la variable \say{e18}, que se encuentra en el conjunto \textit{lower}, parece tener una contribución negativa o menor al valor de predicción, lo que sugiere que puede no ser tan relevante para la aprobación.
 
+Los gráficos de dependencia, especialmente las Figuras \ref{fig:dependencia_e29}, \ref{fig:dependencia_fallidos} y \ref{fig:dependencia_e3}, ofrecen una perspectiva más profunda sobre cómo ciertas variables interactúan entre sí y su relación con la probabilidad de aprobación.
+
+En resumen, el análisis SHAP ha sido instrumental en desentrañar la importancia relativa de las características en nuestro modelo. Estos insights no solo nos permiten entender mejor el comportamiento del modelo, sino que también ofrecen una base sólida para futuras intervenciones educativas, con el objetivo de mejorar las tasas de aprobación y la eficacia de las guías de estudio. Es esencial que, al diseñar estrategias educativas, se consideren estos factores influyentes para garantizar un impacto positivo en el rendimiento de los estudiantes.
