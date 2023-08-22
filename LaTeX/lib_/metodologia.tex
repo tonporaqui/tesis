@@ -15,6 +15,23 @@ Se empleará la metodología KDD (Knowledge Discovery in Databases) para llevar 
   \label{fig:flujo_kdd}
 \end{figure}
 
+A continuación, se describen las etapas del proceso KDD y cómo se adaptan a esta investigación:
+
+\begin{enumerate}
+  \item \textbf{Selección:} En esta etapa, se determinan y seleccionan los conjuntos de datos relevantes para la investigación. En el contexto de esta tesis, se seleccionarán los datos relacionados con el rendimiento académico y la resolución de guías de programación.
+  
+  \item \textbf{Preprocesamiento:} Se limpian y transforman los datos para eliminar cualquier inconsistencia o error. Para esta tesis, se realizará una limpieza de los datos para garantizar que no haya valores faltantes o atípicos que puedan afectar el análisis.
+  
+  \item \textbf{Transformación:} Los datos se transforman en un formato adecuado para el análisis. En el caso de esta investigación, se podrían realizar transformaciones como la normalización o la codificación de variables categóricas.
+  
+  \item \textbf{Minería de datos:} Se aplican técnicas de análisis para extraer patrones y conocimientos de los datos. En esta tesis, se emplearán las técnicas SHAP y DoWhy. SHAP se utilizará para analizar la importancia de las características y su relación con el rendimiento académico, mientras que DoWhy se empleará para la inferencia causal, permitiendo entender las relaciones causales subyacentes en los datos.
+  
+  \item \textbf{Interpretación/Evaluación:} Los resultados obtenidos en la etapa anterior se interpretan y evalúan en función de su relevancia y utilidad. En el contexto de esta investigación, se discutirán los hallazgos y se evaluará su significado en relación con la pregunta de investigación planteada.
+\end{enumerate}
+
+Estas etapas garantizan un enfoque sistemático y riguroso para el análisis de datos, asegurando que los resultados obtenidos sean relevantes y confiables para la investigación.
+
+
 \subsection{Análisis de la base de datos}
 
 Se utiliza un conjunto de datos que registra a los estudiantes que tomaron el curso de Introducción a la Programación en la Universidad Andrés Bello durante el año 2021. Estos datos incluyen información sobre el rendimiento de los estudiantes en la resolución de la guía de apoyo para la primera evaluación.
@@ -102,7 +119,11 @@ El R2 es una medida de qué tan bien se ajustan las predicciones del modelo a lo
 
 \subsection{Aplicación de XAI y SHAP para el Mejor Modelo}
 
-Las técnicas de XAI y SHAP se aplicarán al modelo que haya demostrado el mejor rendimiento en el comparador de algoritmos. Estas técnicas proporcionarán insights sobre qué características son las más influyentes en las predicciones del modelo y cómo estas características afectan las decisiones del modelo.
+Las técnicas de XAI (Explainable Artificial Intelligence) y SHAP (Shapley Additive exPlanations) se aplicarán al modelo que haya demostrado el mejor rendimiento en el comparador de algoritmos. Estas técnicas proporcionarán insights sobre qué características son las más influyentes en las predicciones del modelo y cómo estas características afectan las decisiones del modelo.
+
+\textbf{XAI (Explainable Artificial Intelligence):} XAI se refiere a métodos y técnicas en el dominio de la inteligencia artificial (IA) que son interpretables y comprensibles por seres humanos. La idea es que un ser humano pueda entender el proceso completo de toma de decisiones de un modelo de IA. Esto es esencial para construir la confianza y permitir a los humanos entender, aprobar o rechazar las decisiones tomadas por los algoritmos de IA.
+
+\textbf{SHAP (Shapley Additive exPlanations):} SHAP es una técnica que se basa en la teoría de juegos para explicar la salida de cualquier modelo de aprendizaje automático. Proporciona una medida de la importancia de cada característica en la predicción para una observación individual en el contexto de un modelo. Los valores SHAP interpretan el impacto de tener una característica en particular en comparación con la expectativa del modelo sobre todas las posibles combinaciones de características.
 
 \begin{figure}[H]
   \centering
@@ -111,16 +132,26 @@ Las técnicas de XAI y SHAP se aplicarán al modelo que haya demostrado el mejor
   \label{fig:xai_shap}
 \end{figure}
 
+
 \subsection{Análisis de Causalidad con DoWhy}
 
-Con los resultados de la predicción del mejor modelo, se realizará un análisis de causalidad utilizando la biblioteca DoWhy. Esta herramienta permitirá modelar y evaluar la causalidad entre la resolución de la guía de programación y el éxito académico. Se identificarán variables de confusión potenciales y se aplicarán técnicas como el matching de propensión para controlar estos factores y obtener estimaciones causales más precisas.
+El análisis de causalidad va más allá de la simple correlación, buscando identificar relaciones directas de causa y efecto entre variables. En el ámbito de la minería de datos y el aprendizaje automático, esta distinción es crucial para tomar decisiones informadas basadas en los resultados de un modelo.
+
+\textbf{DoWhy:} DoWhy es una biblioteca de Python que se centra en la inferencia causal. Su objetivo es no solo proporcionar herramientas para realizar análisis causal, sino también guiar al usuario a través del proceso lógico y empírico de inferencia causal. Se basa en la idea de que la inferencia causal requiere dos pasos: primero, modelar el proceso generativo de los datos y, segundo, utilizar técnicas estadísticas para identificar efectos causales a partir de datos observados.
+
+En el contexto de esta investigación, DoWhy se utilizará para analizar la relación causal entre la resolución de la guía de programación y el éxito académico. Aunque puede haber una correlación observada entre estos dos factores, es esencial determinar si la resolución de la guía tiene un efecto directo en el rendimiento académico o si hay otras variables no observadas que puedan estar influyendo en ambos.
+
+Para llevar a cabo este análisis, se identificarán variables de confusión potenciales que puedan afectar tanto la resolución de la guía como el rendimiento académico. Una vez identificadas, se aplicarán técnicas como el matching de propensión para controlar estos factores y obtener estimaciones causales más precisas. El matching de propensión es una técnica que busca emparejar individuos con características similares pero con diferentes tratamientos (en este caso, resolver o no la guía) para comparar sus resultados y determinar el efecto causal del tratamiento.
 
 \begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{img/dowhy.jpg}
-  \caption{Flujo DoHwy libreria Python}
+  \caption{Flujo DoWhy librería Python}
   \label{fig:dowhy_lib}
 \end{figure}
+
+En resumen, el análisis de causalidad con DoWhy proporcionará insights valiosos sobre la verdadera relación entre la resolución de guías de programación y el éxito académico, permitiendo a los educadores y responsables de la toma de decisiones actuar con base en evidencia causal y no solo en correlaciones observadas.
+
 
 \subsection{Conclusiones}
 
