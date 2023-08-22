@@ -9,24 +9,17 @@ A continuación, se presenta la descricion de la base de datos.
 \begin{table}[H]
     \centering
     \caption{Descripción de variables}
-    \begin{tabular}{|l|p{0.6\linewidth}|}
-        \hline
-        \textbf{Variable}        & \textbf{Descripción}   \\
-        \hline
-        sol1                     & Indica la calificación obtenida en la primera evaluación, las calificacion parte de la nota 0 hasta la maxima 7 \\
-        \hline
-        exitosos                 & Indica la cantidad de preguntas respondidas correctamente en la guía, a medida que se van respondiendo correctamente esta va generando un resumen de de total respondidas exitosamente \\
-        \hline
-        fallidos                 & Indica la cantidad de intentos realizados para resolver preguntas de la guia \\
-        \hline
-        hito1                    & Son las espectativas a cumplir del aprendizaje del curso, se construye por medio de conjuntos de preguntas. \\
-        \hline
-        hito2                    & Son las espectativas a cumplir del aprendizaje del curso, se construye por medio de conjuntos de preguntas. \\
-        \hline
-        programa                 & Indica al programa de estudio. \\
-        \hline
-        Columnas e0 hasta la e52 & Son representacion de los resultados de las preguntas de la guia este es binario, 1 equivale a respondida exitosamente y cero no respondida.  \\
-        \hline
+    \begin{tabular}{lp{0.6\linewidth}}
+        \toprule
+        \textbf{Variable} & \textbf{Descripción} \\
+        \midrule
+        sol1 & Calificación en la primera evaluación (0-7) \\
+        exitosos & Número de preguntas correctas en la guía \\
+        fallidos & Intentos realizados en la guía \\
+        hito1 hito2 & Expectativas de aprendizaje del curso (conjunto de preguntas) \\
+        programa & Programa de estudio \\
+        Columnas e0 hasta la e52 & Resultados de la guía (1: correcto, 0: incorrecto) \\
+        \bottomrule
     \end{tabular}
     \label{tab:variables}
 \end{table}
