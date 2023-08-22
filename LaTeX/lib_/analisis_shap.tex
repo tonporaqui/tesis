@@ -10,9 +10,9 @@ Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la 
 \begin{lstlisting}[language=Python, caption=Selección de características y variable objetivo para RandomForestClassifier, label=lst:seleccion_caracteristicasRFC]
     y = df["aprobado"]
     X = df[
-        ['hito1', 'hito2', 'exitosos', 'fallidos', 'e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
+    ['hito1', 'hito2', 'exitosos', 'fallidos','e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
     ]
-\end{lstlisting}
+    \end{lstlisting}
 
 \subsubsection{División de Datos y Definición del Modelo}
 
@@ -141,9 +141,6 @@ Para comprender los gráficos SHAP, es esencial entender que:
 
 Los gráficos SHAP proporcionan una visualización intuitiva de cómo cada característica influye en las predicciones del modelo. A continuación, se presentan varios gráficos que muestran la importancia y el impacto de las características en las predicciones.
 
-
-
-
 En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
 
 \begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
@@ -158,13 +155,40 @@ En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de característica
     \label{fig:caract_var_shap}
 \end{figure}
 
+
+Para obtener una representación visual de la importancia numérica de cada característica, se implementó el siguiente código. Este código calcula y muestra la importancia relativa de cada característica, que posteriormente se visualiza en un gráfico:
+
+\begin{lstlisting}[language=Python, caption=Codigo de calculo valores SHAP, label=lst:cod_calvaloreshap]
+    # Calcula la importancia media absoluta de los valores SHAP para cada característica
+    mean_abs_shap_values = np.abs(shap_values).mean(axis=0)
+    
+    # Calcula la importancia relativa como un porcentaje
+    relative_importance = mean_abs_shap_values / np.sum(mean_abs_shap_values) * 100
+    
+    # Ordena las características por importancia
+    sorted_indices = np.argsort(relative_importance)[::-1]
+    features_sorted = X_train.columns[sorted_indices]
+    importance_sorted = relative_importance[sorted_indices]
+    
+    # Imprime la importancia relativa de cada característica
+    for feature, importance in zip(features_sorted, importance_sorted):
+        print(f"{feature}: {importance:.2f}%")
+\end{lstlisting}
+
+En la Figura \ref{fig:importancia_relativa_shap} se muestra la importancia relativa de las características según SHAP. Este gráfico destaca las características más influyentes en las predicciones del modelo.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{img/shap_rf/importancia_relativa_de_las_caracterticas_segun_shap.png}
+    \caption{Importancia Relativa de las Características según SHAP}
+    \label{fig:importancia_relativa_shap}
+\end{figure}
+
 Al observar este podemos destacar lo siguiente:
 
 \begin{itemize}
-    \item La variable \say{hito1}  muestra un alto \say{higher} contribuyendo bastante informacion con sus picos de dispercion.
-    \item La pregunta de la guía \say{e29} también es una variable de interés, siendo una de las preguntas de la guía con la mayor dispercion en sesgos \say{higher} y \say{lower}.
-    \item Tanto las variables \say{exitosos} como \say{fallidos} también son variables interesantes de analizar, ya que están correlacionadas con la intención de resolver la guía.
-    \item La variable \say{e42} como la variable \say{e3}, tiene un un conjunto de datos bastante marcado entre  sus colores \say{azul} y \say{rojo}.
+    \item Las características \say{hito1}, \say{e29}, \say{exitosos} y \say{fallidos} son las más influyentes en las predicciones del modelo, con hito1 siendo la más importante.
+    \item Las características con un porcentaje de importancia de 0.00\% no tienen un impacto significativo en las predicciones del modelo y podrían considerarse para ser excluidas en futuros análisis.
 \end{itemize}
 
 Además, se presenta otro gráfico generado por matplotlib sobre la prediccion del modelo en la Figura \ref{fig:caract_var_shap_mat}:
@@ -340,14 +364,13 @@ En la Figura \ref{fig:dependencia_e42} se muestra el gráfico de dependencia par
 
 Estos gráficos de dependencia representan la relación entre los valores de las variables mencionadas y los valores de Shapley en el modelo. Proporcionan una visualización de cómo estas variables influyen en las predicciones del modelo y ayudan a comprender su importancia relativa.
 
+
 \subsubsection{Reflexiones Finales del Análisis SHAP}
 
-A través del análisis SHAP, hemos obtenido una visión detallada de cómo las distintas características influyen en las predicciones del modelo RandomForestClassifier. Es evidente que ciertas variables tienen un impacto más significativo en la probabilidad de que un estudiante sea clasificado como \textit{aprobado}.
+A través del análisis SHAP, hemos obtenido una visión detallada de cómo las distintas características influyen en las predicciones del modelo RandomForestClassifier. Es evidente que ciertas variables tienen un impacto más significativo en la probabilidad de que un estudiante sea clasificado como \textit{\say{aprobado}}.
 
-La variable \say{hito1}, como se observa en la Figura \ref{fig:caract_var_shap} y \ref{fig:dependencia_hito1}, tiene una contribución positiva considerable, lo que indica que es un factor crucial para determinar la aprobación. Las variables \say{exitosos} y \say{e42}, junto con \say{hito1}, son de particular interés, ya que muestran una fuerte correlación con la aprobación, como se refleja en las Figuras \ref{fig:caract_var_shap_mat}, \ref{fig:dependencia_exitosos} y \ref{fig:dependencia_e42}.
+La variable \say{hito1}, como se observa en la Figura \ref{fig:importancia_relativa_shap}, tiene una contribución positiva considerable, lo que indica que es un factor crucial para determinar la aprobación. Las variables \say{exitosos} y \say{fallidos} también son esenciales, ya que están correlacionadas con la intención de resolver la guía.
 
-Por otro lado, la variable \say{e18}, que se encuentra en el conjunto \textit{lower}, parece tener una contribución negativa o menor al valor de predicción, lo que sugiere que puede no ser tan relevante para la aprobación.
-
-Los gráficos de dependencia, especialmente las Figuras \ref{fig:dependencia_e29}, \ref{fig:dependencia_fallidos} y \ref{fig:dependencia_e3}, ofrecen una perspectiva más profunda sobre cómo ciertas variables interactúan entre sí y su relación con la probabilidad de aprobación.
+Los gráficos de dependencia ofrecen una perspectiva más profunda sobre cómo ciertas variables interactúan entre sí y su relación con la probabilidad de aprobación.
 
 En resumen, el análisis SHAP ha sido instrumental en desentrañar la importancia relativa de las características en nuestro modelo. Estos insights no solo nos permiten entender mejor el comportamiento del modelo, sino que también ofrecen una base sólida para futuras intervenciones educativas, con el objetivo de mejorar las tasas de aprobación y la eficacia de las guías de estudio. Es esencial que, al diseñar estrategias educativas, se consideren estos factores influyentes para garantizar un impacto positivo en el rendimiento de los estudiantes.
