@@ -130,12 +130,18 @@ El análisis SHAP (SHapley Additive exPlanations) es una técnica que permite in
 \end{lstlisting}
 
 
-Para comprender los gráficos SHAP, es esencial entender que:
+Para comprender los gráficos SHAP y su relevancia en la interpretación de modelos de aprendizaje automático, es esencial entender algunos términos clave. Estos términos nos ayudan a discernir cómo ciertas características influyen en las predicciones del modelo:
 
 \begin{itemize}
     \item \say{Higher}: Refiere a instancias con valores más altos de una característica, que tienen un impacto positivo en la predicción.
+    
     \item \say{Lower}: Indica instancias con valores más bajos de una característica, que tienen un impacto negativo en la predicción.
+    
+    \item \say{Feature Value}: Representa el valor real de una característica para una instancia específica. En el contexto de los gráficos SHAP, nos permite entender cómo se compara el valor de una característica con otros valores en el conjunto de datos.
+    
+    \item \say{Shap Value}: Es una medida que indica cuánto cambia la predicción del modelo debido a la presencia de una característica específica. Un valor SHAP positivo indica que la característica aumenta la predicción, mientras que un valor negativo indica que la disminuye.
 \end{itemize}
+
 
 \subsubsection{Visualización de Resultados con Gráficos SHAP}
 
@@ -156,40 +162,39 @@ En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de característica
 \end{figure}
 
 
-Para obtener una representación visual de la importancia numérica de cada característica, se implementó el siguiente código. Este código calcula y muestra la importancia relativa de cada característica, que posteriormente se visualiza en un gráfico:
+Para visualizar la importancia numérica de cada característica de manera gráfica, se puede recurrir a la representación proporcionada por SHAP. Esta visualización facilita el análisis del impacto de cada característica en las predicciones del modelo:
 
-\begin{lstlisting}[language=Python, caption=Codigo de calculo valores SHAP, label=lst:cod_calvaloreshap]
-    # Calcula la importancia media absoluta de los valores SHAP para cada característica
-    mean_abs_shap_values = np.abs(shap_values).mean(axis=0)
-    
-    # Calcula la importancia relativa como un porcentaje
-    relative_importance = mean_abs_shap_values / np.sum(mean_abs_shap_values) * 100
-    
-    # Ordena las características por importancia
-    sorted_indices = np.argsort(relative_importance)[::-1]
-    features_sorted = X_train.columns[sorted_indices]
-    importance_sorted = relative_importance[sorted_indices]
-    
-    # Imprime la importancia relativa de cada característica
-    for feature, importance in zip(features_sorted, importance_sorted):
-        print(f"{feature}: {importance:.2f}%")
+\begin{lstlisting}[language=Python, caption=Análisis de Importancia de Características, label=lst:cod_calvaloreshap]
+# Análisis de Importancia de Características
+shap_values_tree = explainer(X_test[:100])
+shap.plots.bar(shap_values_tree[0])
 \end{lstlisting}
 
-En la Figura \ref{fig:importancia_relativa_shap} se muestra la importancia relativa de las características según SHAP. Este gráfico destaca las características más influyentes en las predicciones del modelo.
+La Figura \ref{fig:importancia_relativa_shap} ilustra la importancia relativa de las características según SHAP, poniendo de relieve las características con mayor influencia en las predicciones del modelo.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{img/shap_rf/importancia_relativa_de_las_caracterticas_segun_shap.png}
-    \caption{Importancia Relativa de las Características según SHAP}
+    \includegraphics[width=0.8\textwidth]{img/shap_rf/ImportanciaDeCaracteristicasShap.png}
+    \caption{Importancia de las Características según SHAP}
     \label{fig:importancia_relativa_shap}
 \end{figure}
 
-Al observar este podemos destacar lo siguiente:
+Para interpretar el gráfico \ref{fig:importancia_relativa_shap}, consideremos dos ejemplos:
 
+\textbf{hito1 con +0.09 (color rojo y barra hacia la derecha)}:
 \begin{itemize}
-    \item Las características \say{hito1}, \say{e29}, \say{exitosos} y \say{fallidos} son las más influyentes en las predicciones del modelo, con hito1 siendo la más importante.
-    \item Las características con un porcentaje de importancia de 0.00\% no tienen un impacto significativo en las predicciones del modelo y podrían considerarse para ser excluidas en futuros análisis.
+    \item \textbf{Dirección}: La barra orientada hacia la derecha sugiere que, en promedio, esta característica incrementa el valor de la predicción.
+    \item \textbf{Color}: El tono rojo indica un impacto positivo en la predicción, lo que significa que valores más altos de "hito1" tienden a elevar la predicción.
+    \item \textbf{Magnitud}: El valor +0.09 indica que, en promedio, un incremento en "hito1" eleva la predicción en 0.09 unidades (según la unidad de la variable objetivo).
 \end{itemize}
+
+\textbf{e18 con -0.02 (color azul y barra hacia la izquierda)}:
+\begin{itemize}
+    \item \textbf{Dirección}: La barra orientada hacia la izquierda sugiere que, en promedio, esta característica reduce el valor de la predicción.
+    \item \textbf{Color}: El tono azul indica un impacto negativo en la predicción, lo que significa que valores más altos de "e18" tienden a reducir la predicción.
+    \item \textbf{Magnitud}: El valor -0.02 señala que, en promedio, un incremento en "e18" reduce la predicción en 0.02 unidades.
+\end{itemize}
+
 
 Además, se presenta otro gráfico generado por matplotlib sobre la prediccion del modelo en la Figura \ref{fig:caract_var_shap_mat}:
 

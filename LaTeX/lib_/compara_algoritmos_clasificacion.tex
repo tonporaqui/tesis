@@ -154,7 +154,7 @@ Estos resultados proporcionan una medida cuantitativa del rendimiento del modelo
 
 \subsubsection{Comparación Gráfica de Métricas de Rendimiento en Modelos de Clasificación (Conjunto de Entrenamiento)}
 
-Los resultados obtenidos para el conjunto de entrenamiento se presentan a continuación. En la Figura \ref{fig:metricas_clasificacion}, se muestran las métricas de rendimiento de varios modelos de clasificación evaluados.
+A continuación, se presentan los resultados obtenidos para el conjunto de entrenamiento. La Figura \ref{fig:metricas_clasificacion} ilustra las métricas de rendimiento de diversos modelos de clasificación evaluados.
 
 \begin{figure}[H]
     \centering
@@ -163,7 +163,25 @@ Los resultados obtenidos para el conjunto de entrenamiento se presentan a contin
     \label{fig:metricas_clasificacion}
 \end{figure}
 
-De acuerdo con la figura, es evidente que el modelo RandomForestClassifier supera a los demás modelos en términos de F1 Score, recall, precisión y exactitud. Específicamente, este modelo alcanza un F1 Score del 62.53\%, un recall del 58.90\%, una precisión del 66.54\% y una exactitud del 67.61\%.
+La figura destaca que el modelo RandomForestClassifier sobresale en comparación con los otros modelos en todas las métricas evaluadas. En particular, este modelo logra un F1 Score de 62.53\%, un recall de 58.90\%, una precisión de 67.61\% y una exactitud de 66.54\%.
+
+Para una visión más detallada y estructurada de estos resultados, se presenta la siguiente tabla:
+
+\begin{table}[H]
+    \centering
+    \caption{Comparación de Métricas de Rendimiento para Modelos de Clasificación}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Modelo} & \textbf{Accuracy} & \textbf{Precision} & \textbf{Recall} & \textbf{F1} \\
+        \midrule
+        DecisionTreeClassifier & 0.6409 & 0.6300 & 0.5194 & 0.5708 \\
+        LogisticRegression & 0.6617 & 0.6446 & 0.5792 & 0.6069 \\
+        RandomForestClassifier & 0.6826 & 0.6761 & 0.5890 & 0.6253 \\
+        XGBClassifier & 0.6186 & 0.5865 & 0.5262 & 0.5534 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:performance_metrics}
+\end{table}
 
 Para el conjunto de prueba, los resultados se muestran en la Figura \ref{fig:metricas_clasificacion_bestModel}.
 
