@@ -84,40 +84,29 @@ Para obtener una evaluación robusta del modelo, se utiliza la técnica de Strat
 
 Los resultados obtenidos en la validación cruzada proporcionan una visión clara del rendimiento del modelo en diferentes subconjuntos de datos. Estos resultados son esenciales para garantizar que el modelo no esté sobreajustado y pueda generalizar bien en datos no vistos.
 
-\begin{lstlisting}[language=Python, caption=Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:res_skfold_train]
-    Fold - Error cuadrático medio: 0.22338734811732283
-Fold - Coeficiente de determinación (R2): 0.0994393219751517
+A continuación, se presenta una tabla con los resultados de la validación cruzada Stratified K-Fold en los datos de entrenamiento:
 
-Fold - Error cuadrático medio: 0.21610303921931265
-Fold - Coeficiente de determinación (R2): 0.13074682521909087
-
-Fold - Error cuadrático medio: 0.23996759796803746
-Fold - Coeficiente de determinación (R2): 0.029536443893225295
-
-Fold - Error cuadrático medio: 0.20615353475177942
-Fold - Coeficiente de determinación (R2): 0.1662853896389751
-
-Fold - Error cuadrático medio: 0.21340755435714084
-Fold - Coeficiente de determinación (R2): 0.13694908873044587
-
-Fold - Error cuadrático medio: 0.212295439508615
-Fold - Coeficiente de determinación (R2): 0.14144664148272745
-
-Fold - Error cuadrático medio: 0.2277649508485301
-Fold - Coeficiente de determinación (R2): 0.07888570778463855
-
-Fold - Error cuadrático medio: 0.20885878320610823
-Fold - Coeficiente de determinación (R2): 0.1553449749439464
-
-Fold - Error cuadrático medio: 0.23418401446153864
-...
-Fold - Coeficiente de determinación (R2): 0.22574074537220024
-
-Promedio del error cuadrático medio en validación cruzada: 0.21735742055519647
-Promedio del error cuadrático medio en validación cruzada en %: 21.735742055519648
-\end{lstlisting}
+\begin{table}[h]
+\centering
+\caption{Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento}
+\label{lst:res_skfold_train}
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Fold} & \textbf{Error cuadrático medio} & \textbf{Coeficiente de determinación (R2)} \\
+\hline
+1 & 0.2234 & 0.0994 \\
+2 & 0.2161 & 0.1307 \\
+3 & 0.2400 & 0.0295 \\
+... & ... & ... \\
+\hline
+\multicolumn{3}{|c|}{Promedio del error cuadrático medio: 0.2174} \\
+\multicolumn{3}{|c|}{Promedio del error cuadrático medio en \%: 21.74} \\
+\hline
+\end{tabular}
+\end{table}
 
 Si el RMSE es 0, significa que el modelo predice perfectamente los valores reales. Cuanto más cerca esté el MSE o RMSE de cero, mejor será el rendimiento del modelo en términos de la diferencia entre las predicciones y los valores reales.
+
 
 \subsubsection{Análisis SHAP}
 
@@ -149,35 +138,45 @@ Los gráficos SHAP proporcionan una visualización intuitiva de cómo cada carac
 
 En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
 
-\begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
-    # Mostrar Grafico de Caracteristicas
-    shap.summary_plot(shap_values, X_test)
-\end{lstlisting}
-
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.5\textwidth]{img/shap_rf/shapForcePlot2.png}
-    \caption{Características Variables SHAP}
-    \label{fig:caract_var_shap}
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
+        # Mostrar Grafico de Caracteristicas
+        shap.summary_plot(shap_values, X_test)
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{img/shap_rf/shapForcePlot2.png}
+        \caption{Características Variables SHAP}
+        \label{fig:caract_var_shap}
+    \end{minipage}
 \end{figure}
 
 
 Para visualizar la importancia numérica de cada característica de manera gráfica, se puede recurrir a la representación proporcionada por SHAP. Esta visualización facilita el análisis del impacto de cada característica en las predicciones del modelo:
 
-\begin{lstlisting}[language=Python, caption=Análisis de Importancia de Características, label=lst:cod_calvaloreshap]
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Análisis de Importancia de Características, label=lst:cod_calvaloreshap]
 # Análisis de Importancia de Características
 shap_values_tree = explainer(X_test[:100])
 shap.plots.bar(shap_values_tree[0])
-\end{lstlisting}
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{img/shap_rf/ImportanciaDeCaracteristicasShap.png}
+        \caption{Importancia de las Características según SHAP}
+        \label{fig:importancia_relativa_shap}
+    \end{minipage}
+\end{figure}
 
 La Figura \ref{fig:importancia_relativa_shap} ilustra la importancia relativa de las características según SHAP, poniendo de relieve las características con mayor influencia en las predicciones del modelo.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.8\textwidth]{img/shap_rf/ImportanciaDeCaracteristicasShap.png}
-    \caption{Importancia de las Características según SHAP}
-    \label{fig:importancia_relativa_shap}
-\end{figure}
 
 Para interpretar el gráfico \ref{fig:importancia_relativa_shap}, consideremos dos ejemplos:
 
@@ -187,6 +186,7 @@ Para interpretar el gráfico \ref{fig:importancia_relativa_shap}, consideremos d
     \item \textbf{Color}: El tono rojo indica un impacto positivo en la predicción, lo que significa que valores más altos de "hito1" tienden a elevar la predicción.
     \item \textbf{Magnitud}: El valor +0.09 indica que, en promedio, un incremento en "hito1" eleva la predicción en 0.09 unidades (según la unidad de la variable objetivo).
 \end{itemize}
+
 
 \textbf{e18 con -0.02 (color azul y barra hacia la izquierda)}:
 \begin{itemize}
@@ -220,37 +220,46 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
 
-\begin{lstlisting}[language=Python, caption=Grafico de dependencia hito1  e29, label=lst:grafDepHito1e29]
-    # Obtener el índice de la variable "hito1" en tu DataFrame
-    indice = X.columns.get_loc("hito1")
-    
-    # Crear el gráfico de dependencia para "hito1"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-    
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("hito1")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-    
-    # Mostrar el gráfico
-    plt.show()
-
-    # Obtener el índice de la variable "e29" en tu DataFrame
-    indice = X.columns.get_loc("e29")
-
-    # Crear el gráfico de dependencia para "exitosos"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("e29")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-
-    # Mostrar el gráfico
-    plt.show()
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia hito1, label=lst:grafDepHito1]
+        # Obtener el índice de la variable "hito1" en tu DataFrame
+        indice = X.columns.get_loc("hito1")
+        
+        # Crear el gráfico de dependencia para "hito1"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("hito1")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia e29, label=lst:grafDepE29]
+        # Obtener el índice de la variable "e29" en tu DataFrame
+        indice = X.columns.get_loc("e29")
+        
+        # Crear el gráfico de dependencia para "e29"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("e29")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+\end{figure}
 
 \begin{figure}[H]
     \begin{subfigure}{0.48\textwidth}
@@ -269,37 +278,46 @@ Además de los gráficos anteriores, se presentan los gráficos de dependencia p
 
 En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1} y refleja \say{fallidos} con su correlación. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29} con la variable \say{extisoso}.
 
-\begin{lstlisting}[language=Python, caption=Grafico de dependencia exitosos  fallidos, label=lst:grafDepExitososFallidos]
-    # Obtener el índice de la variable "exitosos" en tu DataFrame
-    indice = X.columns.get_loc("exitosos")
-    
-    # Crear el gráfico de dependencia para "exitosos"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-    
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("Exitosos")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-    
-    # Mostrar el gráfico
-    plt.show()
-
-    # Obtener el índice de la variable "fallidos" en tu DataFrame
-    indice = X.columns.get_loc("fallidos")
-    
-    # Crear el gráfico de dependencia para "exitosos"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-    
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("fallidos")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-    
-    # Mostrar el gráfico
-    plt.show()
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia exitosos, label=lst:grafDepExitosos]
+        # Obtener el índice de la variable "exitosos" en tu DataFrame
+        indice = X.columns.get_loc("exitosos")
+        
+        # Crear el gráfico de dependencia para "exitosos"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("Exitosos")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia fallidos, label=lst:grafDepFallidos]
+        # Obtener el índice de la variable "fallidos" en tu DataFrame
+        indice = X.columns.get_loc("fallidos")
+        
+        # Crear el gráfico de dependencia para "fallidos"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("Fallidos")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+\end{figure}
 
 \begin{figure}[H]
     \begin{subfigure}{0.48\textwidth}
@@ -318,37 +336,46 @@ En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia p
 
 En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos} con su variable de dependencia \say{fallidos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos} con su dependencia \say{exitosos}.
 
-\begin{lstlisting}[language=Python, caption=Grafico de dependencia e42 e3, label=lst:grafDepe42e3]
-    # Obtener el índice de la variable "e42" en tu DataFrame
-    indice = X.columns.get_loc("e42")
-    
-    # Crear el gráfico de dependencia para "e42"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-    
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("e42")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-    
-    # Mostrar el gráfico
-    plt.show()
-
-    # Obtener el índice de la variable "e3" en tu DataFrame
-    indice = X.columns.get_loc("e3")
-    
-    # Crear el gráfico de dependencia para "e3"
-    shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-    
-    # Personalizar la apariencia del gráfico
-    plt.xlabel("e3")
-    plt.ylabel("Valores SHAP")
-    plt.title("Gráfico de Dependencia")
-    plt.tight_layout()
-    
-    # Mostrar el gráfico
-    plt.show()
-\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia e42, label=lst:grafDepe42]
+        # Obtener el índice de la variable "e42" en tu DataFrame
+        indice = X.columns.get_loc("e42")
+        
+        # Crear el gráfico de dependencia para "e42"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("e42")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \begin{lstlisting}[language=Python, caption=Grafico de dependencia e3, label=lst:grafDepe3]
+        # Obtener el índice de la variable "e3" en tu DataFrame
+        indice = X.columns.get_loc("e3")
+        
+        # Crear el gráfico de dependencia para "e3"
+        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+        
+        # Personalizar la apariencia del gráfico
+        plt.xlabel("e3")
+        plt.ylabel("Valores SHAP")
+        plt.title("Gráfico de Dependencia")
+        plt.tight_layout()
+        
+        # Mostrar el gráfico
+        plt.show()
+        \end{lstlisting}
+    \end{minipage}
+\end{figure}
 
 \begin{figure}[H]
     \begin{subfigure}{0.48\textwidth}
