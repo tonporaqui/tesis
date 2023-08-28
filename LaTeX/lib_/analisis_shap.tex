@@ -8,10 +8,10 @@ Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la 
 
 
 \begin{lstlisting}[language=Python, caption=Selección de características y variable objetivo para RandomForestClassifier, label=lst:seleccion_caracteristicasRFC]
-    y = df["aprobado"]
-    X = df[
-    ['hito1', 'hito2', 'exitosos', 'fallidos','e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
-    ]
+y = df["aprobado"]
+X = df[
+['hito1', 'hito2', 'exitosos', 'fallidos','e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
+]
     \end{lstlisting}
 
 \subsubsection{División de Datos y Definición del Modelo}
@@ -19,20 +19,20 @@ Para el análisis, se prepararon las coordenadas de análisis X/Y utilizando la 
 Para evaluar el rendimiento del modelo, se dividen los datos en conjuntos de entrenamiento (80\%) y prueba (20\%).
 
 \begin{lstlisting}[language=Python, caption=División de datos para entrenamiento y prueba, label=lst:train_test_split_RFC]
-    X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2,random_state= 1502)
+X_train, X_test, y_train, y_test = train_test_split(X,y, test_size = 0.2,random_state= 1502)
 \end{lstlisting}
 
 El modelo RandomForestClassifier se define según la mejor configuración obtenida en la comparación de algoritmos.
 
 
 \begin{lstlisting}[language=Python, caption=Definición del modelo RandomForestRegressor, label=lst:def_RFC]
-    model = RandomForestRegressor( 
-        max_depth=10, 
-        min_samples_split=10, 
-        min_samples_leaf=5,
-        random_state= 1502,
-        n_estimators=500
-    )
+model = RandomForestRegressor( 
+    max_depth=10, 
+    min_samples_split=10, 
+    min_samples_leaf=5,
+    random_state= 1502,
+    n_estimators=500
+)
 \end{lstlisting}
 
 \subsubsection{Validación Cruzada y Evaluación del Modelo}
@@ -40,45 +40,45 @@ El modelo RandomForestClassifier se define según la mejor configuración obteni
 Para obtener una evaluación robusta del modelo, se utiliza la técnica de Stratified K-Fold Cross-Validation.
 
 \begin{lstlisting}[language=Python, caption=Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento, label=lst:skfold_train]
-    # Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento
-    from sklearn.model_selection import StratifiedKFold
+# Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento
+from sklearn.model_selection import StratifiedKFold
+
+
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=1502)
+
+# Matrices para almacenar los resultados de validación cruzada
+cv_scores = []
+cv_predictions = []
+
+for train_index, val_index in kfold.split(X_train, y_train):
+    # Dividir los datos en conjuntos de entrenamiento y validación
+    X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
+    y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
     
-    
-    kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=1502)
-    
-    # Matrices para almacenar los resultados de validación cruzada
-    cv_scores = []
-    cv_predictions = []
-    
-    for train_index, val_index in kfold.split(X_train, y_train):
-        # Dividir los datos en conjuntos de entrenamiento y validación
-        X_train_fold, X_val_fold = X_train.iloc[train_index], X_train.iloc[val_index]
-        y_train_fold, y_val_fold = y_train.iloc[train_index], y_train.iloc[val_index]
-        
-        # Entrenar el modelo en el conjunto de entrenamiento del fold actual
-        model.fit(X_train_fold, y_train_fold)
-    
-        # Realizar predicciones en el conjunto de validación del fold actual
-        y_val_pred = model.predict(X_val_fold)
-    
-        # Calcular el error cuadrático medio en el conjunto de validación del fold actual
-        fold_score = mean_squared_error(y_val_fold, y_val_pred)
-        cv_scores.append(fold_score)
-    
-        # Almacenar las predicciones del fold actual para su uso posterior
-        cv_predictions.extend(y_val_pred)
-    
-        # Calcular el coeficiente de determinación en el conjunto de validación del fold actual
-        r2 = r2_score(y_val_fold, y_val_pred)
-        print("Fold - Error cuadrático medio:", fold_score)
-        print("Fold - Coeficiente de determinación (R2):", r2)
-        print()
-    
-    # Calcular la puntuación promedio de validación cruzada
-    avg_score = np.mean(cv_scores)
-    percentage_score = avg_score * 100
-    print("Promedio del error cuadrático medio en validación cruzada:", avg_score)
-    print("Promedio del error cuadrático medio en validación cruzada en %:", percentage_score)
+    # Entrenar el modelo en el conjunto de entrenamiento del fold actual
+    model.fit(X_train_fold, y_train_fold)
+
+    # Realizar predicciones en el conjunto de validación del fold actual
+    y_val_pred = model.predict(X_val_fold)
+
+    # Calcular el error cuadrático medio en el conjunto de validación del fold actual
+    fold_score = mean_squared_error(y_val_fold, y_val_pred)
+    cv_scores.append(fold_score)
+
+    # Almacenar las predicciones del fold actual para su uso posterior
+    cv_predictions.extend(y_val_pred)
+
+    # Calcular el coeficiente de determinación en el conjunto de validación del fold actual
+    r2 = r2_score(y_val_fold, y_val_pred)
+    print("Fold - Error cuadrático medio:", fold_score)
+    print("Fold - Coeficiente de determinación (R2):", r2)
+    print()
+
+# Calcular la puntuación promedio de validación cruzada
+avg_score = np.mean(cv_scores)
+percentage_score = avg_score * 100
+print("Promedio del error cuadrático medio en validación cruzada:", avg_score)
+print("Promedio del error cuadrático medio en validación cruzada en %:", percentage_score)
 \end{lstlisting}
 
 
@@ -113,9 +113,9 @@ Si el RMSE es 0, significa que el modelo predice perfectamente los valores reale
 El análisis SHAP (SHapley Additive exPlanations) es una técnica que permite interpretar las predicciones de modelos complejos. En este caso, se utiliza para entender cómo cada característica influye en las predicciones del modelo RandomForestClassifier.
 
 \begin{lstlisting}[language=Python, caption=Predicción con SHAP utilizando el conjunto de prueba, label=lst:shap_analysis]
-    # Realizar la predicción con SHAP utilizando el conjunto de prueba (X_test)
-    explainer = shap.Explainer(model)
-    shap_values = explainer.shap_values(X_test)
+# Realizar la predicción con SHAP utilizando el conjunto de prueba (X_test)
+explainer = shap.Explainer(model)
+shap_values = explainer.shap_values(X_test)
 \end{lstlisting}
 
 
@@ -142,8 +142,8 @@ En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de característica
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
-        # Mostrar Grafico de Caracteristicas
-        shap.summary_plot(shap_values, X_test)
+# Mostrar Grafico de Caracteristicas
+shap.summary_plot(shap_values, X_test)
         \end{lstlisting}
     \end{minipage}
     \hfill
@@ -199,8 +199,8 @@ Para interpretar el gráfico \ref{fig:importancia_relativa_shap}, consideremos d
 Además, se presenta otro gráfico generado por matplotlib sobre la prediccion del modelo en la Figura \ref{fig:caract_var_shap_mat}:
 
 \begin{lstlisting}[language=Python, caption=grafico matplotib, label=lst:graf_matplotib]
-    # Crear la figura de matplotlib
-    shap.force_plot(explainer.expected_value, shap_values[0,:], X_test.iloc[0,:], matplotlib=True)
+# Crear la figura de matplotlib
+shap.force_plot(explainer.expected_value, shap_values[0,:], X_test.iloc[0,:], matplotlib=True)
 \end{lstlisting}
 
 \begin{figure}[H]
@@ -224,39 +224,39 @@ Además de los gráficos anteriores, se presentan los gráficos de dependencia p
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia hito1, label=lst:grafDepHito1]
-        # Obtener el índice de la variable "hito1" en tu DataFrame
-        indice = X.columns.get_loc("hito1")
-        
-        # Crear el gráfico de dependencia para "hito1"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("hito1")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "hito1" en tu DataFrame
+indice = X.columns.get_loc("hito1")
+
+# Crear el gráfico de dependencia para "hito1"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("hito1")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia e29, label=lst:grafDepE29]
-        # Obtener el índice de la variable "e29" en tu DataFrame
-        indice = X.columns.get_loc("e29")
-        
-        # Crear el gráfico de dependencia para "e29"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("e29")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "e29" en tu DataFrame
+indice = X.columns.get_loc("e29")
+
+# Crear el gráfico de dependencia para "e29"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("e29")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
 \end{figure}
@@ -282,39 +282,39 @@ En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia p
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia exitosos, label=lst:grafDepExitosos]
-        # Obtener el índice de la variable "exitosos" en tu DataFrame
-        indice = X.columns.get_loc("exitosos")
-        
-        # Crear el gráfico de dependencia para "exitosos"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("Exitosos")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "exitosos" en tu DataFrame
+indice = X.columns.get_loc("exitosos")
+
+# Crear el gráfico de dependencia para "exitosos"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("Exitosos")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia fallidos, label=lst:grafDepFallidos]
-        # Obtener el índice de la variable "fallidos" en tu DataFrame
-        indice = X.columns.get_loc("fallidos")
-        
-        # Crear el gráfico de dependencia para "fallidos"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("Fallidos")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "fallidos" en tu DataFrame
+indice = X.columns.get_loc("fallidos")
+
+# Crear el gráfico de dependencia para "fallidos"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("Fallidos")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
 \end{figure}
@@ -340,39 +340,39 @@ En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependenci
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia e42, label=lst:grafDepe42]
-        # Obtener el índice de la variable "e42" en tu DataFrame
-        indice = X.columns.get_loc("e42")
-        
-        # Crear el gráfico de dependencia para "e42"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("e42")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "e42" en tu DataFrame
+indice = X.columns.get_loc("e42")
+
+# Crear el gráfico de dependencia para "e42"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("e42")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia e3, label=lst:grafDepe3]
-        # Obtener el índice de la variable "e3" en tu DataFrame
-        indice = X.columns.get_loc("e3")
-        
-        # Crear el gráfico de dependencia para "e3"
-        shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
-        
-        # Personalizar la apariencia del gráfico
-        plt.xlabel("e3")
-        plt.ylabel("Valores SHAP")
-        plt.title("Gráfico de Dependencia")
-        plt.tight_layout()
-        
-        # Mostrar el gráfico
-        plt.show()
+# Obtener el índice de la variable "e3" en tu DataFrame
+indice = X.columns.get_loc("e3")
+
+# Crear el gráfico de dependencia para "e3"
+shap.dependence_plot(indice, shap_values, X_test, feature_names=X.columns, show=False)
+
+# Personalizar la apariencia del gráfico
+plt.xlabel("e3")
+plt.ylabel("Valores SHAP")
+plt.title("Gráfico de Dependencia")
+plt.tight_layout()
+
+# Mostrar el gráfico
+plt.show()
         \end{lstlisting}
     \end{minipage}
 \end{figure}

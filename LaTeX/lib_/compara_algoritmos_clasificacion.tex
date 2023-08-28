@@ -13,22 +13,22 @@ La mejor configuración para los modelos de clasificación se muestra en el sigu
 
 
 \begin{lstlisting}[language=Python, caption=Definicion de los Modelos de Clasificación,label=lst:config_clasificacion]
-    # Definir los modelos de Clasificacion
-    models_clasificacion = [
-        DecisionTreeClassifier(
-            min_samples_split=10,
-            min_samples_leaf=5,
-        ),
-        LogisticRegression(penalty="l2", C=1.0, solver="lbfgs", max_iter=150),
-        RandomForestClassifier(
-            max_depth=10,
-            min_samples_split=10,
-            min_samples_leaf=5,
-            random_state=1502,
-            n_estimators=500,
-        ),
-        XGBClassifier(learning_rate=0.1, max_depth=10, n_estimators=150, subsample=1.0),
-    ]
+# Definir los modelos de Clasificacion
+models_clasificacion = [
+    DecisionTreeClassifier(
+        min_samples_split=10,
+        min_samples_leaf=5,
+    ),
+    LogisticRegression(penalty="l2", C=1.0, solver="lbfgs", max_iter=150),
+    RandomForestClassifier(
+        max_depth=10,
+        min_samples_split=10,
+        min_samples_leaf=5,
+        random_state=1502,
+        n_estimators=500,
+    ),
+    XGBClassifier(learning_rate=0.1, max_depth=10, n_estimators=150, subsample=1.0),
+]
 \end{lstlisting}
 
 % -----------
@@ -51,51 +51,51 @@ X = df[
 En el siguiente fragmento de código, se establece un proceso de validación cruzada estratificada para evaluar varios modelos de clasificación. Primero, definimos las métricas de interés: precisión, exhaustividad, exactitud y la puntuación F1. Luego, aplicamos la técnica de Stratified K-Fold Cross-Validation para garantizar que cada pliegue sea una buena representación del conjunto de datos completo. A continuación, entrenamos cada modelo y evaluamos su rendimiento utilizando las métricas definidas. Finalmente, identificamos y mostramos el modelo con el mejor rendimiento promedio.
 
 \begin{lstlisting}[language=Python, caption=Aplicación de Stratified K-Fold y entrenamiento de modelos, label=lst:stratified_kfold]
-    # Definir las métricas
-    metrics = ["accuracy", "precision", "recall", "f1"]
+# Definir las métricas
+metrics = ["accuracy", "precision", "recall", "f1"]
 
-    # Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento y obtener las métricas para cada modelo
-    results_train = (
+# Realizar Stratified K-Fold Cross-Validation en los datos de entrenamiento y obtener las métricas para cada modelo
+results_train = (
+    {}
+)  # Diccionario para almacenar los resultados de entrenamiento de cada modelo
+
+for model in models_clasificacion:
+    model_name = model.__class__.__name__
+
+    cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=1502)
+    # Dividir los datos en conjuntos de entrenamiento y prueba
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=1502
+    )
+
+    model.fit(X_train, y_train)  # Ajustar el modelo en los datos de entrenamiento
+    model_results = (
         {}
-    )  # Diccionario para almacenar los resultados de entrenamiento de cada modelo
+    )  # Diccionario para almacenar los resultados de las métricas para el modelo actual
 
-    for model in models_clasificacion:
-        model_name = model.__class__.__name__
+    # Calcular las métricas utilizando validación cruzada
+    for metric in metrics:
+        scores = cross_val_score(model, X_train, y_train, cv=cv, scoring=metric)
+        model_results[metric] = scores
 
-        cv = StratifiedKFold(n_splits=10, shuffle=True, random_state=1502)
-        # Dividir los datos en conjuntos de entrenamiento y prueba
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=1502
-        )
+    results_train[
+        model_name
+    ] = model_results  # Almacenar los resultados del modelo en el diccionario
 
-        model.fit(X_train, y_train)  # Ajustar el modelo en los datos de entrenamiento
-        model_results = (
-            {}
-        )  # Diccionario para almacenar los resultados de las métricas para el modelo actual
+best_model = None
+best_score = 0.0
 
-        # Calcular las métricas utilizando validación cruzada
-        for metric in metrics:
-            scores = cross_val_score(model, X_train, y_train, cv=cv, scoring=metric)
-            model_results[metric] = scores
+# Encontrar el mejor modelo basado en la media de las métricas
+for model_name, model_result in results_train.items():
+    mean_scores = [np.mean(model_result[metric]) for metric in metrics]
+    mean_score = np.mean(mean_scores)
 
-        results_train[
-            model_name
-        ] = model_results  # Almacenar los resultados del modelo en el diccionario
+    if mean_score > best_score:
+        best_score = mean_score
+        best_model = model_name
 
-    best_model = None
-    best_score = 0.0
-
-    # Encontrar el mejor modelo basado en la media de las métricas
-    for model_name, model_result in results_train.items():
-        mean_scores = [np.mean(model_result[metric]) for metric in metrics]
-        mean_score = np.mean(mean_scores)
-
-        if mean_score > best_score:
-            best_score = mean_score
-            best_model = model_name
-
-    # Imprimir el mejor modelo y su puntuación
-    print("El mejor modelo en la validación fue:", best_model, best_score)
+# Imprimir el mejor modelo y su puntuación
+print("El mejor modelo en la validación fue:", best_model, best_score)
 \end{lstlisting}
 
 % -----------
@@ -107,7 +107,7 @@ Después de aplicar la validación cruzada estratificada y entrenar los modelos 
 Con estos resultados, se destaca la eficacia del modelo de clasificación basado en bosques aleatorios para este conjunto de datos en particular, lo que sugiere que puede ser una opción adecuada para futuras predicciones o análisis relacionados.
 
 \begin{lstlisting}[language=Python, caption=Resultado Mejor modelo en la Validacion de Clasificación, label=lst:rest_bestModelClasification]
-    El mejor modelo en la validación fue: RandomForestClassifier 0.6432621955500205
+El mejor modelo en la validación fue: RandomForestClassifier 0.6432621955500205
     \end{lstlisting}
 
 
@@ -119,28 +119,28 @@ Con estos resultados, se destaca la eficacia del modelo de clasificación basado
 En el siguiente fragmento de código, buscamos el objeto correspondiente al mejor modelo identificado previamente, en este caso, el RandomForestClassifier. Una vez encontrado, ajustamos este modelo utilizando el conjunto de entrenamiento y luego realizamos predicciones sobre el conjunto de prueba. Posteriormente, calculamos métricas clave, como el Mean Squared Error (MSE) y el R2 Score, para evaluar el rendimiento del modelo en el conjunto de prueba.
 
 \begin{lstlisting}[language=Python, caption=Predicciones y evaluación del mejor modelo, label=lst:prediccion_mejor_modelo]
-    best_model_search = None
+best_model_search = None
 
-    # Buscar el objeto del mejor modelo en la lista de modelos
-    for model in models_clasificacion:
-        if model.__class__.__name__ == best_model:
-            best_model_search = model
-            break
-    
-    best_model_search.fit(
-        X_train, y_train
-    )  # Ajustar el mejor modelo en los datos de entrenamiento
-    y_pred = best_model_search.predict(
-        X_test
-    )  # Realizar predicciones utilizando el mejor modelo
-    
-    # Calcular y mostrar los resultados obtenidos del mejor modelo
-    mse = mean_squared_error(y_test, y_pred)  # Calcular el Mean Squared Error
-    r2 = r2_score(y_test, y_pred)  # Calcular el R2 Score
-    
-    print("Resultados del mejor modelo:", best_model, "en el conjunto de prueba:")
-    print("Mean Squared Error:", mse)
-    print("R2 Score:", r2)
+# Buscar el objeto del mejor modelo en la lista de modelos
+for model in models_clasificacion:
+    if model.__class__.__name__ == best_model:
+        best_model_search = model
+        break
+
+best_model_search.fit(
+    X_train, y_train
+)  # Ajustar el mejor modelo en los datos de entrenamiento
+y_pred = best_model_search.predict(
+    X_test
+)  # Realizar predicciones utilizando el mejor modelo
+
+# Calcular y mostrar los resultados obtenidos del mejor modelo
+mse = mean_squared_error(y_test, y_pred)  # Calcular el Mean Squared Error
+r2 = r2_score(y_test, y_pred)  # Calcular el R2 Score
+
+print("Resultados del mejor modelo:", best_model, "en el conjunto de prueba:")
+print("Mean Squared Error:", mse)
+print("R2 Score:", r2)
     \end{lstlisting}
 
 Después de realizar las predicciones con el RandomForestClassifier en el conjunto de prueba, obtuvimos los siguientes resultados:

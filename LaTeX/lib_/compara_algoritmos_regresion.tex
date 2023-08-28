@@ -13,15 +13,15 @@ Para estos modelos, se utilizará la variable objetivo \say{sol1}, la técnica \
 La mejor configuración para los modelos de regresión se en el siguiente codigo: \ref{lst:config_regresion}:
 
 \begin{lstlisting}[language=Python, caption=Configuración de los modelos de regresión, label=lst:config_regresion]
-    # Definir los modelos de regresión
-    models_regresion = [
-        LinearRegression(positive=True, fit_intercept=True),
-        DecisionTreeRegressor(
-            min_samples_split=5,
-            min_samples_leaf=3,
-        ),
-        KNeighborsRegressor(n_neighbors=8),
-    ]
+# Definir los modelos de regresión
+models_regresion = [
+    LinearRegression(positive=True, fit_intercept=True),
+    DecisionTreeRegressor(
+        min_samples_split=5,
+        min_samples_leaf=3,
+    ),
+    KNeighborsRegressor(n_neighbors=8),
+]
     \end{lstlisting}
 
 % -----------
@@ -43,18 +43,18 @@ X = df[
 La validación cruzada es una técnica que permite evaluar la capacidad de generalización de los modelos. En este estudio, se utiliza K-Fold Cross-Validation para entrenar y validar los modelos de regresión en diferentes subconjuntos del conjunto de datos.
 
 \begin{lstlisting}[language=Python, caption=Configuraicones previas antes de la evaluación, label=lst:config_preEval]
-        # Listas para almacenar los resultados de cada modelo
-        mse_scores = []
-        mae_scores = []
-        r2_scores = []
-        
-        best_model = None
-        best_mse = np.inf
-        best_mae = np.inf
-        best_r2 = -np.inf
-        
-        # Colores para los modelos de regresión
-        colors = ["blue", "green", "red"]
+# Listas para almacenar los resultados de cada modelo
+mse_scores = []
+mae_scores = []
+r2_scores = []
+
+best_model = None
+best_mse = np.inf
+best_mae = np.inf
+best_r2 = -np.inf
+
+# Colores para los modelos de regresión
+colors = ["blue", "green", "red"]
     \end{lstlisting}
 
 % -----------
@@ -62,51 +62,51 @@ La validación cruzada es una técnica que permite evaluar la capacidad de gener
 Una vez entrenados, es esencial evaluar el rendimiento de cada modelo. Esta evaluación se basa en métricas específicas que reflejan la precisión y eficacia de los modelos en la predicción de la variable objetivo.
 
 \begin{lstlisting}[language=Python, caption=Codigo de evaluacion de modelos, label=lst:cod_Eval]
-        # Iterar sobre cada modelo de regresión
-        for i, model in enumerate(models_regresion):
-            # Realizar k-fold cross-validation
-            kf = KFold(n_splits=10, shuffle=True, random_state=1502)
-            mse_cv_scores = []
-            mae_cv_scores = []
-            r2_cv_scores = []
-            
-            for train_index, test_index in kf.split(X):
-                # Train-test split para cada fold
-                X_train, X_test = X.iloc[train_index], X.iloc[test_index]
-                y_train, y_test = y.iloc[train_index], y.iloc[test_index]
-                
-                # Entrenar el modelo
-                model.fit(X_train, y_train)
-                
-                # Realizar predicciones en el conjunto de prueba
-                y_pred = model.predict(X_test)
-                
-                # Calcular las métricas de evaluación
-                mse = mean_squared_error(y_test, y_pred)
-                mae = mean_absolute_error(y_test, y_pred)
-                r2 = r2_score(y_test, y_pred)
-                
-                # Almacenar las métricas de evaluación para cada fold
-                mse_cv_scores.append(mse)
-                mae_cv_scores.append(mae)
-                r2_cv_scores.append(r2)
-                
-            # Calcular la media de las métricas de evaluación para el modelo actual
-            avg_mse = np.mean(mse_cv_scores)
-            avg_mae = np.mean(mae_cv_scores)
-            avg_r2 = np.mean(r2_cv_scores)
-            
-            # Almacenar las métricas de evaluación para el modelo actual
-            mse_scores.append(avg_mse)
-            mae_scores.append(avg_mae)
-            r2_scores.append(avg_r2)
-            
-            # Verificar si el modelo actual es el mejor hasta ahora
-            if avg_mse < best_mse:
-                best_model = model
-                best_mse = avg_mse
-                best_mae = avg_mae
-                best_r2 = avg_r2
+# Iterar sobre cada modelo de regresión
+for i, model in enumerate(models_regresion):
+    # Realizar k-fold cross-validation
+    kf = KFold(n_splits=10, shuffle=True, random_state=1502)
+    mse_cv_scores = []
+    mae_cv_scores = []
+    r2_cv_scores = []
+    
+    for train_index, test_index in kf.split(X):
+        # Train-test split para cada fold
+        X_train, X_test = X.iloc[train_index], X.iloc[test_index]
+        y_train, y_test = y.iloc[train_index], y.iloc[test_index]
+        
+        # Entrenar el modelo
+        model.fit(X_train, y_train)
+        
+        # Realizar predicciones en el conjunto de prueba
+        y_pred = model.predict(X_test)
+        
+        # Calcular las métricas de evaluación
+        mse = mean_squared_error(y_test, y_pred)
+        mae = mean_absolute_error(y_test, y_pred)
+        r2 = r2_score(y_test, y_pred)
+        
+        # Almacenar las métricas de evaluación para cada fold
+        mse_cv_scores.append(mse)
+        mae_cv_scores.append(mae)
+        r2_cv_scores.append(r2)
+        
+    # Calcular la media de las métricas de evaluación para el modelo actual
+    avg_mse = np.mean(mse_cv_scores)
+    avg_mae = np.mean(mae_cv_scores)
+    avg_r2 = np.mean(r2_cv_scores)
+    
+    # Almacenar las métricas de evaluación para el modelo actual
+    mse_scores.append(avg_mse)
+    mae_scores.append(avg_mae)
+    r2_scores.append(avg_r2)
+    
+    # Verificar si el modelo actual es el mejor hasta ahora
+    if avg_mse < best_mse:
+        best_model = model
+        best_mse = avg_mse
+        best_mae = avg_mae
+        best_r2 = avg_r2
     \end{lstlisting}
 
 % -----------
