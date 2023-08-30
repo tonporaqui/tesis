@@ -1,10 +1,10 @@
 \subsection{Análisis de datos}
 
-Una vez recopilados los datos, se realizará un análisis descriptivo para examinar la distribución de los resultados en la guía de programación y la primera evaluación. Además, se llevará a cabo un análisis de correlación entre las variables mencionadas anteriormente para identificar posibles relaciones y patrones significativos.
+Tras la recopilación de datos, se efectuará un análisis descriptivo para inspeccionar la distribución de los resultados tanto en la guía de programación como en la primera evaluación. Adicionalmente, se realizará un análisis de correlación entre las variables previamente mencionadas con el fin de discernir relaciones y patrones significativos.
 
 \subsection{Descripción de la base de datos}
 
-A continuación, se presenta la descricion de la base de datos.
+A continuación, se detalla la estructura de la base de datos:
 
 \begin{table}[H]
     \centering
@@ -13,33 +13,31 @@ A continuación, se presenta la descricion de la base de datos.
         \toprule
         \textbf{Variable} & \textbf{Descripción} \\
         \midrule
-        sol1 & Calificación en la primera evaluación (0-7) \\
-        exitosos & Número de preguntas correctas en la guía \\
-        fallidos & Intentos realizados en la guía \\
+        sol1 & Nota en la primera evaluación (rango 0-7) \\
+        exitosos & Cantidad de respuestas correctas en la guía \\
+        fallidos & Número de intentos en la guía \\
         hito1 hito2 & Expectativas de aprendizaje del curso (conjunto de preguntas) \\
-        programa & Programa de estudio \\
+        programa & Programa académico del estudiante \\
         Columnas e0 hasta la e52 & Resultados de la guía (1: correcto, 0: incorrecto) \\
         \bottomrule
     \end{tabular}
     \label{tab:variables}
 \end{table}
 
-Estas columnas son relevantes para nuestro análisis, ya que nos permitirán examinar la relación
-entre la resolución de la guía de programación, el éxito académico en la primera evaluación y
-el programa de estudio al que pertenecen los estudiantes (véase Tabla \ref{tab:variables}).
+Las columnas descritas son esenciales para nuestro análisis, ya que nos facilitan la exploración de la relación entre la resolución de la guía de programación, el rendimiento académico en la primera evaluación y el programa académico del estudiante (véase Tabla \ref{tab:variables}).
 
 \subsubsection{Variable Objetivo}
 
-Dado que el objetivo de esta investigación es determinar si la resolución de la guía tiene algún impacto en la aprobación de la prueba de evaluación del curso, se propone utilizar la variable \say{sol1} como variable objetivo. Dado que esta variable es de tipo cuantitativa, se sugiere generar una nueva columna llamada aprobado, la cual será de tipo binaria. En esta columna, se representará con el valor 1 a las notas superiores a 4.0 hasta la nota máxima de 7.0, mientras que se asignará el valor 0 a aquellas notas inferiores a las indicadas, representando la condición de reprobado, la cual podemos observar en el listing \ref{lst:trat_varObjetivo}.
+El propósito principal de esta investigación es determinar la influencia de la resolución de la guía en el desempeño de la evaluación del curso. Por ello, se propone la variable \textit{sol1} como variable objetivo. Dado su carácter cuantitativo, se recomienda añadir una columna denominada \textit{aprobado}, de naturaleza binaria. En esta columna, se asignará el valor 1 a las notas que oscilen entre 4.0 y 7.0, y el valor 0 a las notas inferiores, denotando la condición de reprobado. Esta transformación se ilustra en el siguiente fragmento de código:
 
-\begin{lstlisting}[language=Python, caption=Tratamiento Variable Objetivo ,label=lst:trat_varObjetivo]
-    # creando columna aprobado y con la funcion set_in_aprobado_nota poblamos la nueva columna.
+\begin{lstlisting}[language=Python, caption=Tratamiento de la Variable Objetivo ,label=lst:trat_varObjetivo]
+    # Creación de la columna 'aprobado' y población de la misma.
     df["aprobado"] = df.apply(lambda x: functions.set_in_aprobado_nota(x["sol1"]), axis=1)
 \end{lstlisting}
 
 \subsubsection{Descripción del DataFrame}
 
-La tabla \ref{tab:descripcion_dataframe} presenta una descripción del DataFrame, que incluye información sobre las columnas, el número de valores no nulos y los tipos de datos correspondientes. Analizando esta descripción, podemos obtener una visión general de la estructura y las características del DataFrame.
+La Tabla \ref{tab:descripcion_dataframe} ofrece un resumen del DataFrame, detallando las columnas, la cantidad de valores no nulos y los tipos de datos asociados. Esta descripción brinda una perspectiva general de la estructura y características del DataFrame.
 
 \begin{table}[H]
     \centering
@@ -60,11 +58,11 @@ La tabla \ref{tab:descripcion_dataframe} presenta una descripción del DataFrame
     \label{tab:descripcion_dataframe}%
 \end{table}%
 
-En la tabla \ref{tab:descripcion_dataframe}, cada una de estas columnas tiene un total de 839 valores no nulos y se identifica el tipo de dato correspondiente. Estos detalles son fundamentales para comprender la composición y las propiedades del DataFrame analizado.
+Como se observa en la Tabla \ref{tab:descripcion_dataframe}, cada columna cuenta con 839 valores no nulos y se especifica el tipo de dato correspondiente. Estos detalles son cruciales para entender la composición y propiedades del DataFrame en estudio.
 
 \subsubsection{Estadísticas de la variable objetivo}
 
-En el análisis de datos, es importante comprender las características estadísticas de las variables numéricas. En este contexto, hemos examinado la variable \say{sol1} y recopilado estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores nos proporcionan información sobre la distribución y la tendencia central de la variable.
+Dentro del análisis de datos, es esencial conocer las características estadísticas de las variables numéricas. En este contexto, se ha examinado la variable \textit{sol1}, recopilando estadísticas como el recuento, la media, la desviación estándar, los cuartiles y el sesgo. Estos valores ofrecen una visión sobre la distribución y tendencia central de la variable.
 
 \begin{table}[H]
     \centering
@@ -87,11 +85,11 @@ En el análisis de datos, es importante comprender las características estadís
     \label{tab:estadistica_variable_sol1}%
 \end{table}%
 
-En la tabla \ref{tab:estadistica_variable_sol1}, la variable \say{sol1} presenta una media de aproximadamente 3.6 y una desviación estándar de alrededor de 1.83. La distribución de los datos muestra una ligera asimetría positiva con un sesgo de aproximadamente 0.03. Estos resultados nos ayudan a comprender la variabilidad y la forma de la distribución de la variable sol1.
+La Tabla \ref{tab:estadistica_variable_sol1} revela que la variable \textit{sol1} tiene una media cercana a 3.6 y una desviación estándar alrededor de 1.83. La distribución de los datos muestra un ligero sesgo positivo con un valor de aproximadamente 0.03. Estos resultados nos permiten entender la variabilidad y forma de la distribución de la variable \textit{sol1}.
 
-\subsubsection{Coeficiente de asimetría variable objetivo}
+\subsubsection{Coeficiente de asimetría de la variable objetivo}
 
-El coeficiente de asimetría es una medida estadística que nos proporciona información sobre la asimetría de una distribución de datos. En el contexto de los datos analizados, hemos obtenido un coeficiente de asimetría de aproximadamente 3.31\%. Este valor indica una ligera asimetría positiva en la distribución.
+El coeficiente de asimetría es una métrica que brinda información sobre la asimetría de una distribución de datos. Para los datos analizados, se ha obtenido un coeficiente de asimetría de aproximadamente 3.31\%. Este valor señala una ligera asimetría positiva en la distribución.
 
 \begin{table}[H]
     \centering
@@ -107,11 +105,11 @@ El coeficiente de asimetría es una medida estadística que nos proporciona info
     \label{tab:skewness}%
 \end{table}%
 
-En la tabla \ref{tab:skewness}, se puede apreciar la aproximacion de 0.033079652062595215 lo cual nos indica que la distribución de los datos tiene una ligera asimetría hacia la derecha. Esto implica que hay una cola derecha más larga en comparación con la cola izquierda de la distribución. En términos porcentuales, esta asimetría representa aproximadamente el 3.31\% del rango total de la distribución.
+La Tabla \ref{tab:skewness} muestra un coeficiente de asimetría de 0.033079652062595215, lo que indica una ligera asimetría hacia la derecha. Esto sugiere que hay una cola derecha más extensa en comparación con la cola izquierda de la distribución. En términos porcentuales, esta asimetría representa aproximadamente el 3.31\% del rango total de la distribución.
 
-\subsubsection{Coeficiente de Variación variable objetivo}
+\subsubsection{Coeficiente de Variación de la variable objetivo}
 
-El coeficiente de variación es una medida de la dispersión relativa de una variable en relación a su media. Nos permite evaluar la variabilidad de los datos en comparación con su valor promedio. Se calcula dividiendo la desviación estándar por la media y se expresa como un porcentaje.
+El coeficiente de variación es una métrica que refleja la dispersión relativa de una variable respecto a su media. Facilita la evaluación de la variabilidad de los datos en relación con su valor medio. Se calcula dividiendo la desviación estándar entre la media y se expresa en porcentaje.
 
 \begin{table}[H]
     \centering
@@ -128,11 +126,11 @@ El coeficiente de variación es una medida de la dispersión relativa de una var
     \label{tab:coef_variacion}%
 \end{table}%
 
-En la tabla \ref{tab:coef_variacion}, se muestra el coeficiente de variación calculado para los datos analizados. El coeficiente de variación es de aproximadamente 0.5027, lo que indica una alta dispersión relativa en relación con la media. Esto se confirma por el coeficiente de variación en porcentaje, que es del 50.28\%. Estos resultados destacan la variabilidad de los datos en el conjunto de datos analizado.
+La Tabla \ref{tab:coef_variacion} muestra el coeficiente de variación calculado para los datos analizados. Este coeficiente es de aproximadamente 0.5027, lo que indica una alta dispersión relativa respecto a la media. Esto se confirma con el coeficiente de variación en porcentaje, que es del 50.28\%. Estos resultados subrayan la variabilidad de los datos en el conjunto analizado.
 
-\subsubsection{Obteniendo Amplitud variable objetivo}
+\subsubsection{Amplitud de la variable objetivo}
 
-La amplitud es una medida de la variabilidad o dispersión de los datos. Nos permite evaluar la diferencia entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos en el conjunto.
+La amplitud es una métrica que refleja la variabilidad o dispersión de los datos. Permite evaluar la diferencia entre el valor máximo y mínimo de una variable, proporcionando información sobre la extensión de los datos en el conjunto.
 
 \begin{table}[H]
     \centering
@@ -147,12 +145,11 @@ La amplitud es una medida de la variabilidad o dispersión de los datos. Nos per
     \label{tab:amplitud}%
 \end{table}%
 
-En la tabla \ref{tab:amplitud}, se muestra la amplitud calculada para los datos analizados. La amplitud es de aproximadamente 0.56\%, lo que indica la diferencia entre el valor máximo y mínimo de la variable. Esta medida nos proporciona una idea de la extensión de los datos en el conjunto analizado.
+La Tabla \ref{tab:amplitud} muestra la amplitud calculada para los datos analizados. La amplitud es de aproximadamente 0.56\%, lo que indica la diferencia entre el valor máximo y mínimo de la variable. Esta métrica nos proporciona una idea de la extensión de los datos en el conjunto analizado.
 
-\subsubsection{Tabla de Frecuencias variable objetivo}
+\subsubsection{Tabla de Frecuencias de la variable objetivo}
 
-Utilizando los datos obtenidos de la tabla \ref{tab:skewness} y la tabla \ref{tab:amplitud}, se ha construido una tabla de frecuencias que muestra la distribución de los datos en intervalos. Los intervalos se definen con base en
-la amplitud y el valor máximo de los datos analizados.
+Utilizando los datos de la Tabla \ref{tab:skewness} y la Tabla \ref{tab:amplitud}, se ha elaborado una tabla de frecuencias que refleja la distribución de los datos en intervalos. Los intervalos se definen en función de la amplitud y el valor máximo de los datos.
 
 \begin{table}[H]
     \centering
@@ -178,16 +175,15 @@ la amplitud y el valor máximo de los datos analizados.
     \label{tab:tabla_frecuencias}%
 \end{table}%
 
-En la tabla \ref{tab:tabla_frecuencias}, se presenta la tabla de frecuencias que muestra la cantidad de datos en cada intervalo, el total acumulado de datos hasta ese intervalo, la frecuencia relativa del intervalo y la frecuencia
-relativa acumulada. Esta tabla nos permite visualizar la distribución de los datos y su acumulación en cada intervalo.
+La Tabla \ref{tab:tabla_frecuencias} presenta la tabla de frecuencias que muestra la cantidad de datos en cada intervalo, el total acumulado de datos hasta ese intervalo, la frecuencia relativa del intervalo y la frecuencia relativa acumulada. Esta tabla nos permite visualizar la distribución de los datos y su acumulación en cada intervalo.
 
-El intervalo más relevante en esta tabla es el intervalo (3.36, 3.92], ya que contiene la mayor frecuencia (103) y la mayor acumulación (455). Esto indica que la mayoría de los datos se encuentran en este rango de valores.
+El intervalo más relevante es (3.36, 3.92], ya que contiene la mayor frecuencia (103) y la mayor acumulación (455). Esto indica que la mayoría de los datos se encuentran en este rango.
 
-A continuación, se muestra una nueva tabla con información adicional:
+A continuación, se presenta una tabla con información adicional:
 
 \begin{table}[H]
     \centering
-    \caption{Información adicional}
+    \caption{Información Adicional}
     \begin{tabular}{lllll}
         \hline
         \textbf{Mediana} & \textbf{Intervalo de la mediana} & \textbf{Máximo} & \textbf{Intervalo del máximo} \\
@@ -201,11 +197,11 @@ A continuación, se muestra una nueva tabla con información adicional:
     \label{tab:informacion_adicional}%
 \end{table}%
 
-En la tabla \ref{tab:informacion_adicional}, se muestra la mediana de los datos, así como el intervalo en el que se encuentra dicha mediana. Además, se indica el valor máximo y el intervalo en el que se encuentra dicho valor máximo.
+La Tabla \ref{tab:informacion_adicional} muestra la mediana de los datos y el intervalo en el que se encuentra. También se indica el valor máximo y el intervalo correspondiente.
 
-\subsubsection{Histograma con curva de densidad variable objetivo}
+\subsubsection{Histograma con curva de densidad de la variable objetivo}
 
-El histograma con curva de densidad es una herramienta visual importante en el análisis de datos para comprender la distribución de los valores de la variable \say{sol1}.
+El histograma con curva de densidad es una herramienta visual que permite comprender la distribución de los valores de la variable \textit{sol1}.
 
 \begin{figure}[H]
     \centering
@@ -214,22 +210,13 @@ El histograma con curva de densidad es una herramienta visual importante en el a
     \label{fig:hist_density}%
 \end{figure}%
 
+La Figura \ref{fig:hist_density} muestra el histograma con curva de densidad correspondiente a los datos analizados. En el eje Y, se presentan los valores de densidad, mientras que en el eje X, se muestran las notas obtenidas en \textit{sol1}. La mayor concentración de datos se encuentra alrededor del valor 0.35 en el eje Y, lo que indica que la mayoría de las observaciones tienen una nota baja en \textit{sol1}. La curva de densidad, representada en rojo, alcanza su punto más alto entre las notas 3 y 4 en el eje X. Esta curva suavizada muestra la forma general de la distribución de los valores de \textit{sol1}. A medida que las notas aumentan, la densidad disminuye gradualmente.
 
-La figura \ref{fig:hist_density} muestra este tipo de gráfico correspondiente a los datos analizados.
+\subsubsection{Identificación de valores atípicos de la variable objetivo}
 
-En el eje Y se presentan los valores de densidad que van desde 0.00 hasta aproximadamente 0.35, representando la densidad de la variable \say{sol1}. Por otro lado, en el eje X se muestran los valores del 0 al 7, que representan las diferentes notas obtenidas en la columna \say{sol1} (solemne 1).
+La detección de valores atípicos es esencial en el análisis de datos para identificar observaciones que se desvían significativamente de la tendencia general. Estos valores pueden tener un impacto significativo y requerir un análisis más detallado.
 
-La mayor concentración de datos se encuentra alrededor del valor 0.35 en el eje Y, lo cual indica que la mayoría de las observaciones tienen una nota baja en sol1.
-
-La curva de densidad, representada en color rojo, alcanza su punto más alto entre las notas 3 y 4 en el eje X. Esta curva suavizada muestra la forma general de la distribución de los valores de sol1. A medida que las notas aumentan, la densidad disminuye gradualmente.
-
-En resumen, el análisis del histograma con curva de densidad revela que la mayoría de las observaciones tienen una nota baja en sol1, concentrándose principalmente alrededor del valor 0.35 en el eje Y. Además, la curva de densidad muestra un pico más alto entre las notas 3 y 4 en el eje X.
-
-\subsubsection{Identificar valores atípicos variable objetivo}
-
-En el análisis de datos, la detección de valores atípicos es crucial para identificar observaciones que difieren significativamente de la tendencia general. Estos valores pueden tener un impacto significativo y requerir atención especial.
-
-A continuación se muestra una tabla con los valores atípicos identificados mediante el método del Z-score. Se calculó el Z-score para cada observación utilizando un umbral de 3 desviaciones estándar. Los valores que superan este umbral se consideran atípicos y se presentan en la tabla:
+A continuación, se muestra una tabla con los valores atípicos identificados mediante el método del Z-score:
 
 \begin{table}[H]
     \centering
@@ -257,4 +244,4 @@ A continuación se muestra una tabla con los valores atípicos identificados med
     \label{tab:valores_atipicos}%
 \end{table}%
 
-Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. exitosos representa las respuestas correctas de la guía, fallidos indica la cantidad de errores para lograr los exitosos, programa al que pertenece. \say{sol1} se refiere a la nota obtenida en la solemne, aprobado se refiere si la nota de solemen es mayor mayor o igual a 4 el alumno es aprobado(columna agregada por medio de script). Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.
+Observando los valores atípicos en la tabla \ref{tab:valores_atipicos}, podemos notar que algunas observaciones difieren significativamente en al menos una de las variables. \say{exitosos} representa las respuestas correctas de la guía, \say{fallidos} indica la cantidad de errores para lograr los \say{exitosos}, \say{programa} se refiere a la carrera a la cual pertenece. \say{sol1} se refiere a la nota obtenida en la solemne, \say{aprobado} se refiere si la nota de solemen es mayor mayor o igual a 4 el alumno es aprobado(columna agregada por medio de script). Estos valores atípicos pueden ser de interés para un análisis más detallado, ya que podrían indicar situaciones excepcionales o errores en la recolección de datos.
