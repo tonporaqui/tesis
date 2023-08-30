@@ -119,24 +119,23 @@ shap_values = explainer.shap_values(X_test)
 \end{lstlisting}
 
 
-Para comprender los gráficos SHAP y su relevancia en la interpretación de modelos de aprendizaje automático, es esencial entender algunos términos clave. Estos términos nos ayudan a discernir cómo ciertas características influyen en las predicciones del modelo:
+Para comprender los gráficos SHAP y su relevancia en la interpretación de modelos de aprendizaje automático, es crucial familiarizarse con ciertos términos clave y conceptos fundamentales. Estos términos nos proporcionan una visión clara de cómo determinadas características afectan las predicciones del modelo:
 
 \begin{itemize}
-    \item \say{Higher}: Refiere a instancias con valores más altos de una característica, que tienen un impacto positivo en la predicción.
+    \item \textbf{Higher}: Se refiere a instancias con valores más altos de una característica, que contribuyen positivamente a la predicción.
     
-    \item \say{Lower}: Indica instancias con valores más bajos de una característica, que tienen un impacto negativo en la predicción.
+    \item \textbf{Lower}: Denota instancias con valores más bajos de una característica, que reducen el valor de la predicción.
     
-    \item \say{Feature Value}: Representa el valor real de una característica para una instancia específica. En el contexto de los gráficos SHAP, nos permite entender cómo se compara el valor de una característica con otros valores en el conjunto de datos.
+    \item \textbf{Feature Value}: Corresponde al valor real de una característica para una instancia dada. En el contexto de los gráficos SHAP, nos ayuda a visualizar cómo se compara el valor de una característica con otros valores en el conjunto de datos.
     
-    \item \say{Shap Value}: Es una medida que indica cuánto cambia la predicción del modelo debido a la presencia de una característica específica. Un valor SHAP positivo indica que la característica aumenta la predicción, mientras que un valor negativo indica que la disminuye.
+    \item \textbf{Shap Value}: Es una métrica que muestra cuánto varía la predicción del modelo debido a la presencia de una característica en particular. Un valor SHAP positivo sugiere que la característica incrementa la predicción, mientras que un valor negativo sugiere lo contrario.
 \end{itemize}
-
 
 \subsubsection{Visualización de Resultados con Gráficos SHAP}
 
-Los gráficos SHAP proporcionan una visualización intuitiva de cómo cada característica influye en las predicciones del modelo. A continuación, se presentan varios gráficos que muestran la importancia y el impacto de las características en las predicciones.
+Los gráficos SHAP ofrecen una representación visual detallada de la influencia de cada característica en las predicciones del modelo. A continuación, se presentan gráficos que destacan la importancia y el impacto de las características en las predicciones.
 
-En la Figura \ref{fig:caract_var_shap} se muestra el gráfico de características variables SHAP gráfico.
+La Figura \ref{fig:caract_var_shap} ilustra el gráfico de importancia de características basado en valores SHAP.
 
 \begin{figure}[H]
     \centering
@@ -150,11 +149,16 @@ shap.summary_plot(shap_values, X_test)
     \begin{minipage}{0.48\textwidth}
         \centering
         \includegraphics[width=0.9\linewidth]{img/shap_rf/shapForcePlot2.png}
-        \caption{Características Variables SHAP}
+        \caption{Importancia de Características basado en SHAP}
         \label{fig:caract_var_shap}
     \end{minipage}
 \end{figure}
 
+El gráfico SHAP, en particular el \textit{summary plot}, visualiza la importancia de cada característica y cómo afectan las predicciones. Cada punto en el gráfico representa un valor SHAP para una característica y una instancia específica. La posición en el eje Y del gráfico indica qué característica es y la posición en el eje X muestra si la presencia de esa característica aumenta o disminuye la predicción. Los colores representan el valor de la característica, siendo el azul para valores bajos y el rojo para valores altos. Las características se ordenan en función de su importancia, con las más importantes en la parte superior.
+
+Esta visualización permite identificar rápidamente qué características son las más influyentes para el modelo y cómo la variación en los valores de estas características afecta las predicciones.
+
+De la visualización, se observa que las características más influyentes son: \texttt{hito1}, \texttt{e29}, \texttt{exitosos}, \texttt{fallidos}, \texttt{e42}, \texttt{e3}, entre otras. Específicamente, \texttt{hito1} muestra una amplia gama de valores SHAP, extendiéndose tanto en tonos azules como rojos. La presencia de valores SHAP más anchos y separados indica la existencia de valores atípicos. Esto concuerda con lo observado en la tabla \ref{tab:valores_atipicos} presentada anteriormente, donde \texttt{hito1} tiene un valor destacado de 42.
 
 Para visualizar la importancia numérica de cada característica de manera gráfica, se puede recurrir a la representación proporcionada por SHAP. Esta visualización facilita el análisis del impacto de cada característica en las predicciones del modelo:
 
@@ -183,16 +187,16 @@ Para interpretar el gráfico \ref{fig:importancia_relativa_shap}, consideremos d
 \textbf{hito1 con +0.09 (color rojo y barra hacia la derecha)}:
 \begin{itemize}
     \item \textbf{Dirección}: La barra orientada hacia la derecha sugiere que, en promedio, esta característica incrementa el valor de la predicción.
-    \item \textbf{Color}: El tono rojo indica un impacto positivo en la predicción, lo que significa que valores más altos de "hito1" tienden a elevar la predicción.
-    \item \textbf{Magnitud}: El valor +0.09 indica que, en promedio, un incremento en "hito1" eleva la predicción en 0.09 unidades (según la unidad de la variable objetivo).
+    \item \textbf{Color}: El tono rojo indica un impacto positivo en la predicción, lo que significa que valores más altos de \say{hito1} tienden a elevar la predicción.
+    \item \textbf{Magnitud}: El valor +0.09 indica que, en promedio, un incremento en \say{hito1} eleva la predicción en 0.09 unidades (según la unidad de la variable objetivo).
 \end{itemize}
 
 
 \textbf{e18 con -0.02 (color azul y barra hacia la izquierda)}:
 \begin{itemize}
     \item \textbf{Dirección}: La barra orientada hacia la izquierda sugiere que, en promedio, esta característica reduce el valor de la predicción.
-    \item \textbf{Color}: El tono azul indica un impacto negativo en la predicción, lo que significa que valores más altos de "e18" tienden a reducir la predicción.
-    \item \textbf{Magnitud}: El valor -0.02 señala que, en promedio, un incremento en "e18" reduce la predicción en 0.02 unidades.
+    \item \textbf{Color}: El tono azul indica un impacto negativo en la predicción, lo que significa que valores más altos de \say{e18} tienden a reducir la predicción.
+    \item \textbf{Magnitud}: El valor -0.02 señala que, en promedio, un incremento en \say{e18} reduce la predicción en 0.02 unidades.
 \end{itemize}
 
 
@@ -216,6 +220,7 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
     \item La sección \say{higher} muestra los valores positivos que contribuyen a aumentar el valor de predicción. En este caso, \say{hito1} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{exitosos}, \say{e42}, \say{e29}, \say{e35}, \say{e3}, \say{fallidos} para \say{aprobado}.
     \item La sección \say{lower} muestra los valores negativos o fallidos que contribuyen a disminuir el valor de predicción. En este caso, la variable \say{e18}, tiene una contribución negativa al valor de prediccióno que no aporta mucho.
     \item En el gráfico, la marca \say{f(x)} representa el valor de predicción del modelo, que en este caso es 0.81.
+    \item En el grafico \say{base value} es el valor promedio de las predicciones del modelo sobre todo el conjunto de datos. Es el punto de partida en el gráfico y representa la predicción que haríamos si no tuviéramos información sobre la instancia en particular. 
 \end{itemize}
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
