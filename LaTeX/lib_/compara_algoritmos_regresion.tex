@@ -124,6 +124,22 @@ Los resultados obtenidos se presentan en la Figura \ref{fig:metricas_regresion}:
 \end{figure}
 
 Se observa que el modelo LinearRegression en su conjunto de entrenamiento presenta el comportamiento mas normal utilizando la validacion k-fold cross-validation para variables cuantitativas.
+Para una visión más detallada y estructurada de estos resultados, se presenta la siguiente tabla:
+
+\begin{table}[H]
+    \centering
+    \caption{Comparación de Métricas de Rendimiento para Modelos de Regresión}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Modelo} & \textbf{MSE} & \textbf{MAE} & \textbf{R2 } \\
+        \midrule
+        Linear Regression & 0.6409 & 0.6300 & 0.5194 \\
+        Decision Tree  & 0.6617 & 0.6446 & 0.5792 \\
+        K-Neighbors & 0.6826 & 0.6761 & 0.5890 \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:res_metrics}
+\end{table}
 
 Los resultados sobre el conjunto de prueba se presentan en la figura \ref{fig:metricas_regresion_bestModel}
 

@@ -167,7 +167,7 @@ Para visualizar la importancia numérica de cada característica de manera gráf
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Análisis de Importancia de Características, label=lst:cod_calvaloreshap]
 # Análisis de Importancia de Características
-shap_values_tree = explainer(X_test[:100])
+shap_values_tree = explainer(X_test[:])
 shap.plots.bar(shap_values_tree[0])
         \end{lstlisting}
     \end{minipage}
