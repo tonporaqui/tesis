@@ -19,13 +19,13 @@ A continuación, se describen las etapas del proceso KDD y cómo se adaptan a es
 
 \begin{enumerate}
   \item \textbf{Selección:} En esta etapa, se determinan y seleccionan los conjuntos de datos relevantes para la investigación. En el contexto de esta tesis, se seleccionarán los datos relacionados con el rendimiento académico y la resolución de guías de programación.
-  
+
   \item \textbf{Preprocesamiento:} Se limpian y transforman los datos para eliminar cualquier inconsistencia o error. Para esta tesis, se realizará una limpieza de los datos para garantizar que no haya valores faltantes o atípicos que puedan afectar el análisis.
-  
+
   \item \textbf{Transformación:} Los datos se transforman en un formato adecuado para el análisis. En el caso de esta investigación, se podrían realizar transformaciones como la normalización o la codificación de variables categóricas.
-  
+
   \item \textbf{Minería de datos:} Se aplican técnicas de análisis para extraer patrones y conocimientos de los datos. En esta tesis, se emplearán las técnicas SHAP y DoWhy. SHAP se utilizará para analizar la importancia de las características y su relación con el rendimiento académico, mientras que DoWhy se empleará para la inferencia causal, permitiendo entender las relaciones causales subyacentes en los datos.
-  
+
   \item \textbf{Interpretación/Evaluación:} Los resultados obtenidos en la etapa anterior se interpretan y evalúan en función de su relevancia y utilidad. En el contexto de esta investigación, se discutirán los hallazgos y se evaluará su significado en relación con la pregunta de investigación planteada.
 \end{enumerate}
 
@@ -72,7 +72,7 @@ Se utilizarán diversas métricas, incluyendo precisión, exhaustividad, F1-scor
 El accuracy, o precisión, es una métrica que mide la proporción de instancias clasificadas correctamente sobre el total de instancias en los datos de prueba. Es una medida general del rendimiento del modelo en la clasificación. El valor de accuracy se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
-\text{Accuracy} = \frac{\text{Verdaderos Positivos + Verdaderos Negativos}}{\text{Total de instancias}}
+  \text{Accuracy} = \frac{\text{Verdaderos Positivos + Verdaderos Negativos}}{\text{Total de instancias}}
 \end{equation}
 
 Un valor de accuracy alto indica un buen rendimiento general del modelo en la clasificación.
@@ -81,7 +81,7 @@ Un valor de accuracy alto indica un buen rendimiento general del modelo en la cl
 La precisión es una métrica que mide la proporción de instancias clasificadas como positivas que son realmente positivas. Es la capacidad del modelo para evitar hacer falsas afirmaciones de que una instancia pertenece a la clase positiva cuando no lo hace. La precisión se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
-\text{Precision} = \frac{\text{Verdaderos Positivos}}{\text{Verdaderos Positivos + Falsos Positivos}}
+  \text{Precision} = \frac{\text{Verdaderos Positivos}}{\text{Verdaderos Positivos + Falsos Positivos}}
 \end{equation}
 
 Una precisión alta indica que el modelo tiene una baja tasa de falsos positivos.
@@ -90,7 +90,7 @@ Una precisión alta indica que el modelo tiene una baja tasa de falsos positivos
 El recall, también conocido como sensibilidad o tasa de verdaderos positivos, mide la proporción de instancias positivas que son correctamente identificadas por el modelo. Es la capacidad del modelo para detectar y clasificar correctamente las instancias positivas. El recall se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
-\text{Recall} = \frac{\text{Verdaderos Positivos}}{\text{Verdaderos Positivos + Falsos Negativos}}
+  \text{Recall} = \frac{\text{Verdaderos Positivos}}{\text{Verdaderos Positivos + Falsos Negativos}}
 \end{equation}
 
 Un recall alto indica que el modelo tiene una baja tasa de falsos negativos.
@@ -99,7 +99,7 @@ Un recall alto indica que el modelo tiene una baja tasa de falsos negativos.
 El F1 score es una métrica que combina la precisión y el recall en una sola medida. Es la media armónica de la precisión y el recall, y proporciona una evaluación equilibrada del rendimiento del modelo. El F1 score se calcula utilizando la siguiente fórmula:
 
 \begin{equation}
-\text{F1 Score} = \frac{2 \cdot (Precision \cdot Recall)}{Precision + Recall}
+  \text{F1 Score} = \frac{2 \cdot (Precision \cdot Recall)}{Precision + Recall}
 \end{equation}
 
 El F1 score es especialmente útil cuando hay un desequilibrio entre las clases o cuando se desea tener un equilibrio entre la precisión y el recall.

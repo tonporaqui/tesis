@@ -12,7 +12,7 @@ y = df["aprobado"]
 X = df[
 ['hito1', 'hito2', 'exitosos', 'fallidos','e0', 'e1', 'e2', 'e3', 'e4', 'e5', 'e6', 'e7', 'e8', 'e9', 'e10', 'e11', 'e12', 'e13', 'e14', 'e15', 'e16', 'e17', 'e18', 'e19', 'e20', 'e21', 'e22', 'e23', 'e24', 'e25', 'e26', 'e27', 'e28', 'e29', 'e30', 'e31', 'e32', 'e33', 'e34', 'e35', 'e36', 'e37', 'e38', 'e39', 'e40', 'e41', 'e42', 'e43', 'e44', 'e45', 'e46', 'e47', 'e48', 'e49', 'e50', 'e51', 'e52']
 ]
-    \end{lstlisting}
+\end{lstlisting}
 
 \subsubsection{División de Datos y Definición del Modelo}
 
@@ -87,22 +87,22 @@ Los resultados obtenidos en la validación cruzada proporcionan una visión clar
 A continuación, se presenta una tabla con los resultados de la validación cruzada Stratified K-Fold en los datos de entrenamiento:
 
 \begin{table}[h]
-\centering
-\caption{Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento}
-\label{lst:res_skfold_train}
-\begin{tabular}{|c|c|c|}
-\hline
-\textbf{Fold} & \textbf{Error cuadrático medio} & \textbf{Coeficiente de determinación (R2)} \\
-\hline
-1 & 0.2234 & 0.0994 \\
-2 & 0.2161 & 0.1307 \\
-3 & 0.2400 & 0.0295 \\
-... & ... & ... \\
-\hline
-\multicolumn{3}{|c|}{Promedio del error cuadrático medio: 0.2174} \\
-\multicolumn{3}{|c|}{Promedio del error cuadrático medio en \%: 21.74} \\
-\hline
-\end{tabular}
+    \centering
+    \caption{Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento}
+    \label{lst:res_skfold_train}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Fold} & \textbf{Error cuadrático medio} & \textbf{Coeficiente de determinación (R2)} \\
+        \hline
+        1             & 0.2234                          & 0.0994                                     \\
+        2             & 0.2161                          & 0.1307                                     \\
+        3             & 0.2400                          & 0.0295                                     \\
+        ...           & ...                             & ...                                        \\
+        \hline
+        \multicolumn{3}{|c|}{Promedio del error cuadrático medio: 0.2174}                            \\
+        \multicolumn{3}{|c|}{Promedio del error cuadrático medio en \%: 21.74}                       \\
+        \hline
+    \end{tabular}
 \end{table}
 
 Si el RMSE es 0, significa que el modelo predice perfectamente los valores reales. Cuanto más cerca esté el MSE o RMSE de cero, mejor será el rendimiento del modelo en términos de la diferencia entre las predicciones y los valores reales.
@@ -123,11 +123,11 @@ Para comprender los gráficos SHAP y su relevancia en la interpretación de mode
 
 \begin{itemize}
     \item \textbf{Higher}: Se refiere a instancias con valores más altos de una característica, que contribuyen positivamente a la predicción.
-    
+
     \item \textbf{Lower}: Denota instancias con valores más bajos de una característica, que reducen el valor de la predicción.
-    
+
     \item \textbf{Feature Value}: Corresponde al valor real de una característica para una instancia dada. En el contexto de los gráficos SHAP, nos ayuda a visualizar cómo se compara el valor de una característica con otros valores en el conjunto de datos.
-    
+
     \item \textbf{Shap Value}: Es una métrica que muestra cuánto varía la predicción del modelo debido a la presencia de una característica en particular. Un valor SHAP positivo sugiere que la característica incrementa la predicción, mientras que un valor negativo sugiere lo contrario.
 \end{itemize}
 
@@ -220,7 +220,7 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
     \item La sección \say{higher} muestra los valores positivos que contribuyen a aumentar el valor de predicción. En este caso, \say{hito1} esta mas sercana a la \say{f(x)}, lo que significa que esta característica contribuye positivamente al valor de predicción en conjuntos con las variables \say{exitosos}, \say{e42}, \say{e29}, \say{e35}, \say{e3}, \say{fallidos} para \say{aprobado}.
     \item La sección \say{lower} muestra los valores negativos o fallidos que contribuyen a disminuir el valor de predicción. En este caso, la variable \say{e18}, tiene una contribución negativa al valor de prediccióno que no aporta mucho.
     \item En el gráfico, la marca \say{f(x)} representa el valor de predicción del modelo, que en este caso es 0.81.
-    \item En el grafico \say{base value} es el valor promedio de las predicciones del modelo sobre todo el conjunto de datos. Es el punto de partida en el gráfico y representa la predicción que haríamos si no tuviéramos información sobre la instancia en particular. 
+    \item En el grafico \say{base value} es el valor promedio de las predicciones del modelo sobre todo el conjunto de datos. Es el punto de partida en el gráfico y representa la predicción que haríamos si no tuviéramos información sobre la instancia en particular.
 \end{itemize}
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
