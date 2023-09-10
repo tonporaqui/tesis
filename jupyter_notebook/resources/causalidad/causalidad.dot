@@ -1,0 +1,6 @@
+strict digraph "" {
+	hito1 -> hito2;
+	hito2 -> aprobado;
+	exitosos -> hito1;
+	e29 -> exitosos;
+}
