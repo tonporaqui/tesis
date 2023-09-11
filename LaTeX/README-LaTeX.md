@@ -44,6 +44,7 @@ Este documento proporciona una guía paso a paso para instalar y configurar LaTe
 - [LaTeX Workshop Documentation](https://github.com/James-Yu/LaTeX-Workshop/wiki)
 - [LaTeX Project](https://www.latex-project.org/)
 - Para obtener apoyo visual sobre cómo instalar LaTeX en Windows 11 y cómo configurar VSCode para LaTeX, puedes ver [este video tutorial](https://youtu.be/jIh_gBND02U?si=GAUstFF4Q3beqpW3) que encontré útil.
+  [![Cómo instalar LaTeX en Windows 11 y configurar VSCode para LaTeX](https://img.youtube.com/vi/jIh_gBND02U/0.jpg)](https://youtu.be/jIh_gBND02U "Cómo instalar LaTeX en Windows 11 y configurar VSCode para LaTeX")
 
 ---
 
