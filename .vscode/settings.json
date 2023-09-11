@@ -1,7 +1,9 @@
 {
+    "notebook.formatOnCellExecution": true,
+    "notebook.formatOnSave.enabled": true,
     "python.terminal.activateEnvironment": true,
     "spellright.documentTypes": [
         "markdown",
         "plaintext"
-    ],
+    ]
 }
