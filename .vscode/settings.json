@@ -1,9 +1,14 @@
 {
     "notebook.formatOnCellExecution": true,
     "notebook.formatOnSave.enabled": true,
+    "python.analysis.typeCheckingMode": "basic",
     "python.terminal.activateEnvironment": true,
     "spellright.documentTypes": [
         "markdown",
-        "plaintext"
+        "plaintext",
+        "python"
+    ],
+    "spellright.language": [
+        "es"
     ]
 }
