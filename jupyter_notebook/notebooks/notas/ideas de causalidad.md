@@ -31,8 +31,7 @@ donde:
 sol1: Nota en la primera evaluación (rango 0.0-7.7)
 exitosos: Cantidad de respuestas correctas en la guía
 fallidos: Número de intentos en la guía
-hito1 hito2: Expectativas de aprendizaje del curso (conjunto de preguntas)
-programa: Programa académico del estudiante  
+hito1: Expectativas de aprendizaje del curso (conjunto de preguntas)
 Columnas e0 hasta la e52 & Resultados de la guía (1: correcto, 0: incorrecto)
 finalmente se propuso crear la clumna aprobado es la representacion de sol1 donde aprobado es 1 cuando la nota es igual o superior a 4.0.
 
