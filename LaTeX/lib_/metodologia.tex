@@ -132,16 +132,48 @@ Las técnicas de XAI (Explainable Artificial Intelligence) y SHAP (Shapley Addit
   \label{fig:xai_shap}
 \end{figure}
 
-
 \subsection{Análisis de Causalidad con DoWhy}
 
-El análisis de causalidad va más allá de la simple correlación, buscando identificar relaciones directas de causa y efecto entre variables. En el ámbito de la minería de datos y el aprendizaje automático, esta distinción es crucial para tomar decisiones informadas basadas en los resultados de un modelo.
+El análisis de causalidad, a diferencia de la correlación, busca identificar relaciones de causa y efecto entre variables, siendo crucial en minería de datos y aprendizaje automático para tomar decisiones informadas.
 
-\textbf{DoWhy:} DoWhy es una biblioteca de Python que se centra en la inferencia causal. Su objetivo es no solo proporcionar herramientas para realizar análisis causal, sino también guiar al usuario a través del proceso lógico y empírico de inferencia causal. Se basa en la idea de que la inferencia causal requiere dos pasos: primero, modelar el proceso generativo de los datos y, segundo, utilizar técnicas estadísticas para identificar efectos causales a partir de datos observados.
+\textbf{DoWhy:} Es una biblioteca de Python enfocada en la inferencia causal, facilitando el análisis causal y guiando al usuario en este proceso. Se utilizará DoWhy para analizar la relación causal entre la resolución de la guía de programación y el éxito académico, identificando y controlando variables de confusión potenciales mediante técnicas como el matching de propensión.
 
-En el contexto de esta investigación, DoWhy se utilizará para analizar la relación causal entre la resolución de la guía de programación y el éxito académico. Aunque puede haber una correlación observada entre estos dos factores, es esencial determinar si la resolución de la guía tiene un efecto directo en el rendimiento académico o si hay otras variables no observadas que puedan estar influyendo en ambos.
+El proceso de análisis de causalidad con DoWhy se estructura en cuatro etapas principales:
 
-Para llevar a cabo este análisis, se identificarán variables de confusión potenciales que puedan afectar tanto la resolución de la guía como el rendimiento académico. Una vez identificadas, se aplicarán técnicas como el matching de propensión para controlar estos factores y obtener estimaciones causales más precisas. El matching de propensión es una técnica que busca emparejar individuos con características similares pero con diferentes tratamientos (en este caso, resolver o no la guía) para comparar sus resultados y determinar el efecto causal del tratamiento.
+\begin{enumerate}
+    \item \textbf{Modelado Causal:} Se construye un modelo causal, representado mediante un Diagrama Acíclico Dirigido (DAG), que ilustra las relaciones hipotetizadas entre las variables. 
+
+    \begin{figure}[H]
+      \centering
+      \includegraphics[width=0.7\textwidth]{img/causalidad/diagrama_causal_tesis.png}
+      \caption{Diagrama Causal Propuesto}
+      \label{fig:diagrama_causal_propuesto}
+    \end{figure}
+
+    En este diagrama, se puede discernir que las preguntas de la guía están directamente relacionadas con las variables 'fallidos', 'exitosos' y 'hito1'.
+
+    Además, se observa una relación directa entre 'exitosos' con 'hito1' y 'aprobado'.
+
+    A partir de este modelo, se puede inferir que una disminución en los 'fallidos' al resolver las preguntas de la guía podría incrementar la cantidad de 'exitosos', lo cual, a su vez, elevaría el valor de 'hito1' y aumentaría la probabilidad de aprobar.
+
+    \item \textbf{Identificación:} Se deriva la expresión causal a partir del modelo, definida por una fórmula estructural causal (SCM):
+    \begin{equation}
+        Y = \alpha + \beta X + \epsilon
+    \end{equation}
+
+    \item \textbf{Estimación:} Se estima los efectos causales usando datos observados y técnicas estadísticas. Un método común es el Método de Diferencias en Diferencias (DiD):
+    \begin{equation}
+        \hat{\beta}_{DiD} = (\bar{Y}_{1,post} - \bar{Y}_{1,pre}) - (\bar{Y}_{0,post} - \bar{Y}_{0,pre})
+    \end{equation}
+
+    \item \textbf{Pruebas de Robustez:} Se evalúa la sensibilidad de los resultados ante diferentes suposiciones, utilizando, por ejemplo, la prueba de sensibilidad de Rosenbaum:
+    \begin{equation}
+        \Gamma = \frac{U_{1i}}{U_{0i}}
+    \end{equation}
+    y la interpretación de los valores \( p \) donde un \( p < 0.05 \) indica significancia estadística, mientras que un \( p > 0.05 \) sugiere que el efecto observado podría ser aleatorio.
+\end{enumerate}
+
+El análisis con DoWhy ayudará a determinar la relación causal entre la resolución de la guía y el rendimiento académico, proporcionando insights valiosos para la toma de decisiones basada en evidencia causal.
 
 \begin{figure}[H]
   \centering
@@ -149,6 +181,7 @@ Para llevar a cabo este análisis, se identificarán variables de confusión pot
   \caption{Flujo DoWhy librería Python}
   \label{fig:dowhy_lib}
 \end{figure}
+
 
 En resumen, el análisis de causalidad con DoWhy proporcionará insights valiosos sobre la verdadera relación entre la resolución de guías de programación y el éxito académico, permitiendo a los educadores y responsables de la toma de decisiones actuar con base en evidencia causal y no solo en correlaciones observadas.
 
