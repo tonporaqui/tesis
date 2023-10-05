@@ -9,42 +9,59 @@ Sin embargo, solo basarse en datos observacionales para la estimación causal pu
 
 \subsubsection{Análisis de la variable \texttt{hito1}}
 Contexto y relevancia específica de la variable \texttt{hito1} dentro de este análisis.
-El análisis causal es una herramienta poderosa que nos permite desentrañar las relaciones intrínsecas entre las variables en un conjunto de datos. Tras haber interpretado el modelo con SHAP utilizando un \texttt{RandomForestClassifier}, es imperativo adentrarnos en la causalidad de las variables presentes en nuestro conjunto de datos. Emplearemos la biblioteca \texttt{DoWhy} para discernir y cuantificar el efecto causal de las variables \texttt{hito1}, \texttt{exitoso}, \texttt{fallidos}, y \texttt{e29} sobre la variable \texttt{aprobado}. Iniciaremos con \texttt{hito1} y posteriormente abordaremos las demás variables.
+El análisis causal es una herramienta poderosa que nos permite desentrañar las relaciones intrínsecas entre las variables en un conjunto de datos. Tras haber interpretado el modelo con SHAP utilizando un \texttt{RandomForestClassifier}, es imperativo adentrarnos en la causalidad de las variables presentes en nuestro conjunto de datos. Emplearemos la biblioteca \texttt{DoWhy} para discernir y cuantificar el efecto causal de la variable \texttt{hito1} y posteriormente abordaremos las demás variables asociadas a los resultados obtenidos previamente en el Analisis SHAP.
 
 \subsubsection{Modelado del Problema Causal}
 
 El análisis causal se centra en identificar y comprender las relaciones subyacentes entre las variables, en lugar de simplemente observar las correlaciones. Para llevar a cabo un análisis causal efectivo, es crucial establecer un modelo que represente adecuadamente las relaciones causales entre las variables de interés. En este contexto, nos centraremos en la variable \texttt{hito1} como nuestra principal variable de tratamiento.
 
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \begin{lstlisting}[language=Python, caption=Construcción del Modelo Causal para hito1, label=lst:model_causalHito1]
-from dowhy import CausalModel
+\begin{lstlisting}[language=Python, caption=Construcción del Modelo Causal para hito1, label=lst:model_causalHito1]
+    from dowhy import CausalModel
+    
+    model = CausalModel(
+        data=df,
+        treatment="hito1",  # Variable tratada (exposición)
+        outcome="aprobado",  # Variable de resultado
+        graph="""
+        digraph {
+            e42 -> exitosos;
+            e42 -> fallidos;
+            e42 -> hito1;
+            e29 -> exitosos;
+            e29 -> fallidos;
+            e29 -> hito1;
+            e3 -> exitosos;
+            e3 -> fallidos;
+            e3 -> hito1;
+            e35 -> exitosos;
+            e35 -> fallidos;
+            e35 -> hito1;
+            e18 -> exitosos;
+            e18 -> fallidos;
+            e18 -> hito1;
+            hito1 -> aprobado;
+            exitosos -> aprobado;
+            fallidos -> exitosos;
+            exitosos -> hito1;
+        }
+        """,
+    )
+            \end{lstlisting}
 
-model = CausalModel(
-    data=df,
-    treatment="hito1",
-    outcome="aprobado",
-    common_causes=[
-        "fallidos",
-        "exitosos",
-        "e29"
-    ],
-)
-        \end{lstlisting}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
+
+\begin{figure}[H]
+
+
         \centering
-        \includegraphics[width=0.8\textwidth]{img/causalidad/graph_causal_model_hito1.png}
+        \includegraphics[width=0.9\textwidth]{img/causalidad/graph_causal_model_hito1.png}
         \caption{Representación Gráfica del Modelo Causal para hito1}
         \label{fig:modelo_causal_hito1}
-    \end{minipage}
+
 \end{figure}
 
-En el código presentado en la Figura \ref{lst:model_causalHito1}, utilizamos la biblioteca \texttt{DoWhy} para construir un modelo causal. La variable de tratamiento es \texttt{hito1}, y la variable de resultado es \texttt{aprobado}. Las causas comunes, que son variables que pueden influir tanto en el tratamiento como en el resultado, incluyen \texttt{fallidos}, \texttt{exitosos} y \texttt{e29}.
+En el código presentado en la Figura \ref{lst:model_causalHito1}, utilizamos la biblioteca \texttt{DoWhy} para construir un modelo causal. La variable de tratamiento es \texttt{hito1}, y la variable de resultado es \texttt{aprobado}. 
 
-La Figura \ref{fig:modelo_causal_hito1} proporciona una visualización gráfica del modelo causal propuesto. Esta representación gráfica es esencial porque ofrece una perspectiva visual de cómo se espera que las variables interactúen entre sí. Las flechas indican la dirección de la causalidad, ayudando a entender las posibles rutas a través de las cuales una variable puede influir en otra.
+La Figura \ref{fig:modelo_causal_hito1} proporciona una visualización gráfica del \texttt{Diagrama Causal Propuesto} en la Figura  [\ref{fig:diagrama_causal_propuesto}] de la subsection \ref{subsec:analisisCausalDowhy}. Esta representación gráfica es esencial porque ofrece una perspectiva visual de cómo se espera que las variables interactúen entre sí. Las flechas indican la dirección de la causalidad, ayudando a entender las posibles rutas a través de las cuales una variable puede influir en otra.
 
 Es importante destacar que este modelo es una representación hipotética de las relaciones causales basada en el conocimiento previo y la comprensión del dominio. La validación y refinamiento del modelo son esenciales para garantizar que las inferencias causales derivadas sean precisas y significativas.
 
@@ -65,6 +82,7 @@ identified_estimand = model.identify_effect(
 
 estimate = model.estimate_effect(
     identified_estimand,
+    test_significance=True,
     method_name="backdoor.econml.dml.DML",
     control_value=0,
     treatment_value=1,
@@ -94,7 +112,8 @@ estimate = model.estimate_effect(
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
-            Valor Medio & 0.14677867241609466 \\
+            Valor Medio & -0.3318724563706213 \\
+            P-Value & 0.025 \\
             \bottomrule
         \end{tabular}
         \caption{Resultados de la Estimación del Efecto Causal para \texttt{hito1}}
@@ -102,9 +121,9 @@ estimate = model.estimate_effect(
     \end{minipage}
 \end{figure}
 
-El código presentado utiliza la biblioteca \texttt{DoWhy} para llevar a cabo este proceso. El método \texttt{identify\_effect} se encarga de identificar el efecto causal basado en el modelo propuesto. Posteriormente, el método \texttt{estimate\_effect} se utiliza para estimar este efecto. Es importante notar que se ha elegido el método \texttt{backdoor.econml.dml.DML} para la estimación. Esta elección se basa en investigaciones previas donde se determinó que el modelo \texttt{RandomForestRegressor} es el más adecuado para este tipo de análisis, como se discutió en la subsección \texttt{Comparación de algoritmos} \ref{subsec:comparaAlgoritmos}.
+El código presentado utiliza la biblioteca \texttt{DoWhy} para llevar a cabo este proceso. El método \texttt{identify\_effect} se encarga de identificar el efecto causal basado en el modelo propuesto. Posteriormente, el método \texttt{estimate\_effect} se utiliza para estimar este efecto. Es importante notar que se ha elegido el método \texttt{backdoor.econml.dml.DML} para la estimación. Esta elección se basa en investigaciones previas donde se determinó que el modelo \texttt{RandomForestRegressor} es el más adecuado para este tipo de análisis, como se discutió en Modelo Causal de la subsección \texttt{Comparación de algoritmos} \ref{subsec:comparaAlgoritmos}.
 
-El \say{Valor Medio} en la Tabla \ref{tab:efecto_causal_hito1} representa el efecto promedio estimado de \texttt{hito1} sobre \texttt{aprobado}. Un valor de 0.14677867241609466 indica que, en promedio, un incremento unitario en \texttt{hito1} se traduce en un aumento del 14.68\% en la probabilidad de aprobar. Esta métrica nos proporciona una comprensión profunda de la magnitud de la influencia de \texttt{hito1} en el resultado deseado, subrayando su relevancia en el contexto del análisis.
+El \say{Valor Medio} en la Tabla \ref{tab:efecto_causal_hito1} representa el efecto promedio estimado de \texttt{hito1} sobre \texttt{aprobado}. Un valor de -0.3318724563706213 indica que, en promedio, un incremento unitario en \texttt{hito1} se traduce en una disminución del -33.18\% en la probabilidad de aprobar. Esta métrica nos proporciona una comprensión profunda de la magnitud de la influencia de \texttt{hito1} en el resultado deseado, subrayando su relevancia en el contexto del análisis.
 
 \subsubsection{Refutador de Datos Aleatorios}
 
@@ -126,9 +145,9 @@ refute1 = model.refute_estimate(
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
-            Estimado Original & 0.14677867241609466 \\
-            Nuevo Efecto & -0.07422180240608484 \\
-            p-value & 0.1200000000000001 \\
+            Estimado Original & -0.3318724563706213 \\
+            Nuevo Efecto & -0.09830483464318544 \\
+            p-value & 0.15999999999999992 \\
             \bottomrule
         \end{tabular}
         \caption{Resultados del Refutador de Datos Aleatorios para \texttt{hito1}}
@@ -136,7 +155,7 @@ refute1 = model.refute_estimate(
     \end{table}
 \end{minipage}
 
-El código en el Listado \ref{lst:RefutadorDatosAleatoriosHito1} introduce una nueva causa común aleatoria al modelo y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_datos_aleatorios_hito1}. Aunque el \say{Nuevo Efecto} (-0.0742) difiere del \say{Estimado Original} (0.1468), el p-value de 0.12 indica que esta diferencia no es estadísticamente significativa al nivel convencional del 5\%. Esto refuerza la confianza en que nuestro estimado original es robusto y no es altamente susceptible a la influencia de variables no observadas.
+El código en el Listado \ref{lst:RefutadorDatosAleatoriosHito1} introduce una nueva causa común aleatoria al modelo y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_datos_aleatorios_hito1}. Aunque el \say{Nuevo Efecto} (-0.33187) difiere del \say{Estimado Original} (-0.09830), el p-value de 0.16 indica que esta diferencia no es estadísticamente significativa al nivel convencional del 5\%. Esto refuerza la confianza en que nuestro estimado original es robusto y no es altamente susceptible a la influencia de variables no observadas.
 
 
 
@@ -151,7 +170,7 @@ refute2 = model.refute_estimate(
     estimate,
     method_name="add_unobserved_common_cause",
     confounders_effect_on_treatment="binary_flip",
-    confounders_effect_on_outcome="linear",
+    confounders_effect_on_outcome="binary_flip",
     effect_strength_on_treatment=0.01,
     effect_strength_on_outcome=0.02,
 )
@@ -165,8 +184,8 @@ refute2 = model.refute_estimate(
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
-            Estimado Original & -0.024903693843320803 \\
-            Nuevo Efecto & 0.25425759568648637 \\
+            Estimado Original & -0.3318724563706213 \\
+            Nuevo Efecto & -0.2995601095822008 \\
             \bottomrule
         \end{tabular}
         \caption{Resultados del Refutador de Causa Común No Observada para \texttt{hito1}}
@@ -174,7 +193,7 @@ refute2 = model.refute_estimate(
     \end{table}
 \end{minipage}
 
-El código en el Listado \ref{lst:RefutadorCausaComúnNoObservadaHito1} introduce una causa común no observada al modelo y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_causa_no_observada_hito1}. La notable diferencia entre el \say{Estimado Original} y el \say{Nuevo Efecto} indica que nuestro estimado es sensible a la presencia de variables no observadas. Esta sensibilidad subraya la importancia de considerar posibles sesgos en el análisis causal y de interpretar los resultados con precaución.
+El código en el Listado \ref{lst:RefutadorCausaComúnNoObservadaHito1} introduce una causa común no observada al modelo y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_causa_no_observada_hito1}. La notable diferencia entre el \say{Estimado Original} (-0.33187) y el \say{Nuevo Efecto} (-0.29956) indica que nuestro estimado es sensible a la presencia de variables no observadas. Esta sensibilidad subraya la importancia de considerar posibles sesgos en el análisis causal y de interpretar los resultados con precaución.
 
 
 \subsubsection{Refutador de Tratamiento Placebo}
@@ -199,9 +218,9 @@ refute3 = model.refute_estimate(
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
-            Estimado Original & -0.024903693843320803 \\
-            Nuevo Efecto & 0.000123456789012345 \\
-            p-value & 0.99 \\
+            Estimado Original & -0.3318724563706213  \\
+            Nuevo Efecto & 0.018093641860876853 \\
+            p-value & 0.96 \\
             \bottomrule
         \end{tabular}
         \caption{Resultados del Refutador de Tratamiento Placebo para \texttt{hito1}}
@@ -209,13 +228,16 @@ refute3 = model.refute_estimate(
     \end{table}
 \end{minipage}
 
-El código en el Listado \ref{lst:RefutadorTratamientoPlaceboHito1} introduce un tratamiento ficticio y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_placebo_hito1}. El "Nuevo Efecto", cercano a cero, y un p-value elevado de 0.99, sugieren que el tratamiento real, \texttt{hito1}, no tiene un efecto significativo sobre el resultado. Esta evidencia indica que los resultados obtenidos inicialmente podrían ser atribuidos al azar y no necesariamente a la influencia real de \texttt{hito1} sobre \texttt{aprobado}.
+El código en el Listado \ref{lst:RefutadorTratamientoPlaceboHito1} introduce un tratamiento ficticio y recalcula el efecto causal. Los resultados de esta refutación se presentan en la Tabla \ref{tab:refutador_placebo_hito1}. El \say{Estimado Original} (-0.33187) y el \say{Nuevo Efecto} (0.01809), cercano a cero, y un p-value elevado de 0.96, sugieren que el tratamiento real, \texttt{hito1}, no tiene un efecto significativo sobre el resultado. Esta evidencia indica que los resultados obtenidos inicialmente podrían ser atribuidos al azar y no necesariamente a la influencia real de \texttt{hito1} sobre \texttt{aprobado}.
 
 En resumen: El análisis causal de \texttt{hito1} se centró en desentrañar las relaciones intrínsecas con la variable \texttt{aprobado}. Se estableció un modelo causal utilizando \texttt{DoWhy}, representando las relaciones causales entre \texttt{hito1} y otras variables relevantes. La Figura \ref{fig:modelo_causal_hito1} proporciona una visualización gráfica de este modelo.
 
 Posteriormente, se identificó y cuantificó el efecto causal de \texttt{hito1} sobre \texttt{aprobado}, revelando un efecto promedio de 0.1468, lo que indica un aumento del 14.68\% en la probabilidad de aprobar con un incremento unitario en \texttt{hito1}.
 
 Se realizaron refutaciones para validar la robustez del estimado. El refutador de datos aleatorios mostró que el estimado es robusto y no es altamente susceptible a la influencia de variables no observadas. Sin embargo, el refutador de causa común no observada sugirió sensibilidad a variables no observadas. Finalmente, el refutador de tratamiento placebo indicó que el tratamiento real, \texttt{hito1}, podría no tener un efecto significativo sobre el resultado.
+
+
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 
 Tras un análisis detallado de la variable \texttt{hito1}, continuaremos examinando las variables \texttt{exitosos}, \texttt{fallidos} y, finalmente, \texttt{e29}. Durante este análisis, referenciaremos los códigos empleados para \texttt{hito1}, que permanecen en gran medida inalterados, salvo en la construcción del modelo causal, que se adaptará según la variable en estudio. En este contexto, nos centraremos en presentar únicamente los resultados correspondientes a cada variable.
 
