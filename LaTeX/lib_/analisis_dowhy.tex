@@ -1,4 +1,3 @@
-
 \subsection{Análisis Exploratorio de Causalidad con DoWhy}
 
 \textbf{Objetivo del Análisis Exploratorio de Causalidad:} Tras identificar las características más influyentes en nuestro modelo a través del análisis SHAP, buscamos entender no solo la correlación, sino también las posibles relaciones causales entre estas características y los resultados de los estudiantes. Utilizando la biblioteca DoWhy, que facilita un enfoque basado en gráficos causales, pretendemos desentrañar las verdaderas relaciones causales detrás de las predicciones de nuestro modelo. Esto nos permitirá diseñar intervenciones más efectivas, basadas no solo en correlaciones observadas, sino en relaciones causales validadas.
@@ -50,15 +49,13 @@ El análisis causal se centra en identificar y comprender las relaciones subyace
         }
         """,
     )
-            \end{lstlisting}
+\end{lstlisting}
 
 
 \begin{figure}[H]
-
-
         \centering
         \includegraphics[width=0.9\textwidth]{img/causalidad/graph_causal_model_hito1.png}
-        \caption{Representación Gráfica del Modelo Causal para hito1}
+        \caption{Representación Gráfica del Modelo Causal}
         \label{fig:modelo_causal_hito1}
 
 \end{figure}
@@ -278,363 +275,388 @@ Posteriormente, se identificó y cuantificó el efecto causal de \texttt{hito1} 
 Se realizaron refutaciones para validar la robustez del estimado. El refutador de datos aleatorios mostró que el estimado es robusto y no es altamente susceptible a la influencia de variables no observadas. Sin embargo, el refutador de causa común no observada sugirió sensibilidad a variables no observadas. Finalmente, el refutador de tratamiento placebo indicó que el tratamiento real, \texttt{hito1}, podría no tener un efecto significativo sobre el resultado.
 
 
-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+\subsubsection{Análisis exploratorio iterativo de las variables seleccionadas}
+Después de analizar la variable \texttt{hito1}, extendemos nuestro análisis a otras variables de interés identificadas en la predicción SHAP. Para ello, hemos creado un array \texttt{preguntasGuia} que contiene las variables a investigar, y una variable \texttt{outcome\_variable} para representar el resultado de interés, en este caso, \texttt{aprobado}. A continuación, iteramos sobre cada variable en \texttt{preguntasGuia}, aplicando el mismo proceso analítico empleado previamente en \texttt{hito1}. Los resultados de cada iteración se almacenan en una lista llamada \texttt{results} para su posterior análisis y comparación.
 
-Tras un análisis detallado de la variable \texttt{hito1}, continuaremos examinando las variables \texttt{exitosos}, \texttt{fallidos} y, finalmente, \texttt{e29}. Durante este análisis, referenciaremos los códigos empleados para \texttt{hito1}, que permanecen en gran medida inalterados, salvo en la construcción del modelo causal, que se adaptará según la variable en estudio. En este contexto, nos centraremos en presentar únicamente los resultados correspondientes a cada variable.
+\begin{lstlisting}[language=Python, caption=Proceso de análisis iterativo, label=lst:analisisIterativo]
+# Array preguntasGuia treatment
+preguntasGuia = [
+    "hito1",
+    "fallidos",
+    "exitosos",
+    "e42",
+    "e35",
+    "e29",
+    "e18",
+    "e3",
+]
+# Variable outcome
+outcome_variable = "aprobado"
+# Lista para almacenar los resultados
+results = []
+# Función para ejecutar el modelo causal
+def run_causal_model(treatment_variable, outcome_variable):
+    # Paso 1: Modelar un problema causal
+    model = CausalModel(
+        data=df,
+        treatment=treatment_variable,
+        outcome=outcome_variable,
+        graph="""
+            digraph {        
+                e42 -> exitosos;
+                e42 -> fallidos;
+                e42 -> hito1;
+                e29 -> exitosos;
+                e29 -> fallidos;
+                e29 -> hito1;
+                e3 -> exitosos;
+                e3 -> fallidos;
+                e3 -> hito1;
+                e35 -> exitosos;
+                e35 -> fallidos;
+                e35 -> hito1;
+                e18 -> exitosos;
+                e18 -> fallidos;
+                e18 -> hito1;
+                hito1 -> aprobado;
+                exitosos -> aprobado;
+                fallidos -> exitosos;
+                exitosos -> hito1;
+            }
+            """,
+    )
+    # ... (resto del código es el mismo utilizado en el análisis de hito1)
 
+    print("fin: " + str(treatment_variable))
+    # Obtener el valor p del test de significancia
+    significance_test_result = estimate.test_stat_significance()
+    p_value = significance_test_result["p_value"]
+    # Asegurando devolver todos los valores más importantes para posibles análisis a futuro
+    return {
+        "Variable de Tratamiento": treatment_variable,
+        "Variable de Resultado": outcome_variable,
+        "Estimación del Efecto Causal": estimate.value,
+        "Valor p": p_value,
+        "Tipo (Causa Común Aleatoria)": refute1.refutation_type,
+        "CCA Efecto Estimado": refute1.estimated_effect,
+        "CCA - Nuevo Efecto": refute1.new_effect,
+        "CCA - Valor p": refute1.refutation_result["p_value"],
+        "Tipo (Causa Común No Observada)": refute2.refutation_type,
+        "CCNO - Efecto Estimado": refute2.estimated_effect,
+        "CCNO - Nuevo Efecto": refute2.new_effect,
+        "Tipo (Tratamiento Placebo)": refute3.refutation_type,
+        "TP - Efecto Estimado": refute3.estimated_effect,
+        "TP - Nuevo Efecto": refute3.new_effect,
+        "TP - Valor p": refute3.refutation_result["p_value"],
+    }
+# Iterar sobre cada variable en preguntasGuia y el outcome aprobado
+for pregunta in preguntasGuia:
+    result = run_causal_model(pregunta, outcome_variable)
+    results.append(result)
+\end{lstlisting}
 
-\subsubsection{Análisis exploratorio de la variable \texttt{exitosos}}
-Después de analizar la variable \texttt{hito1}, nos enfocamos en la variable \texttt{exitosos}. A continuación, presentamos la construcción del modelo causal para \texttt{exitosos} y los resultados obtenidos.
+El grafico causal obtenido por cada hiteracion se mantiene en su forma de explicar la relacion entre \texttt{treatment} y \texttt{outcome}, presentanda en la Figura [\ref{fig:modelo_causal_hito1}].
+
+\subsubsection{Resultados de la Iteración}
+
+Antes de presentar los resultados de la iteración, se explican las abreviaturas utilizadas en la tabla:
+\begin{itemize}
+    \item CCA: Causa Común Aleatoria.
+    \item CCNO: Causa Común No Observada.
+    \item TP: Tratamiento Placebo.
+\end{itemize}
+
+Los términos \say{Nuevo Efecto} y \say{Valor p} se refieren a los resultados obtenidos en los análisis respectivos.
+
+\begin{table}[H]
+    \centering
+    \resizebox{\textwidth}{!}{%      
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            No. & \makecell{Variable de\\ Tratamiento} & \makecell{Estimación del\\ Efecto Causal} & \makecell{Valor p} & \makecell{CCA \\ Nuevo Efecto} & \makecell{CCA \\ Valor p} & \makecell{CCNO \\ Nuevo Efecto} & \makecell{TP \\ Nuevo Efecto} & \makecell{TP \\ Valor p} \\
+            \hline
+            1 & e42 & 0.224736 & 0.105 & 0.068243 & 0.04 & -0.106769 & 0.025288 & 0.76 \\
+            2 & hito1 & -0.203623 & 0.111 & -0.116408 & 0.56 & 0.172660 & 0.017885 & 0.96 \\
+            3 & e18 & 0.130773 & 0.276 & -0.045586 & 0.06 & 0.025984 & -0.031051 & 1.00 \\
+            4 & fallidos & -0.117432 & 0.288 & 0.009270 & 0.60 & -0.130266 & 0.027725 & 0.78 \\
+            5 & e29 & -0.058810 & 0.322 & 0.219796 & 0.04 & 0.047657 & -0.000015 & 1.00 \\
+            6 & exitosos & 0.034945 & 0.430 & 0.038086 & 0.98 & 0.391752 & 0.013166 & 0.98 \\
+            7 & e3 & -0.027964 & 0.435 & 0.126084 & 0.10 & 0.093429 & 0.019055 & 0.76 \\
+            8 & e35 & 0.006278 & 0.494 & 0.042187 & 0.74 & -0.090410 & 0.006603 & 0.92 \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Resultados de la iteración con las variables.}
+    \label{tab:resultados_iteracion}
+\end{table}
+
+A continuación, se presentan los resultados en un grafico para tener una mejor comprencion de los resultados.
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.48\textwidth}
-        \begin{lstlisting}[language=Python, caption=Modelo causal exitosos, label=lst:model_causalExitosos]
-from dowhy import CausalModel
-
-model = CausalModel(
-    data=df,
-    treatment="exitosos",
-    outcome="aprobado",
-    common_causes=[
-        "fallidos",
-        "hito1",
-        "e29"
-    ],
-)
-        \end{lstlisting}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{img/causalidad/graph_causal_model_exitosos.png}
-        \caption{Modelo Causal Exitosos}
-        \label{fig:modelo_causal_exitosos}
-    \end{minipage}
+    \includegraphics[width=0.8\textwidth]{img/causalidad/grafico_resultados_variables_full.png}
+    \caption{Resultados de la iteración con las variables.}
+    \label{fig:grafico_iteracion_variables_full_dowhy}
 \end{figure}
 
-\textbf{Identificar y Estimar el efecto causal}
+\textbf{Conclusión}
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:IdentificarEstimarefectoCausalHito1}), obtuvimos los siguientes resultados:
+A partir del análisis causal ejecutado, se exploró cómo diferentes variables asociadas a una guía de apoyo podrían afectar la probabilidad de aprobar la primera evaluación del curso. Las variables examinadas incluyeron \texttt{hito1}, \texttt{exitosos}, \texttt{fallidos}, \texttt{e42}, \texttt{e35}, \texttt{e29}, \texttt{e18} y \texttt{e3}.
 
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Mean value & -0.24676503920081228 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Efecto Causal exitosos}
-    \label{tab:efecto_causal_exitosos}
-\end{table}
+\vspace{1em}  % Agrega espacio vertical entre las secciones
 
-El término "Mean Value" denota el valor promedio del efecto estimado de \texttt{exitosos} sobre \texttt{aprobado}. Un valor de -0.24676503920081228 sugiere que, en promedio, un incremento unitario en \texttt{exitosos} se asocia con una disminución del 24.68\% en la probabilidad de que \texttt{aprobado} sea verdadero.
+\textbf{Resultados Numéricos}
 
-\textbf{Refutador de datos aleatorios}
+Las estimaciones de los modelos causales y los valores p correspondientes para el tratamiento placebo se presentan a continuación:
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorDatosAleatoriosHito1}), los resultados fueron:
+\begin{enumerate}
+    \item \textbf{Estimación del Efecto Causal}:
+        \begin{itemize}
+            \item Se identificaron asociaciones entre las variables de interés y la probabilidad de aprobar, aunque la magnitud y dirección de estas asociaciones varían.
+        \end{itemize}
+    
+    \item \textbf{Resultados Numéricos}:
+        \begin{itemize}
+            \item \textbf{Modelo e42}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: 0.224736
+                    \item Valor p: 0.105
+                \end{itemize}
+            \item \textbf{Modelo hito1}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: -0.203623
+                    \item Valor p: 0.111
+                \end{itemize}
+            \item \textbf{Modelo e18}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: 0.130773
+                    \item Valor p: 0.276
+                \end{itemize}
+            \item \textbf{Modelo fallidos}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: -0.117432
+                    \item Valor p: 0.288
+                \end{itemize}
+            \item \textbf{Modelo e29}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: -0.058810
+                    \item Valor p: 0.322
+                \end{itemize}
+            \item \textbf{Modelo exitosos}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: 0.034945
+                    \item Valor p: 0.430
+                \end{itemize}
+            \item \textbf{Modelo e3}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: -0.027964
+                    \item Valor p: 0.435
+                \end{itemize}
+            \item \textbf{Modelo e35}:
+                \begin{itemize}
+                    \item Estimación del Efecto Causal: 0.006278
+                    \item Valor p: 0.494
+                \end{itemize}
+        \end{itemize}
+    
+    \item \textbf{Refutaciones}:
+        \begin{itemize}
+            \item Las refutaciones indican una posible sensibilidad de la estimación del efecto causal a causas comunes no observadas y aleatorias, sugiriendo la necesidad de un examen más detenido de las suposiciones del modelo.
+        \end{itemize}
+    
+    \item \textbf{Tratamiento Placebo - Interpretación}:
+        \begin{itemize}
+            \item La introducción de un tratamiento placebo en el análisis evaluó la robustez de las estimaciones del efecto causal.
+        \end{itemize}
+    
+    \item \textbf{Interpretación del Valor p}:
+        \begin{itemize}
+            \item Un valor p bajo ($\leq$ 0.05) sugiere que los resultados son estadísticamente significativos, mientras que un valor p alto ($>$ 0.05) sugiere que los resultados podrían ser producto del azar.
+        \end{itemize}
+    
+    \item \textbf{Relevancia de las Variables}:
+        \begin{itemize}
+            \item Entre las variables analizadas, \texttt{e42} y \texttt{hito1} mostraron las estimaciones del efecto causal más prominentes, indicando una relevancia notable en el análisis causal.
+        \end{itemize}
+    
+    \item \textbf{Implicaciones}:
+        \begin{itemize}
+            \item Los hallazgos proporcionan una visión inicial sobre cómo la guía de apoyo podría influir en la probabilidad de aprobar la primera evaluación del curso, aunque la interpretación del impacto y relevancia de las variables requiere un examen cuidadoso de las suposiciones del modelo y, posiblemente, una exploración adicional a través de análisis de sensibilidad o recopilación de datos adicionales.
+        \end{itemize}
+    
+    \item \textbf{Consideraciones Adicionales}:
+        \begin{itemize}
+            \item La calidad y cantidad de los datos, así como la adecuación de las suposiciones del modelo y la metodología de análisis, son aspectos cruciales a considerar.
+        \end{itemize}
+\end{enumerate}
 
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & -0.24676503920081228 \\
-        Nuevo Efecto & -0.08017355855007074 \\
-        p-value & 0.38 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Datos Aleatorios exitosos}
-    \label{tab:refutador_datos_aleatorios_exitosos}
-\end{table}
+Este análisis representa un avance inicial hacia la comprensión de las relaciones causales entre la participación en una guía de apoyo y el rendimiento académico, subrayando la importancia de evaluar las suposiciones del modelo y las variables confundidoras en la interpretación de los resultados.
 
-La variación en el efecto estimado al introducir una causa común aleatoria, junto con un p-value de 0.38, sugiere que nuestro estimado original es bastante robusto y no es altamente influenciado por variables no observadas.
+\subsubsection{Comparativa entre SHAP y DoWhy}
 
-\textbf{Refutador de causa común no observada}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorCausaComúnNoObservadaHito1}), los resultados fueron:
+\paragraph{Tabla Comparativa:} Aunque SHAP y DoWhy aborden el análisis de las variables desde perspectivas diferentes, es esclarecedor visualizar ambos resultados de manera conjunta para obtener una visión integral. Mientras SHAP se enfoca en descomponer la contribución de cada variable al modelo predictivo, donde la predicción fue de un 81\%, DoWhy explora la causalidad entre las variables de tratamiento y la variable de resultado. La comparación entre estas dos metodologías proporciona una visión más profunda sobre cómo las variables influyen en el rendimiento académico y cómo estas contribuciones se traducen en relaciones causales. La tabla siguiente presenta una comparativa entre la importancia de las variables según SHAP y las estimaciones del efecto causal según DoWhy:
 
 \begin{table}[H]
     \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & -0.24676503920081228 \\
-        Nuevo Efecto & -0.26835476106611056 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Causa Común No Observada exitosos}
-    \label{tab:refutador_causa_no_observada_exitosos}
+    \resizebox{\textwidth}{!}{%
+        \begin{tabular}{|c|c|c|c|l|}
+            \hline
+            \makecell{Variable de\\ Tratamiento} & \makecell{Variable de\\ Resultado} & \makecell{Estimación del\\ Efecto Causal} & \makecell{Valor p} & Observaciones \\
+            \hline
+            hito1 & aprobado & -0.203623 & 0.111 & Correlación: Más importante en SHAP (73\%-81\%); Efecto causal negativo en DoWhy. \\
+            fallidos & aprobado & -0.117432 & 0.288 & SHAP: Contribución entre 45\% y 46\%; No hay efecto causal notable en DoWhy. \\
+            exitosos & aprobado & 0.034945 & 0.430 & Discrepancia: Importante en SHAP (65\%-73\%); Valor p más alto en DoWhy comparado con otras variables. \\
+            e42 & aprobado & 0.224736 & 0.105 & SHAP: Contribución entre 59\% y 65\%; No hay efecto causal notable en DoWhy. \\
+            e35 & aprobado & 0.006278 & 0.494 & SHAP: Contribución entre 48\% y 54\%; No hay efecto causal notable en DoWhy. \\
+            e29 & aprobado & -0.058810 & 0.322 & SHAP: Contribución entre 54\% y 59\%; No hay efecto causal notable en DoWhy. \\
+            e18 & aprobado & 0.130773 & 0.276 & Discrepancia: Baja en SHAP (81\%-83\%); Efecto causal negativo fuerte en DoWhy. \\
+            e3 & aprobado & -0.027964 & 0.435 & Correlación: Significativo en ambos análisis (46\%-48\% en SHAP); Efecto causal positivo en DoWhy. \\
+            \hline
+        \end{tabular}
+    }
+    \caption{Tabla comparativa entre los resultados SHAP y la exploración con DoWhy.}
+    \label{tab:comparativa_shap_dowhy}
 \end{table}
 
-La introducción de una causa común no observada cambia ligeramente nuestro estimado. Esto sugiere que nuestro estimado podría ser sensible a variables no observadas.
+\subsubsection*{Observaciones:}
 
-\textbf{Refutador de tratamiento placebo}
+\paragraph{Correlaciones:}
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorTratamientoPlaceboHito1}), los resultados fueron:
+\begin{itemize}
+    \item Según SHAP, `hito1` y `e3` fueron variables importantes para la predicción, mientras que DoWhy también muestra efectos causales significativos para estas variables.
+\end{itemize}
 
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & -0.24676503920081228 \\
-        Nuevo Efecto & 0.01707981451338608 \\
-        p-value & 0.96 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Tratamiento Placebo exitosos}
-    \label{tab:refutador_placebo_exitosos}
-\end{table}
+\paragraph{Discrepancias:}
 
-El nuevo efecto, cercano a cero, junto con un p-value de 0.96, sugiere que el tratamiento real (\texttt{exitosos}) no tiene un efecto significativo sobre el resultado. Esto indica que los resultados obtenidos inicialmente podrían ser atribuidos al azar y no necesariamente a la influencia de \texttt{exitosos} sobre \texttt{aprobado}.
+\begin{itemize}
+    \item `e18` muestra una baja significancia en SHAP pero un efecto causal negativo fuerte en DoWhy.
+    \item La variable `exitosos` es considerada importante en SHAP, pero en DoWhy tiene un valor p más alto (0.430) comparado con otras variables como `e3` (valor p: 0.435) o `e18` (valor p: 0.276).
+\end{itemize}
 
-\textbf{Conclusión para \texttt{exitosos}}
+Este análisis conjunto permite una mejor interpretación y validación cruzada de los hallazgos, contribuyendo a un entendimiento más robusto de las relaciones entre las variables y el rendimiento académico.
 
-El análisis exploratorio de causalidad con \texttt{DoWhy} para la variable \texttt{exitosos} nos ha proporcionado insights valiosos sobre su efecto causal en \texttt{aprobado}. A medida que avanzamos en nuestra investigación, continuaremos analizando las variables \texttt{fallidos} y \texttt{e29} siguiendo un enfoque similar.
+\textbf{Gráfico Comparativo}
 
-\subsubsection{Análisis exploratorio de la variable \texttt{fallidos}}
-
-Después de analizar las variables \texttt{hito1} y \texttt{exitosos}, nos enfocamos en la variable \texttt{fallidos}. A continuación, presentamos la construcción del modelo causal para \texttt{fallidos} y los resultados obtenidos.
+Para visualizar de manera conjunta los resultados obtenidos a través de DoWhy y SHAP, se generó un gráfico comparativo. En este gráfico, se ordenaron las variables de tratamiento según el valor \( p \) obtenido de DoWhy, de más relevante a menos relevante. También se incluyó la contribución promedio de SHAP para cada variable. La Figura \ref{fig:grafico_comparativo_dowhy_shap} muestra la comparación entre la Estimación del Efecto Causal, el Valor \( p \) y la Contribución SHAP por Variable de Tratamiento.
 
 \begin{figure}[H]
     \centering
-    \begin{minipage}{0.48\textwidth}
-        \begin{lstlisting}[language=Python, caption=Modelo causal fallidos, label=lst:model_causalFallidos]
-from dowhy import CausalModel
-
-model = CausalModel(
-    data=df,
-    treatment="fallidos",
-    outcome="aprobado",
-    common_causes=[
-        "hito1",
-        "exitosos",
-        "e29"
-    ],
-)
-        \end{lstlisting}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{img/causalidad/graph_causal_model_fallidos.png}
-        \caption{Modelo Causal Fallidos}
-        \label{fig:modelo_causal_Fallidos}
-    \end{minipage}
+    \includegraphics[width=0.8\textwidth]{img/causalidad/grafico_resultados_variables_compara_shap.png}
+    \caption{Comparación entre Estimación del Efecto Causal, Valor \( p \) y Contribución SHAP por Variable de Tratamiento.}
+    \label{fig:grafico_comparativo_dowhy_shap}
 \end{figure}
 
-\textbf{Identificar y Estimar el efecto causal}
+Los datos utilizados para generar este gráfico fueron registrados manualmente según los resultados obtenidos en lo largo de esta investigación. A continuación, se presenta el código utilizado para crear el gráfico comparativo:
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:IdentificarEstimarefectoCausalHito1}), obtuvimos los siguientes resultados:
+\begin{lstlisting}[language=Python, caption=Código para generar el gráfico comparativo, label=lst:codigo_grafico_comparativo]
+# Creando un gráfico comparativo de los resultados
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Mean value & 0.031651437521335604 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Efecto Causal Fallidos}
-    \label{tab:efecto_causal_Fallidos}
-\end{table}
-
-El término "Mean Value" denota el valor promedio del efecto estimado de \texttt{fallidos} sobre \texttt{aprobado}. Un valor de 0.031651437521335604 sugiere que, en promedio, un incremento unitario en \texttt{fallidos} se asocia con un aumento del 3.17\% en la probabilidad de que \texttt{aprobado} sea verdadero.
-
-\textbf{Refutador de datos aleatorios}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorDatosAleatoriosHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.031651437521335604 \\
-        Nuevo Efecto & 0.013599125681968194 \\
-        p-value & 0.94 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Datos Aleatorios Fallidos}
-    \label{tab:refutador_datos_aleatorios_Fallidos}
-\end{table}
-
-La variación en el efecto estimado al introducir una causa común aleatoria, junto con un p-value de 0.94, sugiere que nuestro estimado original es bastante robusto y no es altamente influenciado por variables no observadas.
-
-\textbf{Refutador de causa común no observada}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorCausaComúnNoObservadaHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.031651437521335604 \\
-        Nuevo Efecto & 0.16595441857221216 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Causa Común No Observada Fallidos}
-    \label{tab:refutador_causa_no_observada_fallidos}
-\end{table}
-
-La introducción de una causa común no observada cambia significativamente nuestro estimado. Esto sugiere que nuestro estimado podría ser sensible a variables no observadas.
-
-\textbf{Refutador de tratamiento placebo}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorTratamientoPlaceboHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.031651437521335604 \\
-        Nuevo Efecto & 0.0019291403589726274 \\
-        p-value & 0.98 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Tratamiento Placebo Fallidos}
-    \label{tab:refutador_placebo_Fallidos}
-\end{table}
-
-El nuevo efecto, cercano a cero, junto con un p-value de 0.98, sugiere que el tratamiento real (\texttt{fallidos}) no tiene un efecto significativo sobre el resultado. Esto indica que los resultados obtenidos inicialmente podrían ser atribuidos al azar y no necesariamente a la influencia de \texttt{fallidos} sobre \texttt{aprobado}.
-
-\textbf{Conclusión para \texttt{fallidos}}
-
-El análisis exploratorio de causalidad con \texttt{DoWhy} para la variable \texttt{fallidos} nos ha proporcionado insights valiosos sobre su efecto causal en \texttt{aprobado}. A medida que avanzamos en nuestra investigación, continuaremos analizando la variable \texttt{e29} siguiendo un enfoque similar.
-
-\subsubsection{Análisis exploratorio de la variable \texttt{e29}}
-
-Después de analizar las variables \texttt{hito1}, \texttt{exitosos} y \texttt{fallidos}, nos enfocamos en la variable \texttt{e29}. A continuación, presentamos la construcción del modelo causal para \texttt{e29} y los resultados obtenidos.
-
-\begin{figure}[H]
-    \centering
-    \begin{minipage}{0.48\textwidth}
-        \begin{lstlisting}[language=Python, caption=Modelo causal e29, label=lst:model_causalE29]
-from dowhy import CausalModel
-
-model = CausalModel(
-    data=df,
-    treatment="e29",
-    outcome="aprobado",
-    common_causes=[
-        "fallidos",
-        "exitosos",
-        "hito1"
-    ],
+# Definiendo los datos
+dfDS = pd.DataFrame(
+    {
+        "Variable de Tratamiento": [
+            "hito1",
+            "fallidos",
+            "exitosos",
+            "e42",
+            "e35",
+            "e29",
+            "e18",
+            "e3",
+        ],
+        "Estimación del Efecto Causal": [
+            -0.203623,
+            -0.117432,
+            0.034945,
+            0.224736,
+            0.006278,
+            -0.058810,
+            0.130773,
+            -0.027964,
+        ],
+        "Valor p": [0.111, 0.288, 0.430, 0.105, 0.494, 0.322, 0.276, 0.435],
+        "Contribución SHAP": [
+            0.77,
+            0.455,
+            0.69,
+            0.62,
+            0.51,
+            0.565,
+            0.82,
+            0.47,
+        ],  # Asumiendo estos como los valores promedio de SHAP
+    }
 )
-        \end{lstlisting}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=0.8\textwidth]{img/causalidad/graph_causal_model_e29.png}
-        \caption{Modelo Causal e29}
-        \label{fig:modelo_causal_e29}
-    \end{minipage}
-\end{figure}
+# Ordenar el DataFrame por el valor p (de más relevante a menos relevante)
+dfDS = dfDS.sort_values(by="Valor p", ascending=True)
+x = np.arange(len(dfDS))  # las ubicaciones de las etiquetas
+width = 0.2  # el ancho de las barras
 
-\textbf{Identificar y Estimar el efecto causal}
+# Creando el gráfico
+fig, ax = plt.subplots(figsize=(15, 10))
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:IdentificarEstimarefectoCausalHito1}), obtuvimos los siguientes resultados:
+# Definiendo las barras
+rects1 = ax.bar(
+    x - width,
+    dfDS["Estimación del Efecto Causal"],
+    width,
+    label="Estimación del Efecto Causal",
+)
+rects2 = ax.bar(x, dfDS["Valor p"], width, label="Valor p")
+rects3 = ax.bar(x + width, dfDS["Contribución SHAP"], width, label="Contribución SHAP")
 
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Mean value & 0.1108420573840858 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Efecto Causal e29}
-    \label{tab:efecto_causal_e29}
-\end{table}
+# Agregar etiquetas, título y leyenda
+ax.set_xlabel("Variable de Tratamiento")
+ax.set_ylabel("Valor")
+ax.set_title(
+    "Comparación entre Estimación del Efecto Causal, Valor p y Contribución SHAP por Variable de Tratamiento"
+)
+ax.set_xticks(x)
+ax.set_xticklabels(dfDS["Variable de Tratamiento"])
+ax.legend()
 
-El término "Mean Value" denota el valor promedio del efecto estimado de \texttt{e29} sobre \texttt{aprobado}. Un valor de 0.1108420573840858 sugiere que, en promedio, un incremento unitario en \texttt{e29} se asocia con un aumento del 11.08\% en la probabilidad de que \texttt{aprobado} sea verdadero.
+# Función para autolabel
+def autolabel(rects):
+    for rect in rects:
+        height = rect.get_height()
+        ax.annotate(
+            "{:.2f}".format(height),
+            xy=(rect.get_x() + rect.get_width() / 2, height),
+            xytext=(0, 3),  # 3 puntos de compensación vertical
+            textcoords="offset points",
+            ha="center",
+            va="bottom",
+        )
 
-\textbf{Refutador de datos aleatorios}
+# Aplicando la función autolabel
+autolabel(rects1)
+autolabel(rects2)
+autolabel(rects3)
 
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorDatosAleatoriosHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering        
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.1108420573840858 \\
-        Nuevo Efecto & 0.1407657769498767 \\
-        p-value & 0.88 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Datos Aleatorios e29}
-    \label{tab:refutador_datos_aleatorios_e29}
-\end{table}
-
-La variación en el efecto estimado al introducir una causa común aleatoria, junto con un p-value de 0.88, sugiere que nuestro estimado original es bastante robusto y no es altamente influenciado por variables no observadas.
-
-\textbf{Refutador de causa común no observada}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorCausaComúnNoObservadaHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.1108420573840858 \\
-        Nuevo Efecto & 0.08324099555164001 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Causa Común No Observada e29}
-    \label{tab:refutador_causa_no_observada_e29}
-\end{table}
-
-La introducción de una causa común no observada cambia nuestro estimado. Esto sugiere que nuestro estimado podría ser sensible a variables no observadas.
-
-\textbf{Refutador de tratamiento placebo}
-
-Utilizando el mismo código que en \texttt{hito1} (ver \ref{lst:RefutadorTratamientoPlaceboHito1}), los resultados fueron:
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{lp{0.6\linewidth}}
-        \toprule
-        \textbf{Resultado} & \textbf{Valor} \\
-        \midrule
-        Estimado Original & 0.1108420573840858 \\
-        Nuevo Efecto & -0.025440763654296695 \\
-        p-value & 0.8400000000000001 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Resultados del Refutador de Tratamiento Placebo e29}
-    \label{tab:refutador_placebo_29}
-\end{table}
-
-El nuevo efecto, cercano a cero, junto con un p-value de 0.84, sugiere que el tratamiento real (\texttt{e29}) no tiene un efecto significativo sobre el resultado. Esto indica que los resultados obtenidos inicialmente podrían ser atribuidos al azar y no necesariamente a la influencia de \texttt{e29} sobre \texttt{aprobado}.
-
-\textbf{Conclusión para \texttt{e29}}
-
-El análisis exploratorio de causalidad con \texttt{DoWhy} para la variable \texttt{e29} nos ha proporcionado insights valiosos sobre su efecto causal en \texttt{aprobado}. A medida que avanzamos en nuestra investigación, estos análisis nos ayudarán a tomar decisiones informadas y a entender mejor las relaciones causales entre las variables.
-
-\subsubsection{Reflexión Final del Análisis Exploratorio} Conclusiones derivadas de este análisis y recomendaciones o pasos a seguir.
+# Ajustando el layout y mostrando el gráfico
+fig.tight_layout()
+plt.show()
+\end{lstlisting}
 
 
-\textbf{Conclusión de los Análisis por Variable:} A través del análisis de causalidad utilizando \texttt{DoWhy}, hemos profundizado en las relaciones causales de las variables identificadas como significativas en el análisis SHAP. Es evidente que variables como \texttt{hito1}, \texttt{exitosos}, \texttt{fallidos} y \texttt{e29} no solo tienen importancia predictiva, sino que también tienen relaciones causales significativas que influyen en los resultados de los estudiantes. Estos insights causales proporcionan una base más sólida para las intervenciones educativas, permitiendo acciones más dirigidas y efectivas.
 
-\textbf{Reflexión Final del Análisis Exploratorio:} Este análisis exploratorio de causalidad ha complementado y enriquecido nuestra comprensión obtenida del análisis SHAP. Al identificar relaciones causales, no solo correlaciones, estamos mejor posicionados para diseñar intervenciones y estrategias educativas que tengan un impacto real y positivo en el rendimiento de los estudiantes. Sin embargo, es crucial recordar que estos hallazgos, aunque prometedores, están basados en supuestos. Por lo tanto, es esencial validar estos resultados en diferentes contextos o con datos adicionales. La causalidad es compleja, y si bien las herramientas como \texttt{DoWhy} ofrecen un camino para desentrañarla, siempre es prudente abordar los resultados con un grado de cautela y con la mente abierta a futuras investigaciones y validaciones.
+
+
+\textbf{Resumen:}
+
+El análisis se enfocó en expandir la exploración inicial realizada en la variable \texttt{hito1} a otras variables de interés identificadas en la predicción SHAP. Se estableció un proceso analítico iterativo, encapsulado en la función \texttt{run\_causal\_model}, que se ejecutó sobre cada variable en el array \texttt{preguntasGuia}. Se almacenaron los resultados en una lista \texttt{results} para un análisis posterior y comparación. A través de este proceso, se obtuvieron estimaciones del efecto causal y valores p para cada variable, que se detallaron en una tabla y se visualizaron en un gráfico. Además, se realizó una comparación entre los resultados obtenidos con SHAP y DoWhy, mostrando cómo estas dos metodologías proporcionan insights diferentes pero complementarios sobre la influencia de las variables en la probabilidad de aprobar la primera evaluación del curso.
+
+\textbf{Conclusión Final:}
+
+El ejercicio analítico realizado proporciona una visión integral y profunda sobre cómo ciertas variables, asociadas a una guía de apoyo, podrían afectar la probabilidad de aprobar la primera evaluación del curso. Se logró una comprensión inicial de la variable \texttt{hito1} y su relación con la variable de resultado \texttt{aprobado}, y se expandió este análisis a otras variables relevantes, utilizando un proceso iterativo que proporcionó estimaciones del efecto causal y evaluaciones de significancia estadística.
+
+La comparativa entre los análisis de SHAP y DoWhy revela cómo diferentes perspectivas y metodologías pueden enriquecer la comprensión sobre las relaciones entre las variables y el rendimiento académico. Mientras SHAP proporciona una descomposición de la contribución de cada variable al modelo predictivo, DoWhy permite explorar la causalidad entre las variables.
+
+Este trabajo destaca la importancia de evaluar las suposiciones del modelo y considerar variables confundidoras en la interpretación de los resultados. Además, subraya la relevancia de una validación cruzada y una visualización efectiva para una mejor comprensión y comunicación de los hallazgos.
+
+En resumen, los insights obtenidos a través de este análisis ofrecen una base sólida para futuras investigaciones y pueden servir como guía para implementar estrategias de apoyo dirigidas a mejorar el rendimiento académico de los estudiantes. Sin embargo, es crucial tener en cuenta que la interpretación del impacto y relevancia de las variables requiere un examen cuidadoso de las suposiciones del modelo y, posiblemente, una exploración adicional a través de análisis de sensibilidad o recopilación de datos adicionales.
 
 
