@@ -89,21 +89,28 @@ A continuación, se presenta una tabla con los resultados de la validación cruz
 \begin{table}[h]
     \centering
     \caption{Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento}
-    \label{lst:res_skfold_train}
-    \begin{tabular}{|c|c|c|}
+    \label{lst:res_skfold_train}%
+    \begin{tabular}{ccc}
         \hline
         \textbf{Fold} & \textbf{Error cuadrático medio} & \textbf{Coeficiente de determinación (R2)} \\
         \hline
-        1             & 0.2234                          & 0.0994                                     \\
-        2             & 0.2161                          & 0.1307                                     \\
-        3             & 0.2400                          & 0.0295                                     \\
-        ...           & ...                             & ...                                        \\
+        1 & 0.2234 & 0.0994 \\
+        2 & 0.2161 & 0.1307 \\
+        3 & 0.2400 & 0.0295 \\
+        4 & 0.2062 & 0.1663 \\
+        5 & 0.2134 & 0.1370 \\
+        6 & 0.2123 & 0.1414 \\
+        7 & 0.2278 & 0.0789 \\
+        8 & 0.2089 & 0.1553 \\
+        9 & 0.2342 & 0.0529 \\
+        10 & 0.1915 & 0.2257 \\
         \hline
-        \multicolumn{3}{|c|}{Promedio del error cuadrático medio: 0.2174}                            \\
-        \multicolumn{3}{|c|}{Promedio del error cuadrático medio en \%: 21.74}                       \\
+        \multicolumn{3}{c}{Promedio del error cuadrático medio: 0.2174} \\
+        \multicolumn{3}{c}{Promedio del error cuadrático medio en \%: 21.74} \\
         \hline
-    \end{tabular}
-\end{table}
+    \end{tabular}%
+\end{table}%
+
 
 Si el RMSE es 0, significa que el modelo predice perfectamente los valores reales. Cuanto más cerca esté el MSE o RMSE de cero, mejor será el rendimiento del modelo en términos de la diferencia entre las predicciones y los valores reales.
 
