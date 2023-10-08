@@ -137,7 +137,7 @@ Las técnicas de XAI (Explainable Artificial Intelligence) y SHAP (Shapley Addit
 
 El análisis de causalidad, a diferencia de la correlación, busca identificar relaciones de causa y efecto entre variables, siendo crucial en minería de datos y aprendizaje automático para tomar decisiones informadas.
 
-\textbf{DoWhy:} Es una biblioteca de Python enfocada en la inferencia causal, facilitando el análisis causal y guiando al usuario en este proceso. Se utilizará DoWhy para analizar la relación causal entre la resolución de la guía de programación y el éxito académico, identificando y controlando variables de confusión potenciales mediante técnicas como el matching de propensión.
+\textbf{DoWhy:} Es una biblioteca de Python enfocada en la inferencia causal, facilitando el análisis causal y guiando al usuario en este proceso. Se utilizará DoWhy (DoWhy: An End-to-End Library for Causal Inference) \cite{sharma2020dowhy} para analizar la relación causal entre la resolución de la guía de programación y el éxito académico, identificando y controlando variables de confusión potenciales mediante técnicas como el matching de propensión.
 
 El proceso de análisis de causalidad con DoWhy se estructura en cuatro etapas principales:
 
@@ -157,21 +157,21 @@ El proceso de análisis de causalidad con DoWhy se estructura en cuatro etapas p
 
     A partir de este modelo, se puede inferir que una disminución en los 'fallidos' al resolver las preguntas de la guía podría incrementar la cantidad de 'exitosos', lo cual, a su vez, elevaría el valor de 'hito1' y aumentaría la probabilidad de aprobar.
 
-    \item \textbf{Identificación:} Se deriva la expresión causal a partir del modelo, definida por una fórmula estructural causal (SCM):
+    \item \textbf{Identificación:} En esta etapa, se establecen las condiciones bajo las cuales se puede identificar un efecto causal a partir de los datos observados, utilizando criterios como el criterio de puerta trasera (Back-door) o el criterio de puerta delantera (Front-door). La expresión causal se deriva del modelo, y es típicamente representada por una Fórmula Estructural Causal (SCM):
     \begin{equation}
         Y = \alpha + \beta X + \epsilon
     \end{equation}
 
-    \item \textbf{Estimación:} Se estima los efectos causales usando datos observados y técnicas estadísticas. Un método común es el Método de Diferencias en Diferencias (DiD):
-    \begin{equation}
-        \hat{\beta}_{DiD} = (\bar{Y}_{1,post} - \bar{Y}_{1,pre}) - (\bar{Y}_{0,post} - \bar{Y}_{0,pre})
-    \end{equation}
+    donde \( Y \) es la variable de resultado, \( X \) es la variable de tratamiento, \( \alpha \) es la intersección, \( \beta \) es el efecto del tratamiento, y \( \epsilon \) es el término de error.
 
-    \item \textbf{Pruebas de Robustez:} Se evalúa la sensibilidad de los resultados ante diferentes suposiciones, utilizando, por ejemplo, la prueba de sensibilidad de Rosenbaum:
-    \begin{equation}
-        \Gamma = \frac{U_{1i}}{U_{0i}}
-    \end{equation}
-    y la interpretación de los valores \( p \) donde un \( p < 0.05 \) indica significancia estadística, mientras que un \( p > 0.05 \) sugiere que el efecto observado podría ser aleatorio.
+    \item \textbf{Estimación:} Se estima los efectos causales usando datos observados y técnicas estadísticas. En este análisis, se emplea un método basado en árboles, específicamente utilizando el método \texttt{backdoor.econml.dml.DML} proporcionado por DoWhy:
+    \begin{verbatim}
+        method_name="backdoor.econml.dml.DML"
+    \end{verbatim}
+    Los parámetros del modelo y el método de estimación se configuran utilizando Random Forest como el modelo para las variables de tratamiento y resultado.
+
+    \item \textbf{Pruebas de Robustez:} Se evalúa la sensibilidad de los resultados ante diferentes suposiciones, utilizando varios refutadores proporcionados por DoWhy. Por ejemplo, se emplea el refutador \texttt{random\_common\_cause} para evaluar el impacto de una causa común aleatoria, y el refutador \texttt{placebo\_treatment\_refuter} para evaluar el impacto de un tratamiento placebo. Los resultados de estas pruebas ayudan a evaluar la validez y robustez de las estimaciones causales obtenidas.
+
 \end{enumerate}
 
 El análisis con DoWhy ayudará a determinar la relación causal entre la resolución de la guía y el rendimiento académico, proporcionando insights valiosos para la toma de decisiones basada en evidencia causal.
@@ -183,8 +183,7 @@ El análisis con DoWhy ayudará a determinar la relación causal entre la resolu
   \label{fig:dowhy_lib}
 \end{figure}
 
-
-En resumen, el análisis de causalidad con DoWhy proporcionará insights valiosos sobre la verdadera relación entre la resolución de guías de programación y el éxito académico, permitiendo a los educadores y responsables de la toma de decisiones actuar con base en evidencia causal y no solo en correlaciones observadas.
+En resumen, el análisis de causalidad con DoWhy proporcionará insights valiosos sobre la verdadera relación entre la resolución de guías de programación y el éxito académico, permitiendo a los educadores y responsables de la toma de decisiones actuar con base en evidencia causal y no solo en correlaciones observadas~\cite{sharma2021dowhy}.
 
 
 \subsection{Conclusiones}
