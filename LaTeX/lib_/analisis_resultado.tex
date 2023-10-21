@@ -1,7 +1,12 @@
 \hypertarget{analisis_resultado}{%
     \section{Análisis de resultados}\label{Análisis de resultados}}
 
-En la sección de análisis de resultados, se utilizará el marco unificado SHAP y XAI para analizar cómo la resolución de las guías de programación influye en el éxito académico de los estudiantes en el ramo de introducción a la programación. En particular, se analizará la columna sol1 como la variable de interes del conjunto de datos dataset a 2021 con el objetivo de responder a la pregunta de investigación planteada en este estudio: ¿La resolución de una guía de programación está relacionada con el éxito académico en el ramo de introducción a la programación en la Universidad Andrés Bello? Los resultados obtenidos serán útiles para mejorar las estrategias de apoyo a los estudiantes y la toma de decisiones relacionadas con el uso de las guías como herramienta educativa.
+Esta sección emplea la metodología \textit{Análisis Causal Asistido por Minería de Datos} (ACAMD) para profundizar en el impacto de resolver las guías de programación sobre el éxito académico de los estudiantes en el curso introductorio de programación. ACAMD, que incorpora tanto SHAP como DoWhy, permite un análisis exhaustivo y causal a partir del conjunto de datos \texttt{dataset} del año 2021.
+
+El análisis se centra en \texttt{sol1}, identificada como nuestra variable clave. Utilizando SHAP, evaluamos la influencia de \texttt{sol1} en el rendimiento académico, seguido de la construcción de un modelo causal con DoWhy. Este enfoque responde a nuestra pregunta central de investigación: ¿Cómo se relaciona la resolución de una guía de programación con el éxito académico en el curso introductorio de programación en la Universidad Andrés Bello?
+
+A través de ACAMD, no solo validamos la relevancia de \texttt{sol1} sino que también descubrimos las relaciones causales potenciales entre la participación activa de los estudiantes en las guías de programación y sus logros académicos. Estos hallazgos son fundamentales para el desarrollo de estrategias pedagógicas efectivas y la optimización de las guías como herramientas educativas.
+
 
 
 \input{lib_/analisis_datos.tex}

@@ -1,14 +1,11 @@
 \subsection{Análisis Exploratorio de Causalidad con DoWhy}
 
-\textbf{Objetivo del Análisis Exploratorio de Causalidad:} Tras identificar las características más influyentes en nuestro modelo a través del análisis SHAP, buscamos entender no solo la correlación, sino también las posibles relaciones causales entre estas características y los resultados de los estudiantes. Utilizando la biblioteca DoWhy, que facilita un enfoque basado en gráficos causales, pretendemos desentrañar las verdaderas relaciones causales detrás de las predicciones de nuestro modelo. Esto nos permitirá diseñar intervenciones más efectivas, basadas no solo en correlaciones observadas, sino en relaciones causales validadas.
+\textbf{Objetivo del Análisis Exploratorio de Causalidad:} Mediante la metodología \textit{Análisis Causal Asistido por Minería de Datos} (ACAMD), este estudio se propone desentrañar las dinámicas causales subyacentes que vinculan las actividades de aprendizaje, como la resolución de guías de programación, con el rendimiento académico de los estudiantes. Tras la identificación de variables críticas con SHAP, el análisis se profundiza para discernir entre simples correlaciones y relaciones causales, utilizando para ello la biblioteca DoWhy.
 
-\textbf{Metodología Utilizada:} En el ámbito del análisis de causalidad, el primer paso es construir un modelo causal, a menudo representado gráficamente, que captura nuestras creencias iniciales sobre las relaciones causales entre las variables. Este modelo se basa tanto en el conocimiento previo como en la lógica, y establece claramente las variables de tratamiento, resultado y las posibles causas comunes (confundidores). Una vez que tenemos este modelo, podemos identificar el efecto causal de interés y estimarlo utilizando datos observacionales.
-
-Sin embargo, solo basarse en datos observacionales para la estimación causal puede ser engañoso debido a posibles sesgos. Aquí es donde entran los refutadores. Los refutadores en DoWhy son técnicas que nos permiten validar la robustez de nuestros hallazgos causales. Al aplicar diferentes refutadores, como la inserción de una causa común no observada o el uso de un tratamiento placebo, podemos evaluar cuán confiables son nuestras estimaciones causales en presencia de posibles sesgos o supuestos no cumplidos. Si nuestras conclusiones causales se mantienen consistentes incluso después de aplicar estos refutadores, ganamos más confianza en la validez de nuestros hallazgos.
+\textbf{Metodología Utilizada:} La metodología ACAMD combina la claridad explicativa de SHAP con la profundidad analítica de DoWhy. Inicia con la creación de un modelo causal gráfico, fundamentado en hipótesis preliminares y conocimientos previos, que incluye variables de tratamiento, resultado y confundidores potenciales. Este modelo guía la identificación y cuantificación del efecto causal, utilizando datos observacionales. Para asegurar la robustez de los hallazgos, ACAMD incorpora refutadores en DoWhy, probando la solidez de las conclusiones frente a sesgos y supuestos no verificados.
 
 \subsubsection{Análisis de la variable \texttt{hito1}}
-Contexto y relevancia específica de la variable \texttt{hito1} dentro de este análisis.
-El análisis causal es una herramienta poderosa que nos permite desentrañar las relaciones intrínsecas entre las variables en un conjunto de datos. Tras haber interpretado el modelo con SHAP utilizando un \texttt{RandomForestClassifier}, es imperativo adentrarnos en la causalidad de las variables presentes en nuestro conjunto de datos. Emplearemos la biblioteca \texttt{DoWhy} para discernir y cuantificar el efecto causal de la variable \texttt{hito1} y posteriormente abordaremos las demás variables asociadas a los resultados obtenidos previamente en el Analisis SHAP.
+La variable \texttt{hito1} emerge como un componente significativo en nuestro modelo, según el análisis SHAP. Para comprender su influencia causal en el rendimiento académico, recurrimos a DoWhy. Este enfoque nos permite no solo cuantificar el impacto directo de \texttt{hito1}, sino también explorar cómo interactúa con otras variables dentro del marco de ACAMD, proporcionando una comprensión más holística y fundamentada de los factores que contribuyen al éxito académico.
 
 \subsubsection{Modelado del Problema Causal}
 
@@ -179,7 +176,7 @@ refute1 = model.refute_estimate(
 \begin{minipage}{0.45\textwidth}
     \begin{table}[H]
         \centering        
-        \begin{tabular}{lp{0.6\linewidth}}
+        \begin{tabular}{lp{0.5\linewidth}}
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
@@ -218,7 +215,7 @@ refute2 = model.refute_estimate(
 \begin{minipage}{0.45\textwidth}
     \begin{table}[H]
         \centering
-        \begin{tabular}{lp{0.6\linewidth}}
+        \begin{tabular}{lp{0.5\linewidth}}
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule
@@ -252,7 +249,7 @@ refute3 = model.refute_estimate(
 \begin{minipage}{0.45\textwidth}
     \begin{table}[H]
         \centering
-        \begin{tabular}{lp{0.6\linewidth}}
+        \begin{tabular}{lp{0.5\linewidth}}
             \toprule
             \textbf{Resultado} & \textbf{Valor} \\
             \midrule

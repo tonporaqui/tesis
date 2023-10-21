@@ -1,6 +1,13 @@
 \subsection{Interpretación del Modelo con SHAP}
 
-Tras una exhaustiva investigación y comparación de algoritmos, se determinó que el modelo de clasificación más adecuado es el RandomForestClassifier. Dado que el objetivo principal de la investigación es determinar la aprobación del curso, este modelo se seleccionó para analizar la variable objetivo \say{aprobado}. Esta variable nos permite identificar si un estudiante aprobó o reprobó la primera evaluación y evaluar el impacto de la guía de apoyo en dicha aprobación. A continuación, se detallan los resultados y análisis de este modelo.
+En el proceso de esta investigación, se llevó a cabo una rigurosa selección de algoritmos, concluyendo que el RandomForestClassifier es el modelo de clasificación más adecuado para nuestros propósitos. La elección se basó en la necesidad de analizar la variable objetivo \say{aprobado}, crucial para determinar si un estudiante ha pasado o no la primera evaluación, y para evaluar el efecto de la guía de apoyo en este resultado.
+
+Sin embargo, para profundizar en nuestro entendimiento de los factores que influyen en la aprobación, hemos adoptado la metodología \textit{Análisis Causal Asistido por Minería de Datos} (ACAMD). ACAMD integra el análisis explicativo proporcionado por SHAP y el análisis causal de DoWhy, permitiéndonos no solo identificar las características más relevantes con SHAP sino también entender las relaciones causales subyacentes con DoWhy.
+
+Utilizando SHAP, comenzamos interpretando la importancia de las características del modelo RandomForestClassifier, centrándonos especialmente en la variable \say{aprobado}. Posteriormente, aplicamos DoWhy para construir un modelo causal que explora cómo diferentes variables, especialmente la resolución de las guías de programación, podrían afectar la probabilidad de aprobar el curso.
+
+Los siguientes apartados presentan un desglose detallado de los resultados y análisis derivados de la aplicación de la metodología ACAMD, proporcionando insights significativos sobre los determinantes clave del éxito académico en el contexto de este estudio.
+
 
 \subsubsection{Preparación y Selección de Características}
 
@@ -86,7 +93,7 @@ Los resultados obtenidos en la validación cruzada proporcionan una visión clar
 
 A continuación, se presenta una tabla con los resultados de la validación cruzada Stratified K-Fold en los datos de entrenamiento:
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \caption{Resultados Stratified K-Fold Cross-Validation en los datos de entrenamiento}
     \label{lst:res_skfold_train}%
@@ -144,7 +151,7 @@ Los gráficos SHAP ofrecen una representación visual detallada de la influencia
 
 La Figura \ref{fig:caract_var_shap} ilustra el gráfico de importancia de características basado en valores SHAP.
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de Caracteristicas, label=lst:graf_caracteristicas]
@@ -169,7 +176,7 @@ De la visualización, se observa que las características más influyentes son: 
 
 Para visualizar la importancia numérica de cada característica de manera gráfica, se puede recurrir a la representación proporcionada por SHAP. Esta visualización facilita el análisis del impacto de cada característica en las predicciones del modelo:
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Análisis de Importancia de Características, label=lst:cod_calvaloreshap]
@@ -214,7 +221,7 @@ Además, se presenta otro gráfico generado por matplotlib sobre la prediccion d
 shap.force_plot(explainer.expected_value, shap_values[0,:], X_test.iloc[0,:], matplotlib=True)
 \end{lstlisting}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{img/shap_rf/shapForcePlot.png}
     \caption{Características Variables SHAP (Matplotlib)}
@@ -232,7 +239,7 @@ Al revisar este gráfico, podemos obtener más detalles sobre las característic
 
 Además de los gráficos anteriores, se presentan los gráficos de dependencia para algunas variables con referencia a \say{aprobado}:
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia hito1, label=lst:grafDepHito1]
@@ -273,7 +280,7 @@ plt.show()
     \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{subfigure}{0.48\textwidth}
         \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/hito1.png}
         \caption{hito1}
@@ -290,7 +297,7 @@ plt.show()
 
 En la Figura \ref{fig:dependencia_hito1} se muestra el gráfico de dependencia para la variable \say{hito1} y refleja \say{fallidos} con su correlación. mientras tanto en la figura \ref{fig:dependencia_e29} se muestra el gráfico de dependencia para la variable \say{e29} con la variable \say{extisoso}.
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia exitosos, label=lst:grafDepExitosos]
@@ -331,7 +338,7 @@ plt.show()
     \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{subfigure}{0.48\textwidth}
         \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/exitosos.png}
         \caption{exitosos}
@@ -348,7 +355,7 @@ plt.show()
 
 En la Figura \ref{fig:dependencia_exitosos} se muestra el gráfico de dependencia para la variable \say{exitosos} con su variable de dependencia \say{fallidos}, mientras tanto en la figura \ref{fig:dependencia_fallidos} se muestra el gráfico de dependencia para la variable \say{fallidos} con su dependencia \say{exitosos}.
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{lstlisting}[language=Python, caption=Grafico de dependencia e42, label=lst:grafDepe42]
@@ -389,7 +396,7 @@ plt.show()
     \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[ht]
     \begin{subfigure}{0.48\textwidth}
         \includegraphics[width=0.9\linewidth, height=6cm]{img/shap_rf/e42.png}
         \caption{e42}
