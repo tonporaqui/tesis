@@ -9,6 +9,12 @@ Mi nombre es **Gastón Sepulveda**, del Magister en gestión de información & t
 
 Procederé a defender mi tesis abordando los siguientes aspectos centrales...
 
+- Planteamiento del Problema y Justificación.
+- Objetivo General y Específicos.
+- Propuesta de Metodología ACAMD.
+- Análisis de Resultados con ACAMD.
+- Conclusiones y Recomendaciones.
+
 ---
 
 # Planteamiento del Problema y Justificación
@@ -34,6 +40,15 @@ Desde la recopilación de datos y revisión bibliográfica hasta el análisis y 
 Hemos desarrollado una metodología innovadora llamada **ACAMD**, que integra técnicas avanzadas de minería de datos y análisis causal. Esta metodología nos ha permitido identificar y analizar las variables clave que influyen en el rendimiento académico de los estudiantes y ha mejorado la interpretación de nuestros resultados.
 
 ---
+
+## Introduccion Análisis de Resultados con ACAMD
+
+A continuación, Revisaremos el Análisis de Resultados con ACAMD.
+
+- Minería de datos.
+- Variable Objetivo y Comparación de algoritmos.
+- Análisis SHAP.
+- Análisis DoWhy.
 
 # Minería de datos
 
@@ -83,15 +98,13 @@ Por otra parte, podemos observar que los mejores resultados los obtiene el model
 
 En conclusión, con esta técnica podemos determinar que los datos sobre aprobado el modelo de clasificación RandomForesRegressor es el más estable y entrega los mejores resultados para realizar una predicción.
 
-Los datos muestran que 'RandomForestClassifier' lidera con un 62.53% en el F1 score, siendo la métrica que combina la precisión y el recall en una sola media.
-
-Por lo tanto, este modelo se destaca como el más consistente y eficaz para nuestras predicciones.
-
 ---
 
 # Análisis SHAP
 
-**SHAP**, o SHapley Additive exPlanation, es una herramienta que hemos utilizado para explicar las predicciones de nuestros modelos de aprendizaje automático. Permítanme mostrarles cómo los resultados de SHAP han enriquecido nuestra comprensión de las variables en juego.
+## Introducción Análisis SHAP
+
+**SHAP**, es una herramienta que hemos utilizado para explicar las predicciones de nuestros modelos de aprendizaje automático. Permítanme mostrarles cómo los resultados de SHAP han enriquecido nuestra comprensión de las variables en juego.
 
 ---
 
@@ -105,7 +118,7 @@ Las variables más destacadas incluyen 'Hito1', que exhibe una contribución pos
 
 ## Predicción del Modelo
 
-El gráfico de SHAP evidencia la precisión del modelo, destacando un acertado 81% en la predicción. El valor de base ('base value') sirve como referencia inicial para las predicciones, facilitando la evaluación del impacto de cada variable. Las variables 'Higher' resaltadas en rojo contribuyen positivamente a la predicción de aprobación, mientras que las 'Lower' en azul, aunque menos determinantes, mantienen su relevancia. Esta distribución de variables sugiere que el modelo está alineado con el éxito de aprobar, conforme a los objetivos de la investigación.
+El gráfico de SHAP evidencia la precisión del modelo, destacando un acertado 81% en la predicción. El valor base o ('base value') sirve como referencia inicial para las predicciones, facilitando la evaluación del impacto de cada variable. Las variables 'Higher' resaltadas en rojo contribuyen positivamente a la predicción de aprobación, mientras que las 'Lower' en azul, aunque menos determinantes, mantienen su relevancia. Esta distribución de variables sugiere que el modelo está alineado con el éxito de aprobar, conforme a los objetivos de la investigación.
 
 ---
 
@@ -125,7 +138,7 @@ El gráfico ilustra el Problema Causal Modelado mediante DoWhy en formato DOT, d
 
 **Resultados Variables de interés**
 
-El gráfico clasifica las variables de interés según la significancia estadística de su estimación, ordenadas del valor p más bajo al más alto. Un valor p menor o igual a 0.05 indica significancia estadística, implicando que los efectos observados probablemente no se deban al azar. En contraste, un valor p alto sugiere una posible aleatoriedad en los resultados. La 'Estimación del Efecto Causal' revela cómo un cambio unitario en las variables afecta la probabilidad de aprobar. Al correlacionar estos hallazgos con el 'base value' de SHAP, obtenemos una comparativa visual y entendemos mejor cómo cada variable influye en la predicción del modelo.
+El siguiente gráfico clasifica las variables de interés según la significancia estadística de su estimación, ordenadas del valor p más bajo al más alto. Un valor p menor o igual a 0.05 indica significancia estadística, implicando que los efectos observados probablemente no se deban al azar. En contraste, un valor p alto sugiere una posible aleatoriedad en los resultados. La 'Estimación del Efecto Causal' revela cómo un cambio unitario en las variables afecta la probabilidad de aprobar. Al correlacionar estos hallazgos con el 'base value' de SHAP, obtenemos una comparativa visual y entendemos mejor cómo cada variable influye en la predicción del modelo.
 
 ---
 
@@ -139,7 +152,7 @@ Al discutir los resultados, notamos:
 
 Correlaciones significativas entre SHAP y DoWhy en variables como 'Hito1' y 'e3', ambas resaltadas por su importancia en la predicción y efectos causales. Discrepancias notables, por ejemplo, 'exitosos' muestra importancia en SHAP pero presenta un 'valor p' elevado en DoWhy, indicando menor significancia estadística comparado con 'e3' y 'e18'. La variable 'e18' revela una contribución menor en SHAP pero un impacto causal negativo relevante en DoWhy.
 
-Para profundizar en los resultados, se consultó a Pablo Schwarzenber, quien proporcionó una contextualización valiosa sobre el papel de la guía de programación en el éxito académico. Las discusiones subrayaron la importancia de ejercicios específicos como 'e42' y 'e29' como autoaprendizaje, mientras que 'e18' se beneficia de la instrucción directa del profesor. Estos intercambios enriquecieron la interpretación de los datos, vinculándolos con experiencias educativas concretas.
+Para profundizar en los resultados, se consultó a Pablo Schwarzen-Berg (Schwarzenber), quien proporcionó una contextualización valiosa sobre el papel de la guía de programación en el éxito académico. Las discusiones subrayaron la importancia de ejercicios específicos como 'e42' y 'e29' como autoaprendizaje, mientras que 'e18' se beneficia de la instrucción directa del profesor. Estos intercambios enriquecieron la interpretación de los datos, vinculándolos con experiencias educativas concretas.
 
 ---
 
@@ -155,7 +168,7 @@ Como Conclusión General, el estudio enfatiza que, a pesar de las limitaciones p
 
 # Agradecimientos
 
-Me gustaría agradecer a [menciona a las personas o instituciones relevantes] por su valioso apoyo y contribuciones a esta investigación.
+Me gustaría agradecer a Billy Peralta y Pablo Schwarzen-Berg por su valioso apoyo y contribuciones a esta investigación.
 
 ---
 
