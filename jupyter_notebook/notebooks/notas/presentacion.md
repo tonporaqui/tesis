@@ -1,6 +1,5 @@
 # Portada
 
-**Inicio de la Investigación**
 Hoy, analizaremos cómo las guías de programación pueden influir en el éxito académico de los estudiantes.
 
 Mi nombre es **Gastón Sepulveda**, del Magister en gestión de información & telecomunicaciones. Defendiendo la tesis titulada “Análisis de la relación entre la resolución de una guía de programación y éxito académico en el ramo de introducción a la programación”. Mi Profesor Guía es **Billy Peralta**.
